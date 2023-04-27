@@ -4,7 +4,6 @@
 ## 프로젝트
 
 칵테고라이즈 - 사용자 기반 칵테일 가이드 서비스 
-![image](https://user-images.githubusercontent.com/114224596/234785628-68f4bf13-6d43-49eb-b83e-b6465bd31ca3.png)
 
 ## 팀원 소개
 
