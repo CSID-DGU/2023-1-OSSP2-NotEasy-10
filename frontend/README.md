@@ -1,4 +1,1 @@
-DB = MARIA DB
-FRAMEWORK = SPRING BOOT
-
-
+React
