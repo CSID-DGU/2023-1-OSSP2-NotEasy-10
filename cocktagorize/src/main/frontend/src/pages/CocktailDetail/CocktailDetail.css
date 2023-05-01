@@ -1,0 +1,50 @@
+.CocktailDetail{
+    display: flex;
+}
+
+.content{
+    width: 990px;
+    margin: 25px 15px 25px 10px;
+    background-color: white;
+    padding: 30px;
+}
+
+.tags{
+    margin-top: 10px;
+}
+
+.inner{
+    display: flex;
+    height: auto;
+}
+
+.inner_left{
+    width: 330px;
+    height: 500px;
+    background-color: none;
+}
+
+.cocktail_card{
+    background-color: aquamarine;
+    height: 320px;
+}
+
+.cocktail_similar{
+    background-color: beige;
+    height: 180px;
+}
+
+.inner_right{
+    width: 600px;
+    background-color: none;
+}
+
+.cocktail_recipe{
+    background-color: blueviolet;
+    height: 320px;
+}
+
+.cocktail_tip{
+    background-color: cadetblue;
+    height: 180px;
+}
