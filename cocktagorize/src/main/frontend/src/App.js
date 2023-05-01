@@ -10,25 +10,33 @@ import CommunityPostList from "./pages/community/CommunityPostList";
 import CommunityPost from "./pages/community/CommunityPost";
 import CommunityPostModify from "./pages/community/CommunityPostModify";
 import CommunityPostWrite from "./pages/community/CommunityPostWrite";
+import Header from "./component/common/Header";
+import Footer from "./component/common/Footer";
+import Layout from "./Layout";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/login" element={<Login />}></Route>
-      <Route path="/signUp" element={<SignUp />}></Route>
-      <Route path="/myPage" element={<MyPage />}></Route>
-      <Route
-        path="/cocktail/:cocktailName"
-        element={<CocktailDetail />}
-      ></Route>
-      <Route path="/community" element={<CommunityPostList />}></Route>
-      <Route path="/community/:communityId" element={<CommunityPost />}></Route>
-      <Route
-        path="/community/:communityId/modify"
-        element={<CommunityPostModify />}
-      ></Route>
-      <Route path="/community/write" element={<CommunityPostWrite />}></Route>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signUp" element={<SignUp />}></Route>
+        <Route path="/myPage" element={<MyPage />}></Route>
+        <Route
+          path="/cocktail/:cocktailName"
+          element={<CocktailDetail />}
+        ></Route>
+        <Route path="/community" element={<CommunityPostList />}></Route>
+        <Route
+          path="/community/:communityId"
+          element={<CommunityPost />}
+        ></Route>
+        <Route
+          path="/community/:communityId/modify"
+          element={<CommunityPostModify />}
+        ></Route>
+        <Route path="/community/write" element={<CommunityPostWrite />}></Route>
+      </Route>
     </Routes>
   );
 }
