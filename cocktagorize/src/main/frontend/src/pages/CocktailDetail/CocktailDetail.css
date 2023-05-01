@@ -1,50 +1,52 @@
-.CocktailDetail{
-    display: flex;
+.CocktailDetail {
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.content{
-    width: 990px;
-    margin: 25px 15px 25px 10px;
-    background-color: white;
-    padding: 30px;
+.content {
+  width: 990px;
+  margin: 25px 15px 25px 10px;
+  background-color: transparent;
+  padding: 30px;
+  border-radius: 0.5rem;
 }
 
-.tags{
-    margin-top: 10px;
+.tags {
+  margin-top: 10px;
 }
 
-.inner{
-    display: flex;
-    height: auto;
+.inner {
+  display: flex;
+  height: auto;
 }
 
-.inner_left{
-    width: 330px;
-    height: 500px;
-    background-color: none;
+.inner_left {
+  width: 330px;
+  height: 500px;
+  background-color: none;
 }
 
-.cocktail_card{
-    background-color: aquamarine;
-    height: 320px;
+.cocktail_card {
+  background-color: aquamarine;
+  height: 320px;
 }
 
-.cocktail_similar{
-    background-color: beige;
-    height: 180px;
+.cocktail_similar {
+  background-color: beige;
+  height: 180px;
 }
 
-.inner_right{
-    width: 600px;
-    background-color: none;
+.inner_right {
+  width: 600px;
+  background-color: none;
 }
 
-.cocktail_recipe{
-    background-color: blueviolet;
-    height: 320px;
+.cocktail_recipe {
+  background-color: blueviolet;
+  height: 320px;
 }
 
-.cocktail_tip{
-    background-color: cadetblue;
-    height: 180px;
+.cocktail_tip {
+  background-color: cadetblue;
+  height: 180px;
 }

@@ -1,49 +1,66 @@
-.sidebar{
-    background-color: white;
-    width: 200px;
-    height: 600px;
-    margin: 20px 20px 20px 20px;
-    padding: 20px;
+.sidebar {
+  background-color: white;
+  width: 200px;
+  height: 600px;
+  margin: 20px 20px 20px 20px;
+  padding: 20px;
+  border-radius: 0.5rem;
+  -webkit-box-shadow: 5px 5px 10px -5px #000000;
+  box-shadow: 5px 5px 10px -5px #000000;
 }
 
-.menu{
-    margin: 5px 0 10px 0;
+li {
+  display: flex;
+  align-items: center;
 }
 
-.menulist{
-    list-style: none;
-    height: 360px;
-    padding-left: 5px;
+.dropdown {
+  display: flex;
+  align-items: center;
 }
 
-.menulist > li{
-    height: 35px;
-}
-.menulist > li:hover{
-    background-color: lightgray;
-    border-radius: 5px;
+.list {
+  margin-left: 1rem;
 }
 
-.menulist_personal{
-    list-style: none;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    padding-left: 5px;
+.menu {
+  margin: 5px 0 10px 0;
 }
 
-.menulist_personal > li{
-    height: 35px;
+.menulist {
+  list-style: none;
+  height: 360px;
+  padding-left: 5px;
 }
-.menulist_personal > li:hover{
-    background-color: lightgray;
-    border-radius: 5px;
+
+.menulist > li {
+  height: 35px;
+}
+.menulist > li:hover {
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+.menulist_personal {
+  list-style: none;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+.menulist_personal > li {
+  height: 35px;
+}
+.menulist_personal > li:hover {
+  background-color: lightgray;
+  border-radius: 5px;
 }
 
 hr {
-    margin: 5px 0 5px 0;
+  margin: 5px 0 5px 0;
 }
 
-.dropdown{
-    height: 35px;
-    margin-top: 15px;
+.dropdown {
+  height: 35px;
+  margin-top: 15px;
 }
