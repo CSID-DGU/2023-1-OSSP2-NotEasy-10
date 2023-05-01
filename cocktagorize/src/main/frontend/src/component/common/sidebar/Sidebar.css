@@ -1,0 +1,49 @@
+.sidebar{
+    background-color: white;
+    width: 200px;
+    height: 600px;
+    margin: 20px 20px 20px 20px;
+    padding: 20px;
+}
+
+.menu{
+    margin: 5px 0 10px 0;
+}
+
+.menulist{
+    list-style: none;
+    height: 360px;
+    padding-left: 5px;
+}
+
+.menulist > li{
+    height: 35px;
+}
+.menulist > li:hover{
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+.menulist_personal{
+    list-style: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+.menulist_personal > li{
+    height: 35px;
+}
+.menulist_personal > li:hover{
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+hr {
+    margin: 5px 0 5px 0;
+}
+
+.dropdown{
+    height: 35px;
+    margin-top: 15px;
+}
