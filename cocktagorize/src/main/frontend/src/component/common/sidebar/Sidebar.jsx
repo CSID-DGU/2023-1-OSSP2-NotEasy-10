@@ -40,7 +40,7 @@ export default function Sidebar() {
       </ul>
       <hr></hr>
       <div className="dropdown">
-        <VscAccount /> <div className="list User">User Name</div>
+        <VscAccount /> <div className="user">User Name</div>
       </div>
     </div>
   );

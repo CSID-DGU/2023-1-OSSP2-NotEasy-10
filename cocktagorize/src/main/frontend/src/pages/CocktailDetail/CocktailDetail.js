@@ -15,7 +15,23 @@ const CocktailDetail = () => {
             <div className="cocktail_similar">비슷한 칵테일</div>
           </div>
           <div className="inner_right">
-            <div className="cocktail_recipe">칵테일 레시피</div>
+            <div className="cocktail_recipe">
+              <div className="name">칵테일 이름</div>
+              <hr />
+              <div className="info">
+                <div className="info_left">
+                  <p>재료: </p>
+                  <span className="ingredient">레몬 위스키 ...</span>
+                  <p>도수: 소주잔 <span className="alchol">1</span></p>
+                  <p>기법: <span className="technic">shake</span></p>
+                  <p>추천잔: <span className="glass">cup</span></p>
+                </div>
+                <div className="info_right">
+                  <p>제작순서: </p>
+                  <span className="order">1.어쩌고 2.저쩌고</span>
+                </div>
+              </div>
+            </div>
             <UserTipList />
           </div>
         </div>
