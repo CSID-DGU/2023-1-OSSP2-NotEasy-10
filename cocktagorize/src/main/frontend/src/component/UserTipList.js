@@ -9,11 +9,14 @@ import styled from "styled-components";
 const UserTipListBlock = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0 1rem 1rem 1rem;
+  height: 28vh;
+  overflow-y: scroll;
 `;
 
 const H4 = styled.h4`
   margin-bottom: 1rem;
+  margin-top: 1rem;
 `;
 
 const TipList = styled.div`
@@ -27,19 +30,8 @@ const TipList = styled.div`
 const UserTipList = () => {
   return (
     <UserTipListBlock>
-      <H4>자신만의 TIP</H4>
+      <H4> User's TIP</H4>
       <TipList>
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
-        <UserTip />
         <UserTip />
         <UserTip />
       </TipList>

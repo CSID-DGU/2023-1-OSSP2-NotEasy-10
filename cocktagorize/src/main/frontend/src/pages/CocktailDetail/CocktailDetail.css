@@ -4,49 +4,81 @@
 }
 
 .content {
-  width: 990px;
-  margin: 25px 15px 25px 10px;
+  width: 70vw;
+  margin: 1.6rem 0 1.5rem 0;
+  padding: 1rem 1.25rem 1rem 0;
   background-color: transparent;
-  padding: 30px;
   border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .tags {
-  margin-top: 10px;
+  margin-bottom: 0.5rem;
 }
 
 .inner {
   display: flex;
   height: auto;
+  flex: 1;
 }
 
 .inner_left {
-  width: 330px;
-  height: 500px;
-  background-color: none;
+  display: inline-flex;
+  flex-direction: column;
+  width: 20vw;
+  height: auto;
 }
 
 .cocktail_card {
   background-color: aquamarine;
-  height: 320px;
+  flex: 1;
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  border-radius: 0.25rem;
 }
 
 .cocktail_similar {
   background-color: beige;
-  height: 180px;
+  height: 28vh;
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem 0 0;
+  border-radius: 0.25rem;
 }
 
 .inner_right {
-  width: 600px;
-  background-color: none;
+  display: inline-flex;
+  flex-direction: column;
+  height: auto;
+  flex: 1;
 }
 
 .cocktail_recipe {
-  background-color: blueviolet;
-  height: 320px;
+  background-color: white;
+  flex: 1;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 0.25rem;
 }
 
-.cocktail_tip {
-  background-color: cadetblue;
-  height: 180px;
+.info {
+  display: flex;
+  
+}
+
+.info_left {
+  display: flex;
+  flex-direction: column;
+  width: 30vh;
+  margin: 0 0.5rem;
+}
+
+p{
+  margin: 0.5rem 0;
+}
+
+.info_right{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }

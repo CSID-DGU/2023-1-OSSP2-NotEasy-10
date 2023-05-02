@@ -6,7 +6,6 @@ const FooterBlock = styled.footer`
   position: relative;
   transform: translateY(-100%);
   height: 4rem;
-  width: 100vw;
 `;
 
 const Footer = () => {
