@@ -116,9 +116,10 @@ public class CocktailApiSetUpService {
                 }
                 ingredientTag = tagRepository.findTagByName(ingredient);
                 CocktailTag cocktailTag = CocktailTag.builder()
-                        .cocktail(cocktail)
-                        .tag(ingredientTag)
+                            .cocktail(cocktail)
+                            .tag(ingredientTag)
                         .build();
+
                 cocktailTagRepository.save(cocktailTag);
             }
         }

@@ -1,17 +1,24 @@
 package com.ossp.cocktagorize.controller.apiController;
 
 import com.ossp.cocktagorize.service.CocktailApiSetUpService;
+import org.apache.commons.io.FileUtils;
+import org.apache.tika.Tika;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 public class CocktailApiSetUpController {
@@ -62,24 +69,51 @@ public class CocktailApiSetUpController {
     @GetMapping("/getAllCocktail")
     public void getAllCocktail() {
         // 칵테일 id 범위 : 11000 ~ 17840, 178306 ~ 178369
-        for (int i = 11000; i < 20000; i++) {
+        for (int i = 11000; i < 17841; i++) {
 
             String result = getJsonDataByURL("api/json/v1/1/lookup.php?i=" + String.valueOf(i));
 
             JSONArray cocktailArray = parsingArray(result, "drinks");
 
-//            if (cocktailArray == null) continue;
-//            else cocktailApiSetUpService.saveCocktail(cocktailArray);
-
-            System.out.println(i);
-
             if (cocktailArray == null) {
                 continue;
             }
             else {
-                System.out.println(i);
                 cocktailApiSetUpService.saveCocktail(cocktailArray);
             }
         }
+    }
+
+    @GetMapping("/getAllImages")
+    public void getAllImages() {
+        // 칵테일 id 범위 : 11000 ~ 17840, 178306 ~ 178369
+        for (int i = 178306; i < 178370; i++) {
+            String result = getJsonDataByURL("api/json/v1/1/lookup.php?i=" + String.valueOf(i));
+
+            JSONArray cocktailArray = parsingArray(result, "drinks");
+
+            if (cocktailArray == null) continue;
+
+            try {
+                JSONObject jsonCocktail = (JSONObject) cocktailArray.get(0);
+                URL url = new URL((String) jsonCocktail.get("strDrinkThumb"));
+                File cocktailImg = new File("./src/main/frontend/src/images", (String) jsonCocktail.get("idDrink") + ".jpeg");
+                FileUtils.copyURLToFile(url, cocktailImg);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static String getContentType(File image) {
+        String contentType = null;
+        Tika tika = new Tika();
+        try {
+            contentType = tika.detect(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contentType;
     }
 }
