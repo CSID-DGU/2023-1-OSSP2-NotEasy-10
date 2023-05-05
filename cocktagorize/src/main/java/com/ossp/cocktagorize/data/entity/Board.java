@@ -2,15 +2,14 @@ package com.ossp.cocktagorize.data.entity;
 
 import com.ossp.cocktagorize.data.type.BoardType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -22,6 +21,7 @@ public class Board {
     private int id;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private BoardType type;
 
     @Column(nullable = false)
@@ -34,7 +34,7 @@ public class Board {
     @Column(nullable = false)
     private int liked;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -1,21 +1,21 @@
 package com.ossp.cocktagorize.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 public class Cocktail {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cocktail_id")
     private int id;
 
@@ -25,11 +25,11 @@ public class Cocktail {
     private String glassType;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String recipe;
 
     @Column(nullable = false)
-    private int alcoholDegree;
+    private BigDecimal alcoholDegree;
 
     @Column(nullable = false)
     @ColumnDefault("0")

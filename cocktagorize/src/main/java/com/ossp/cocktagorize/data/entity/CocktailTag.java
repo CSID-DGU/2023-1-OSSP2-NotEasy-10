@@ -2,10 +2,10 @@ package com.ossp.cocktagorize.data.entity;
 
 import com.ossp.cocktagorize.data.idClass.CocktailTagId;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -13,12 +13,12 @@ import lombok.Setter;
 @IdClass(CocktailTagId.class)
 public class CocktailTag {
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
 }
