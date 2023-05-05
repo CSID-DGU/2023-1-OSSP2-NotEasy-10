@@ -1,0 +1,84 @@
+.CocktailDetail {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.content {
+  width: 70vw;
+  margin: 1.6rem 0 1.5rem 0;
+  padding: 1rem 1.25rem 1rem 0;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.tags {
+  margin-bottom: 0.5rem;
+}
+
+.inner {
+  display: flex;
+  height: auto;
+  flex: 1;
+}
+
+.inner_left {
+  display: inline-flex;
+  flex-direction: column;
+  width: 20vw;
+  height: auto;
+}
+
+.cocktail_card {
+  background-color: aquamarine;
+  flex: 1;
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  border-radius: 0.25rem;
+}
+
+.cocktail_similar {
+  background-color: beige;
+  height: 28vh;
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem 0 0;
+  border-radius: 0.25rem;
+}
+
+.inner_right {
+  display: inline-flex;
+  flex-direction: column;
+  height: auto;
+  flex: 1;
+}
+
+.cocktail_recipe {
+  background-color: white;
+  flex: 1;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.info {
+  display: flex;
+  
+}
+
+.info_left {
+  display: flex;
+  flex-direction: column;
+  width: 30vh;
+  margin: 0 0.5rem;
+}
+
+p{
+  margin: 0.5rem 0;
+}
+
+.info_right{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
