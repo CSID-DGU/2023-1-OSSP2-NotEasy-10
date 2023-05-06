@@ -7,7 +7,7 @@ const styles = {
 		backgroundColor: "#6E41E2",
 		display: "flex",
 		alignItems: "center",
-		margin: "0px 8px 8px 0px",
+		margin: "4px 4px",
 		borderRadius: 8,
 	},
 	nameText: {
