@@ -38,6 +38,14 @@ public class User {
     private List<Board> boardList = new ArrayList<Board>();
 
     @OneToMany(mappedBy = "user")
+    private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
+
+
+    @OneToMany(mappedBy = "user")
+    private List<CocktailReply> cocktailReplyList = new ArrayList<CocktailReply>();
+
+
+    @OneToMany(mappedBy = "user")
     private List<UserLikeBoard> likeBoardList = new ArrayList<UserLikeBoard>();
 
     @OneToMany(mappedBy = "user")

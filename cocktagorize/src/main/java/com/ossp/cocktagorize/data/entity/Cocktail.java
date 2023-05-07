@@ -1,5 +1,6 @@
 package com.ossp.cocktagorize.data.entity;
 
+import com.ossp.cocktagorize.data.dto.response.CocktailDetailResponseDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Cocktail {
+public class Cocktail{
     @Id
     @Column(name = "cocktail_id")
     private int id;
