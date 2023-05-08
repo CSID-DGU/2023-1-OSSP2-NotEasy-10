@@ -12,11 +12,15 @@ const Card = styled.div`
 	margin: 0px;
 	margin-left: ${(props) => props.horizontalMargin || "0px"};
 	margin-right: ${(props) => props.horizontalMargin || "0px"};
+	margin-top: ${(props) => props.verticalMargin || "0px"};
+	margin-bottom: ${(props) => props.verticalMargin || "0px"};
 `;
 
 const Image = styled.img`
 	width: 300px;
 	height: 300px;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
 `;
 
 const Container = styled.div`
@@ -39,12 +43,15 @@ const NameText = styled.h5`
 	font-size: 24px;
 	font-weight: bold;
 	margin: 0px 10px 10px 10px;
+	-webkit-user-select: none;
 `;
 
 const SoundImage = styled.img`
 	width: 20px;
 	height: 20px;
 	margin: auto;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
 `;
 
 const TagContainer = styled.div`
@@ -68,15 +75,21 @@ const BlackHeartImage = styled.img`
 	width: 16px;
 	height: 16px;
 	margin: 0px 8px;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
 `;
 
 const HeartText = styled.div`
 	margin: 0px 4px;
+	-webkit-user-select: none;
 `;
 
 function CocktailCard(props) {
 	return (
-		<Card horizontalMargin={props.horizontalMargin}>
+		<Card
+			horizontalMargin={props.horizontalMargin}
+			verticalMargin={props.verticalMargin}
+		>
 			<Image src={cocktailImage} alt={cocktailImage} />
 			<Container>
 				<TitleContainer>
