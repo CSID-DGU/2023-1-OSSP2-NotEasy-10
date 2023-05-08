@@ -28,5 +28,9 @@ public class CocktailReply {
     @JoinColumn(name = "cocktail_id")
     private Cocktail cocktail;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     Timestamp createdDate;
 }
