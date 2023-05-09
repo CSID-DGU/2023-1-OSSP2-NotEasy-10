@@ -1,5 +1,5 @@
 package com.ossp.cocktagorize.data.type;
 
 public enum TagType {
-    WEATHER, ALCOHOL, INGREDIENT
+    WEATHER, ALCOHOL, INGREDIENT, TASTE, ETC, COLOR
 }
