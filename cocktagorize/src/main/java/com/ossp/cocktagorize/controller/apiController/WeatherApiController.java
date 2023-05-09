@@ -1,13 +1,21 @@
 package com.ossp.cocktagorize.controller.apiController;
 
 import com.ossp.cocktagorize.data.dto.WeatherRequestDto;
+import com.ossp.cocktagorize.data.entity.Cocktail;
+import com.ossp.cocktagorize.data.entity.CocktailTag;
+import com.ossp.cocktagorize.data.entity.Tag;
 import com.ossp.cocktagorize.data.entity.VillagePosition;
+import com.ossp.cocktagorize.data.repository.CocktailRepository;
+import com.ossp.cocktagorize.data.repository.CocktailTagRepository;
+import com.ossp.cocktagorize.data.repository.TagRepository;
 import com.ossp.cocktagorize.data.repository.VillagePositionRepository;
+import com.ossp.cocktagorize.data.type.TagType;
 import io.netty.handler.codec.http2.WeightedFairQueueByteDistributor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +32,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //     json 데이터로 위치 정보를 입력받고, 그 위치에 대한 날씨 api 호출
@@ -40,10 +50,16 @@ public class WeatherApiController {
     private final String encodedServiceKey = "LRZW5zkCYDpglLoZvNXqEhT0z%2Fe%2B7%2FeOl9BGjVA8A8i%2B2Pfg%2BTwRe47iFRTT1rynQSd%2BzEUqBrvx3oX3VyxCdw%3D%3D";
 
     private final VillagePositionRepository villagePositionRepository;
+    private final CocktailTagRepository cocktailTagRepository;
+    private final CocktailRepository cocktailRepository;
+    private final TagRepository tagRepository;
     private final ApiUtils apiUtils;
 
-    public WeatherApiController(VillagePositionRepository villagePositionRepository, ApiUtils apiUtils) {
+    public WeatherApiController(VillagePositionRepository villagePositionRepository, CocktailTagRepository cocktailTagRepository, CocktailRepository cocktailRepository, TagRepository tagRepository, ApiUtils apiUtils) {
         this.villagePositionRepository = villagePositionRepository;
+        this.cocktailTagRepository = cocktailTagRepository;
+        this.cocktailRepository = cocktailRepository;
+        this.tagRepository = tagRepository;
         this.apiUtils = apiUtils;
     }
 
@@ -62,8 +78,33 @@ public class WeatherApiController {
         return items;
     }
 
-    @GetMapping("/weather")
-    public void getWeather(@RequestBody WeatherRequestDto weatherRequestDto) {
+    private int getTagIdByTempAndRain(double temp, int isRainy) {
+        if (isRainy == 0) {
+            if (temp < 5) {
+                return tagRepository.findTagByName("NotRainyAndWinter").getId();
+            } else if (temp >= 20) {
+                return tagRepository.findTagByName("NotRainyAndSummer").getId();
+            } else {
+                return tagRepository.findTagByName("NotRainyAndSpring").getId();
+            }
+
+        } else if (isRainy == 1) {
+            if (temp < 5) {
+                return tagRepository.findTagByName("RainyAndWinter").getId();
+            } else if (temp >= 20) {
+                return tagRepository.findTagByName("RainyAndSummer").getId();
+            } else {
+                return tagRepository.findTagByName("RainyAndSpring").getId();
+            }
+        } else {
+            System.out.println("지정되지 않은 강우 여부 값이 들어옴.");
+        }
+
+        return -1;
+    }
+
+    @GetMapping("/weatherCocktails")
+    public ResponseEntity<List<Cocktail>> getWeatherMatchCocktails(@RequestBody WeatherRequestDto weatherRequestDto) {
         // 사용자 위치 x, y
         String city = weatherRequestDto.getCity();
         String dong = weatherRequestDto.getDong();
@@ -71,7 +112,6 @@ public class WeatherApiController {
 
         VillagePosition villagePosition = null;
 
-        // 여기 더 좋게 코딩하는 방법 생각하기
         if (gu.equals("") && dong.equals("")) {
             // ex)서울특별시 NULL NULL
             villagePosition = villagePositionRepository.findVillagePositionByCityAndDongIsNullAndGuIsNull(city);
@@ -118,7 +158,7 @@ public class WeatherApiController {
         JSONArray item = apiUtils.parsingArray(items.toString(), "item");
 
         double temp = -1;
-        int isRainy = -1;
+        int isRainy = 0;
 
         for (Object obj : item) {
             JSONObject jsonItem = (JSONObject) obj;
@@ -135,8 +175,18 @@ public class WeatherApiController {
             }
         }
 
-        System.out.println(temp);
-        System.out.println(isRainy);
+//        System.out.println("현재 온도 : " + temp);
+//        System.out.println("현재 강우여부 : " + isRainy);
 
+//        int weatherTagId = getTagIdByTempAndRain(temp, isRainy);
+        int weatherTagId = getTagIdByTempAndRain(15, 0);
+        // 받아온 태그 정보들 갖고 칵테일 검색해서 JSON 으로 반환하는 로직 짜기
+        List<CocktailTag> weatherCocktailTags = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId);
+        List<Cocktail> weatherCocktails = new ArrayList<>();
+
+        weatherCocktailTags.forEach(cocktailTag -> weatherCocktails.add(cocktailTag.getCocktail()));
+
+        // 태그 리스트 담아서 보내기 구현해야 함.
+        return ResponseEntity.ok(weatherCocktails);
     }
 }

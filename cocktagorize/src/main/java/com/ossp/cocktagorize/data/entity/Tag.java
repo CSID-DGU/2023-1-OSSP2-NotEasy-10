@@ -19,6 +19,7 @@ public class Tag {
     @Column(name = "tag_id")
     private int id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     TagType category;
 
