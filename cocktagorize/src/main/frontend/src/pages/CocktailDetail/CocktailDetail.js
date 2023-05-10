@@ -32,7 +32,7 @@ const CocktailDetail = () => {
             <p>유사한 칵테일</p>
             <div className="cocktail_similar">
               <img className="cocktail_similar_image" src={cocktailImage} alt={cocktailImage}></img>
-              <div className="cocktail_similar_name">유사 칵테일 이름 <VscLinkExternal/></div>
+              <div className="cocktail_similar_name">유사 칵테일 이름<VscLinkExternal/></div>
             </div>
           </div>
           <div className="inner_right">
@@ -43,9 +43,12 @@ const CocktailDetail = () => {
                 <div className="info_left">
                   <p>재료: </p>
                   <span className="ingredient">레몬 위스키 ...</span>
-                  <p>도수: 소주잔 <span className="alchol">1</span></p>
-                  <p>기법: <span className="technic">shake</span></p>
-                  <p>추천잔: <span className="glass">cup</span></p>
+                  <p>도수: </p>
+                  <span className="alchol">소주 1잔</span>
+                  <p>기법: </p>
+                  <span className="technic">shake</span>
+                  <p>추천잔: </p>
+                  <span className="glass">cup</span>
                 </div>
                 <div className="info_right">
                   <p>제작순서: </p>
@@ -53,9 +56,9 @@ const CocktailDetail = () => {
                 </div>
               </div>
             </div>
-            <UserTipList />
           </div>
         </div>
+        <UserTipList />
       </div>
     </div>
   );
