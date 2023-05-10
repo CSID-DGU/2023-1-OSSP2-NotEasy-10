@@ -1,5 +1,6 @@
 package com.ossp.cocktagorize.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,15 +35,27 @@ public class User {
 
     private Double alcoholCapacity;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Board> boardList = new ArrayList<Board>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
+
+
+    @OneToMany(mappedBy = "user")
+    private List<CocktailReply> cocktailReplyList = new ArrayList<CocktailReply>();
+
 
     @OneToMany(mappedBy = "user")
     private List<UserLikeBoard> likeBoardList = new ArrayList<UserLikeBoard>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserLikeCocktail> likeCocktailList = new ArrayList<UserLikeCocktail>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<PreferTag> preferTagList = new ArrayList<PreferTag>();
 }
