@@ -1,0 +1,29 @@
+.Login {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: auto;
+    background-color: white;
+    margin: auto;
+    margin-top: 5rem;
+    border-radius: 0.5rem;
+    padding: 5%;
+}
+
+.Login > input {
+    margin-top: 0.3rem;
+}
+
+.toSignUp {
+    text-align: end;
+    text-decoration: underline;
+    font-size: small;
+}
+
+.Login .submit {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    width: 20vw;
+    height: 5vh;
+    background-color: lightgrey;
+}
