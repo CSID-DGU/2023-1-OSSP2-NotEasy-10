@@ -1,4 +1,4 @@
-package com.ossp.cocktagorize.controller.apiController;
+package com.ossp.cocktagorize.controller.setUpController;
 
 import com.ossp.cocktagorize.service.CocktailApiSetUpService;
 import org.apache.commons.io.FileUtils;

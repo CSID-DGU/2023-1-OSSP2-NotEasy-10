@@ -18,7 +18,7 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -30,16 +30,16 @@ public class User {
     @Column(nullable = false)
     private String realName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nickname;
 
     private Double alcoholCapacity;
 
-    @JsonIgnore
+    
     @OneToMany(mappedBy = "user")
     private List<Board> boardList = new ArrayList<Board>();
 
-    @JsonIgnore
+    
     @OneToMany(mappedBy = "user")
     private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
@@ -51,11 +51,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserLikeBoard> likeBoardList = new ArrayList<UserLikeBoard>();
 
-    @JsonIgnore
+    
     @OneToMany(mappedBy = "user")
     private List<UserLikeCocktail> likeCocktailList = new ArrayList<UserLikeCocktail>();
 
-    @JsonIgnore
+    
     @OneToMany(mappedBy = "user")
     private List<PreferTag> preferTagList = new ArrayList<PreferTag>();
 }

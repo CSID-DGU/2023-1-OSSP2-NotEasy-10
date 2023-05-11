@@ -1,6 +1,7 @@
 package com.ossp.cocktagorize.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -36,11 +37,9 @@ public class Cocktail {
     @ColumnDefault("0")
     private int liked;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "cocktail")
     private List<CocktailReply> cocktailReplyList = new ArrayList<CocktailReply>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "cocktail")
     private List<CocktailTag> cocktailTagList = new ArrayList<CocktailTag>();
 }
