@@ -1,9 +1,8 @@
 package com.ossp.cocktagorize.controller.apiController;
 
 import com.ossp.cocktagorize.controller.setUpController.ApiUtils;
-import com.ossp.cocktagorize.data.dto.CocktailDto;
+import com.ossp.cocktagorize.data.dto.CocktailResponseDto;
 import com.ossp.cocktagorize.data.dto.WeatherRequestDto;
-import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.entity.CocktailTag;
 import com.ossp.cocktagorize.data.entity.VillagePosition;
 import com.ossp.cocktagorize.data.repository.CocktailRepository;
@@ -86,8 +85,14 @@ public class WeatherApiController {
         return -1;
     }
 
+    @GetMapping("/hahaha")
+    public ResponseEntity<Boolean> haha() {
+        return ResponseEntity.ok(true);
+    }
+
+
     @GetMapping("/cocktail/weather")
-    public List<CocktailDto> getWeatherMatchCocktails(@RequestBody WeatherRequestDto weatherRequestDto) {
+    public List<CocktailResponseDto> getWeatherMatchCocktails(@RequestBody WeatherRequestDto weatherRequestDto) {
         // 사용자 위치 x, y
         String city = weatherRequestDto.getCity();
         String dong = weatherRequestDto.getDong();
@@ -136,6 +141,9 @@ public class WeatherApiController {
 
         String result = apiUtils.getJsonDataByURL(weatherApiURL.toString());
 
+        System.out.println(weatherApiURL);
+        System.out.println(result);
+
         JSONObject items = getItemFromResult(result);
 
         JSONArray item = apiUtils.parsingArray(items.toString(), "item");
@@ -165,11 +173,10 @@ public class WeatherApiController {
         int weatherTagId = getTagIdByTempAndRain(temp, isRainy);
         // 받아온 태그 정보들 갖고 칵테일 검색해서 JSON 으로 반환하는 로직 짜기
         List<CocktailTag> weatherCocktailTags = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId);
-        List<CocktailDto> weatherCocktails = new ArrayList<>();
+        List<CocktailResponseDto> weatherCocktails = new ArrayList<>();
 
         weatherCocktailTags.forEach(cocktailTag -> {
-            weatherCocktails.add(CocktailDto.toEntity(cocktailTag.getCocktail()));
-            System.out.println(cocktailTag.getCocktail().getName());
+            weatherCocktails.add(CocktailResponseDto.toEntity(cocktailTag.getCocktail()));
         });
 
         // 태그 리스트 담아서 보내기 구현해야 함.

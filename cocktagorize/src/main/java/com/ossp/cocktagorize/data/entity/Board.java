@@ -39,10 +39,9 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    
     @OneToMany(mappedBy = "board")
     private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
-    
+
     @OneToMany(mappedBy = "board")
     private List<UserLikeBoard> likeUserList = new ArrayList<UserLikeBoard>();
 
