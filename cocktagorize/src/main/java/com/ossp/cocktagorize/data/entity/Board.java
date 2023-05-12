@@ -22,7 +22,6 @@ public class Board {
     private int id;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private BoardType type;
 
     @Column(nullable = false)
