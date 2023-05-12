@@ -20,7 +20,6 @@ public class Tag {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private TagType category;
 
     @Column(nullable = false)

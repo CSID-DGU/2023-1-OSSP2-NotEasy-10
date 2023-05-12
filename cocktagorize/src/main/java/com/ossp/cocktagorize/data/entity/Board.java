@@ -23,7 +23,6 @@ public class Board {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private BoardType type;
 
     @Column(nullable = false)
