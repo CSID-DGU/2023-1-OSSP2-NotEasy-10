@@ -1,4 +1,4 @@
-package com.ossp.cocktagorize.controller.apiController;
+package com.ossp.cocktagorize.controller.setUpController;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
