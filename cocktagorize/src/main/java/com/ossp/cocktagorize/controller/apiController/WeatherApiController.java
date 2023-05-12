@@ -1,16 +1,14 @@
 package com.ossp.cocktagorize.controller.apiController;
 
+import com.ossp.cocktagorize.controller.setUpController.ApiUtils;
+import com.ossp.cocktagorize.data.dto.CocktailResponseDto;
 import com.ossp.cocktagorize.data.dto.WeatherRequestDto;
-import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.entity.CocktailTag;
-import com.ossp.cocktagorize.data.entity.Tag;
 import com.ossp.cocktagorize.data.entity.VillagePosition;
 import com.ossp.cocktagorize.data.repository.CocktailRepository;
 import com.ossp.cocktagorize.data.repository.CocktailTagRepository;
 import com.ossp.cocktagorize.data.repository.TagRepository;
 import com.ossp.cocktagorize.data.repository.VillagePositionRepository;
-import com.ossp.cocktagorize.data.type.TagType;
-import io.netty.handler.codec.http2.WeightedFairQueueByteDistributor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,13 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -35,15 +26,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//     json 데이터로 위치 정보를 입력받고, 그 위치에 대한 날씨 api 호출
-//
-//    REQUEST JSON Data
-//    {
-//        "city" : "머시기",
-//        "gu" : "머시기",
-//        "dong" : "머시기",
-//    }
 @RestController
 public class WeatherApiController {
 
@@ -103,8 +85,14 @@ public class WeatherApiController {
         return -1;
     }
 
-    @GetMapping("/weatherCocktails")
-    public ResponseEntity<List<Cocktail>> getWeatherMatchCocktails(@RequestBody WeatherRequestDto weatherRequestDto) {
+    @GetMapping("/hahaha")
+    public ResponseEntity<Boolean> haha() {
+        return ResponseEntity.ok(true);
+    }
+
+
+    @GetMapping("/cocktail/weather")
+    public List<CocktailResponseDto> getWeatherMatchCocktails(@RequestBody WeatherRequestDto weatherRequestDto) {
         // 사용자 위치 x, y
         String city = weatherRequestDto.getCity();
         String dong = weatherRequestDto.getDong();
@@ -153,6 +141,9 @@ public class WeatherApiController {
 
         String result = apiUtils.getJsonDataByURL(weatherApiURL.toString());
 
+        System.out.println(weatherApiURL);
+        System.out.println(result);
+
         JSONObject items = getItemFromResult(result);
 
         JSONArray item = apiUtils.parsingArray(items.toString(), "item");
@@ -179,14 +170,16 @@ public class WeatherApiController {
 //        System.out.println("현재 강우여부 : " + isRainy);
 
 //        int weatherTagId = getTagIdByTempAndRain(temp, isRainy);
-        int weatherTagId = getTagIdByTempAndRain(15, 0);
+        int weatherTagId = getTagIdByTempAndRain(temp, isRainy);
         // 받아온 태그 정보들 갖고 칵테일 검색해서 JSON 으로 반환하는 로직 짜기
         List<CocktailTag> weatherCocktailTags = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId);
-        List<Cocktail> weatherCocktails = new ArrayList<>();
+        List<CocktailResponseDto> weatherCocktails = new ArrayList<>();
 
-        weatherCocktailTags.forEach(cocktailTag -> weatherCocktails.add(cocktailTag.getCocktail()));
+        weatherCocktailTags.forEach(cocktailTag -> {
+            weatherCocktails.add(CocktailResponseDto.toEntity(cocktailTag.getCocktail()));
+        });
 
         // 태그 리스트 담아서 보내기 구현해야 함.
-        return ResponseEntity.ok(weatherCocktails);
+        return weatherCocktails;
     }
 }

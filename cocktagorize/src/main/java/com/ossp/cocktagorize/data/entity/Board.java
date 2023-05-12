@@ -21,9 +21,7 @@ public class Board {
     @Column(name = "board_id")
     private int id;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private BoardType type;
 
     @Column(nullable = false)
@@ -40,11 +38,9 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "board")
     private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "board")
     private List<UserLikeBoard> likeUserList = new ArrayList<UserLikeBoard>();
 

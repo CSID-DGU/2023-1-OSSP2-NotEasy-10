@@ -36,6 +36,10 @@ const SignUp = () => {
     }
   }
 
+  const onClickSubmit = () => {
+    alert('회원가입 완료')
+  }
+
   return (
     <form className="SignUp" action="">
       <label for="id">아이디 </label>
@@ -64,7 +68,7 @@ const SignUp = () => {
         <option value={"sour"}>상큼</option>
         <option value={"bitter"}>씁쓸</option>
       </select>
-      <input className="submit" type="submit" value="가입하기" disabled={!isPasswordConfirm || !isId}/>
+      <input className="submit" type="submit" value="가입하기" onClick={onClickSubmit} disabled={!isPasswordConfirm || !isId}/>
     </form>
   );
 };

@@ -1,5 +1,6 @@
 package com.ossp.cocktagorize.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -26,10 +27,12 @@ public class CocktailReply {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cocktail_id")
+    
     private Cocktail cocktail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    
     private User user;
 
     Timestamp createdDate;

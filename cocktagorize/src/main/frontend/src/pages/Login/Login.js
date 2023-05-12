@@ -29,6 +29,10 @@ const Login = () => {
     }
   }
 
+  const onClickSubmit = () => {
+    alert('로그인 완료');
+  }
+
   return (
     <form className="Login" action="">
       <label for="id">ID </label>
@@ -36,7 +40,7 @@ const Login = () => {
       <label for="password">password </label>
       <input type="password" name="password" value={password} onChange={onChangePassword}/>
       <p className="toSignUp"><Link to='/SignUp'>Sign Up</Link></p>
-      <input className="submit" type="submit" value="Login" disabled={!isId || !isPassword}/>
+      <input className="submit" type="submit" value="Login" onClick={onClickSubmit} disabled={!isId || !isPassword}/>
     </form>
   );
 };
