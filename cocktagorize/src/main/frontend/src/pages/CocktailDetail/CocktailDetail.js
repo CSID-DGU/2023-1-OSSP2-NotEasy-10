@@ -51,7 +51,7 @@ const CocktailDetail = () => {
                   <span className="glass">cup</span>
                 </div>
                 <div className="info_right">
-                  <p>제작순서: </p>
+                  <p>레시피: </p>
                   <span className="order">1.어쩌고 2.저쩌고</span>
                 </div>
               </div>
