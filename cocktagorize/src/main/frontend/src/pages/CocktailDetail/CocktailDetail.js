@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
@@ -9,17 +9,40 @@ import {
   VscUnmute,
   VscLinkExternal
 } from "react-icons/vsc";
+import {useParams} from "react-router-dom";
+import axios from "axios";
 
 const CocktailDetail = () => {
+  const {cocktail_id} = useParams();
+  const [cocktail, setCocktail] = useState(null);
+
+  useEffect(() => {
+    const getCocktailDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/cocktail/${cocktail_id}`);
+        console.log(response.data.cocktailTagList);
+        setCocktail(response.data);
+        // Handle the cocktail data as needed
+      } catch (error) {
+        // Handle the error
+        console.error(error);
+      }
+    };
+    getCocktailDetails();
+  }, [])
+
+  if (!cocktail) {
+    return null;
+  }
+
+  const tagList = cocktail.cocktailTagList.map(tag => <Tag key={tag.id} name={tag.name} />);
+
   return (
     <div className="CocktailDetail">
       <Sidebar />
       <div className="content">
         <div className="tags">
-          <Tag name="달달" />
-          <Tag name="시원한" />
-          <Tag name="상큼" />
-          <Tag name="기분이 좋아지는" />
+          {tagList}
         </div>
         <div className="inner">
           <div className="inner_left">
