@@ -1,5 +1,6 @@
 package com.ossp.cocktagorize.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ossp.cocktagorize.data.idClass.CocktailTagId;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,6 +16,7 @@ public class CocktailTag {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cocktail_id")
+    
     private Cocktail cocktail;
 
     @Id
