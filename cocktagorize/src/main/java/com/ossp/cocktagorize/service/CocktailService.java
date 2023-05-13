@@ -4,6 +4,8 @@ import com.ossp.cocktagorize.data.dto.CocktailResponseDto;
 import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.repository.CocktailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,30 +17,19 @@ public class CocktailService {
     @Autowired
     private CocktailRepository cocktailRepository;
 
-    private List<CocktailResponseDto> cocktailToCocktailResponseDtoList(List<Cocktail> cocktailList) {
-        List<CocktailResponseDto> cocktailResponseDtoList = new ArrayList<>();
-        return cocktailList.stream()
-                .map(CocktailResponseDto::toEntity)
-                .collect(Collectors.toList());
+    public Page<CocktailResponseDto> getCocktailList(Pageable pageable){
+        return cocktailRepository.findAll(pageable).map(CocktailResponseDto::toEntity);
     }
 
-    public List<CocktailResponseDto> getCocktailList(){
-        List<Cocktail> cocktailList = cocktailRepository.findAll();
-        return cocktailToCocktailResponseDtoList(cocktailList);
+    public Page<CocktailResponseDto> getCocktailByDic(Pageable pageable){
+        return cocktailRepository.findAllByOrderByName(pageable).map(CocktailResponseDto::toEntity);
     }
 
-    public List<CocktailResponseDto> getCocktailByDic(){
-        List<Cocktail> cocktailList = cocktailRepository.findAllByOrderByName();
-        return cocktailToCocktailResponseDtoList(cocktailList);
+    public Page<CocktailResponseDto> getCocktailByLiked(Pageable pageable){
+        return cocktailRepository.findAllByOrderByLiked(pageable).map(CocktailResponseDto::toEntity);
     }
 
-    public List<CocktailResponseDto> getCocktailByLiked(){
-        List<Cocktail> cocktailList = cocktailRepository.findAllByOrderByLiked();
-        return cocktailToCocktailResponseDtoList(cocktailList);
-    }
-
-    public List<CocktailResponseDto> getCocktailByUpdate(){
-        List<Cocktail> cocktailList = cocktailRepository.getCocktailByCocktailReplyCreationTime();
-        return cocktailToCocktailResponseDtoList(cocktailList);
+    public Page<CocktailResponseDto> getCocktailByUpdate(Pageable pageable){
+        return cocktailRepository.getCocktailByCocktailReplyCreationTime(pageable).map(CocktailResponseDto::toEntity);
     }
 }

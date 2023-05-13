@@ -7,6 +7,7 @@ import useInterval from "../../component/common/UseInterval.js";
 import CocktailCard from "../../component/cocktailCard.js";
 import plusImage from "../../images/plusButton.png";
 import * as home from "./HomeCss.js";
+import axios from "axios";
 
 const Home = () => {
 	const [weatherScrollIndex, setWeatherScrollIndex] = useState(0);
@@ -15,10 +16,70 @@ const Home = () => {
 
 	const [currentTagData, setCurrentTagData] = useState([]);
 
+	// Database에서 불러온 cocktailList
+	const [cocktailList, setCocktailList] = useState([]);
+
+	// 처음 페이지 랜더링 될 때 칵테일 id 순으로 불러옴.
+	const getAllCocktailById = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8080/`);
+			console.log(response.data);
+			setCocktailList(response.data.content);
+			// Handle the cocktail data as needed
+		} catch (error) {
+			// Handle the error
+			console.error(error);
+		}
+	};
+
+	// 정렬 조건 : 사전 순서
+	const getAllCocktailByName = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8080/dictionary`);
+			setCocktailList(response.data.content);
+			// Handle the cocktail data as needed
+		} catch (error) {
+			// Handle the error
+			console.error(error);
+		}
+	};
+
+	// 정렬 조건 : 좋아요 많은 순서
+	const getAllCocktailByLiked = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8080/`);
+			setCocktailList(response.data.content);
+			// Handle the cocktail data as needed
+		} catch (error) {
+			// Handle the error
+			console.error(error);
+		}
+	};
+
+	// 정렬 조건 : 댓글 최신 업데이트 순서
+	const getAllCocktailByUpdate = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8080/update`);
+			setCocktailList(response.data.content);
+			// Handle the cocktail data as needed
+		} catch (error) {
+			// Handle the error
+			console.error(error);
+		}
+	};
+
+	useEffect(() => {
+		getAllCocktailById();
+	}, [])
+
 	let weatherAutoScroll = useInterval(
 		() => onWeatherScrollClick("right"),
 		5000
 	);
+
+	if (!cocktailList) {
+		return null;
+	}
 
 	function onWeatherScrollClick(direction) {
 		if (direction === "left") {
