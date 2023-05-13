@@ -5,6 +5,7 @@ import com.ossp.cocktagorize.data.type.BoardType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -44,5 +45,6 @@ public class Board {
     @OneToMany(mappedBy = "board")
     private List<UserLikeBoard> likeUserList = new ArrayList<UserLikeBoard>();
 
+    @CreationTimestamp
     private Timestamp createdDate;
 }

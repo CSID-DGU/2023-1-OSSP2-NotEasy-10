@@ -20,7 +20,7 @@ const CocktailDetail = () => {
     const getCocktailDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/cocktail/${cocktail_id}`);
-        console.log(response.data.cocktailTagList);
+        console.log(response.data);
         setCocktail(response.data);
         // Handle the cocktail data as needed
       } catch (error) {

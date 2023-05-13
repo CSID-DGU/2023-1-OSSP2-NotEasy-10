@@ -14,9 +14,26 @@ public class CocktailController {
     private CocktailService cocktailService;
     @GetMapping("/")
     @ResponseBody
-    public ResponseEntity<List<CocktailResponseDto>> getCocktail(){
-        List<CocktailResponseDto> cocktailList=cocktailService.getCocktailList();
+    public ResponseEntity<List<CocktailResponseDto>> getCocktailList(){
+        List<CocktailResponseDto> cocktailList = cocktailService.getCocktailList();
         return ResponseEntity.ok(cocktailList);
     }
 
+    @GetMapping("/dictionary")
+    public ResponseEntity<List<CocktailResponseDto>> getCocktailByDic() {
+        List<CocktailResponseDto> cocktailList = cocktailService.getCocktailByDic();
+        return ResponseEntity.ok(cocktailList);
+    }
+
+    @GetMapping("/liked")
+    public ResponseEntity<List<CocktailResponseDto>> getCocktailByLiked() {
+        List<CocktailResponseDto> cocktailList = cocktailService.getCocktailByLiked();
+        return ResponseEntity.ok(cocktailList);
+    }
+
+    @GetMapping("/update")
+    public ResponseEntity<List<CocktailResponseDto>> getCocktailByUpdate() {
+        List<CocktailResponseDto> cocktailList=cocktailService.getCocktailByUpdate();
+        return ResponseEntity.ok(cocktailList);
+    }
 }
