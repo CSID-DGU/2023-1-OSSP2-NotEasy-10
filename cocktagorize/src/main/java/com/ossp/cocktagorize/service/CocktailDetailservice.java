@@ -32,6 +32,9 @@ public class CocktailDetailservice {
         Random random=new Random();
         random.setSeed(System.currentTimeMillis());
         Cocktail similar=cocktailDetailrepository.findById(tagList.get(random.nextInt(tagList.size())).getCocktail().getId());
+        while(similar.getId()==cocktail.getId()){
+            similar=cocktailDetailrepository.findById(tagList.get(random.nextInt(tagList.size())).getCocktail().getId());
+        }
         return new CocktailDetailResponseDto(cocktail,similar);
     }
 }
