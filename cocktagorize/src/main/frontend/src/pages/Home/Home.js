@@ -1,18 +1,19 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import styled, { css } from "styled-components";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import Modal from "../../component/modal.js";
 import Tag from "../../component/common/tag.js";
 import useInterval from "../../component/common/UseInterval.js";
 import CocktailCard from "../../component/cocktailCard.js";
+import plusImage from "../../images/plusButton.png";
 import * as home from "./HomeCss.js";
-import TagSearch from "../../component/TagSearch.js";
 
 const Home = () => {
 	const [weatherScrollIndex, setWeatherScrollIndex] = useState(0);
 	const [maxWeatherScrollIndex, setMaxWeatherScrollIndex] = useState(4);
-	const [isModal, setIsModal] = useState("false");
+	const [isModal, setIsModal] = useState("true");
+
+	const [currentTagData, setCurrentTagData] = useState([]);
 
 	let weatherAutoScroll = useInterval(
 		() => onWeatherScrollClick("right"),
@@ -85,21 +86,57 @@ const Home = () => {
 		return result;
 	}
 
+	const deleteTag = (targetId, mode) => {
+		if (mode === "delete" && targetId !== 0) {
+			const newData = currentTagData.filter((x) => x.id !== targetId);
+			setCurrentTagData(newData);
+		}
+	};
+
+	const modalOff = (tags) => {
+		setIsModal(false);
+		setCurrentTagData(tags);
+		console.log("Off");
+	};
+
+	const modalOn = () => {
+		setIsModal(true);
+		console.log("On");
+	};
+
 	return (
 		<home.Entire>
+			{isModal === true ? (
+				<Modal modalOff={modalOff} parentTag={currentTagData} />
+			) : null}
 			<Sidebar />
 			<home.NonSidebar>
 				<home.Explore>
 					<home.Search type="text" placeholder="Search"></home.Search>
-					<TagSearch />
+					<home.TagSearchDiv>
+						<home.ModalButton
+							onClick={() => {
+								modalOn();
+							}}
+						>
+							<home.Image src={plusImage} alt={plusImage} />
+						</home.ModalButton>
+						<home.TagSearch>
+							{currentTagData.map((info, index) => (
+								<Tag
+									info={info}
+									key={index}
+									onDelete={deleteTag}
+								/>
+							))}
+						</home.TagSearch>
+					</home.TagSearchDiv>
 					<home.Sort>
 						<home.SortBase selected="selected">
-							당신에게 추천하는 칵테일
+							좋아요가 많은 순서
 						</home.SortBase>
-						<home.SortBase>사람들이 좋아하는 칵테일</home.SortBase>
-						<home.SortBase>
-							최근에 댓글이 올라온 칵테일
-						</home.SortBase>
+						<home.SortBase>최근 업데이트 순서</home.SortBase>
+						<home.SortBase>사전 순서</home.SortBase>
 					</home.Sort>
 				</home.Explore>
 				<home.NonExplore>

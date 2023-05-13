@@ -9,18 +9,23 @@ export const NonSidebar = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 25px;
-	margin-left: 50px;
-	width: 1475px;
-	height: 720px;
+	margin-left: 25px;
+	margin-right: 25px;
+	width: 75vw;
+	height: 80vh;
 `;
 
 export const NonExplore = styled.div`
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	overflow-x: hidden;
 	overflow-y: auto;
 	border: solid;
 	border-color: black;
-	border-width: 2px;
+	border-width: 0px;
+	width: calc(100% - 0px);
+	height: calc(100% - 70px);
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -41,6 +46,73 @@ export const NonExplore = styled.div`
 	}
 `;
 
+export const Image = styled.img`
+	width: 10px;
+	height: 10px;
+	margin-top: 2px;
+	margin-right: 8px;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+`;
+
+export const ModalButton = styled.div`
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	padding-left: 8px;
+	margin: 0px 5px;
+	border-color: black;
+	background-color: #6e41e2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const TagSearchDiv = styled.div`
+	width: 36vw;
+	height: 50px;
+	background-color: white;
+	border: solid;
+	border-color: black;
+	border-width: 2px;
+	border-radius: 15px;
+	padding: 5px;
+	margin: 0px 20px 0px 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+`;
+
+export const TagSearch = styled.div`
+	width: 100%;
+	height: 50px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	&::-webkit-scrollbar {
+		height: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: #ccccff;
+		margin: 0px 5px;
+		border-radius: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		background-color: #6666ff;
+	}
+
+	&::-webkit-scrollbar-button {
+		width: 0;
+		height: 0;
+	}
+`;
+
 export const Explore = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -51,7 +123,7 @@ export const Explore = styled.div`
 `;
 
 export const Search = styled.input`
-	width: 300px;
+	width: 18vw;
 	height: 50px;
 	border-radius: 15px;
 	padding: 0px 10px;
@@ -60,8 +132,9 @@ export const Search = styled.input`
 `;
 
 export const Sort = styled.select`
-	width: 300px;
+	width: 18vw;
 	height: 50px;
+	border-width: 2px;
 	border-radius: 15px;
 	padding: 0px 10px;
 	border-color: black;
@@ -76,12 +149,9 @@ export const WeatherNUserCocktail = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	width: auto;
+	width: calc(100% - 10px);
 	height: auto;
 	margin: 5px 0px 0px 0px;
-	border: solid;
-	border-color: black;
-	border-width: 2px;
 `;
 
 export const Weather = styled.div`
@@ -89,18 +159,17 @@ export const Weather = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 400px;
+	width: auto;
 	height: auto;
-	border: solid;
-	border-radius: 10px;
-	border-color: black;
 	margin: 0px 10px;
+	border: solid;
+	border-color: black;
 `;
 
 export const WeatherInfoBox = styled.div`
-	width: 380px;
-	height: 50px;
-	margin: 5px;
+	width: calc(15.625vw + 10px);
+	height: auto;
+	margin: 10px 20px;
 	padding: auto 10px;
 	border: solid;
 	border-radius: 5px;
@@ -118,13 +187,10 @@ export const WeatherCarousel = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 380px;
+	width: 15.625vw;
 	height: auto;
-	margin: 0px;
+	margin: 0px 40px;
 	padding: 0px;
-	border: solid;
-	border-radius: 5px;
-	border-color: black;
 `;
 
 export const WeatherScroll = styled.div`
@@ -132,13 +198,10 @@ export const WeatherScroll = styled.div`
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	width: 380px;
+	width: 100%;
 	height: auto;
 	margin: 0px;
 	padding: 0px;
-	border: solid;
-	border-radius: 5px;
-	border-color: black;
 `;
 
 export const WeatherScrollArrow = styled.div`
@@ -199,7 +262,7 @@ export const WeatherCocktail = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	width: 300px;
+	width: 100%;
 	height: auto;
 	margin: 0px;
 	float: left;
@@ -211,15 +274,15 @@ export const WeatherCocktail = styled.div`
 `;
 
 export const WeatherCocktailCard = styled.div`
-	width: 300px;
-	height: auto;
+	width: 15.625vw;
+	height: calc(75vh - 270px);
 	margin: 0px;
-	transition: all ease-in-out 0.5s;
+	transition: margin ease-in-out 0.5s;
 
 	${(props) => {
 		if (props.cardIndex == 0)
 			return css`
-				margin-left: ${(props) => props.index * -300}px;
+				margin-left: ${(props) => props.index * -15.625}vw;
 			`; // 맨 왼쪽에 있는 카드만 margin-left 적용
 	}};
 `;
@@ -229,17 +292,17 @@ export const UserRecommand = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: auto;
+	width: 50%;
+	flex-grow: 1;
 	height: auto;
-	border: solid;
-	border-radius: 10px;
-	border-color: black;
 	margin: 0px 0px 0px 20px;
+	border: solid;
+	border-color: black;
 `;
 
 export const UserRecommandInfoBox = styled.div`
-	width: auto;
-	height: 50px;
+	width: calc(100% - 20px);
+	height: auto;
 	margin: 5px;
 	padding: auto 10px;
 	border: solid;
@@ -257,14 +320,31 @@ export const UserRecommandCocktail = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	width: 960px;
-	height: 503px;
-	margin: 5px;
-	border: solid;
-	border-radius: 0px;
-	border-color: black;
-	overflow-x: hidden;
+	width: 100%;
+	height: auto;
+	margin: 20px 5px;
+	overflow-x: auto;
 	overflow-y: hidden;
+
+	&::-webkit-scrollbar {
+		height: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: #ccccff;
+		margin: 0px 5px;
+		border-radius: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		background-color: #6666ff;
+	}
+
+	&::-webkit-scrollbar-button {
+		width: 0;
+		height: 0;
+	}
 `;
 
 export const NormalRecommandCocktail = styled.div`
@@ -272,14 +352,13 @@ export const NormalRecommandCocktail = styled.div`
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
-	width: auto;
+	width: inherit;
 	height: auto;
-	margin: 0px 0px 0px 0px;
-	border: solid;
-	border-radius: 0px;
-	border-color: black;
+	margin: 0px 10px 0px 1px;
+	padding-right: 20px;
 `;
 
 export const Hr = styled.hr`
-	margin: 50px 0px 50px 0px;
+	margin: 50px 50px 50px 0px;
+	width: inherit;
 `;

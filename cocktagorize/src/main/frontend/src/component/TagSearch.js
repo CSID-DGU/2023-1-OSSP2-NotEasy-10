@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 
 const Search = styled.div`
 	width: 750px;
+	width: ${(props) => props.info.width};
 	height: 50px;
 	background-color: white;
 	border: solid;
@@ -13,6 +14,7 @@ const Search = styled.div`
 	border-radius: 15px;
 	padding: 5px;
 	margin: 0px 10px;
+	margin: ${(props) => props.info.margin};
 	overflow-x: auto;
 	overflow-y: hidden;
 	display: flex;
@@ -24,39 +26,43 @@ const Search = styled.div`
 	}
 `;
 
-const TagSearch = () => {
+const TagSearch = (props) => {
 	const [data, setData] = useState([
 		{
 			id: 1,
 			name: "태그1",
 			type: "알코올",
-			isDeletable: "true",
+			mode: "delete",
 		},
 		{
 			id: 2,
 			name: "태그2",
 			type: "알코올",
-			isDeletable: "true",
+			mode: "delete",
 		},
 		{
 			id: 3,
 			name: "태그3",
 			type: "알코올",
-			isDeletable: "true",
+			mode: "delete",
 		},
 	]);
 
-	const deleteTag = (targetId, isDeletable) => {
-		if (isDeletable && targetId !== 0) {
+	const deleteTag = (targetId, mode) => {
+		if (mode === "delete" && targetId !== 0) {
 			const newData = data.filter((x) => x.id !== targetId);
 			setData(newData);
 		}
 	};
 
 	return (
-		<Search>
+		<Search info={props}>
 			{data.map((info, index) => (
-				<Tag info={info} key={index} onDelete={deleteTag} />
+				<Tag
+					info={{ ...info, mode: "delete" }}
+					key={index}
+					onDelete={deleteTag}
+				/>
 			))}
 		</Search>
 	);
