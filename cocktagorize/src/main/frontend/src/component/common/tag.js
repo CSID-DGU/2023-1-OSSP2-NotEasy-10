@@ -96,7 +96,8 @@ const NameText = styled.div`
 	margin: 8px;
 	word-break: keep-all;
 	white-space: nowrap;
-	--webkit-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
 
 	@media (max-width: 600px) {
 		font-size: 6px;
