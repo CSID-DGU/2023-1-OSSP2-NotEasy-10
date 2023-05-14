@@ -9,9 +9,9 @@ import styled from "styled-components";
 const UserTipListBlock = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 1rem 1rem 1rem;
-  height: 28vh;
-  overflow-y: scroll;
+  padding: 0 0 1rem 0;
+  height: auto;
+  overflow-y: visible;
 `;
 
 const H4 = styled.h4`

@@ -23,7 +23,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />}></Route>
         <Route path="/myPage" element={<MyPage />}></Route>
         <Route
-          path="/cocktail/:cocktailName"
+          path="/cocktail/:cocktail_id"
           element={<CocktailDetail />}
         ></Route>
         <Route path="/community" element={<CommunityPostList />}></Route>

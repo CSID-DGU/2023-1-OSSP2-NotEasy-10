@@ -1,13 +1,12 @@
 package com.ossp.cocktagorize.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -37,6 +36,12 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Board> boardList = new ArrayList<Board>();
+
+    @OneToMany(mappedBy = "user")
+    private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
+
+    @OneToMany(mappedBy = "user")
+    private List<CocktailReply> cocktailReplyList = new ArrayList<CocktailReply>();
 
     @OneToMany(mappedBy = "user")
     private List<UserLikeBoard> likeBoardList = new ArrayList<UserLikeBoard>();

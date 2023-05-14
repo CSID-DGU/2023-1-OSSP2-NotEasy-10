@@ -1,0 +1,24 @@
+.SignUp {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: auto;
+    align-items: center;
+    background-color: white;
+    text-align: center;
+    margin: auto;
+    margin-top: 3rem;
+    border-radius: 0.5rem;
+}
+
+.SignUp > label {
+    margin-top: 1.2rem;
+}
+
+.SignUp .submit {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    width: 20vw;
+    height: 5vh;
+    background-color: lightgrey;
+}

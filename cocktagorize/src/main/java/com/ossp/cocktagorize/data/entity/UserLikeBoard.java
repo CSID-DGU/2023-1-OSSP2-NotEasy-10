@@ -2,10 +2,10 @@ package com.ossp.cocktagorize.data.entity;
 
 import com.ossp.cocktagorize.data.idClass.UserLikeBoardId;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -13,12 +13,13 @@ import lombok.Setter;
 @IdClass(UserLikeBoardId.class)
 public class UserLikeBoard {
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
 }
