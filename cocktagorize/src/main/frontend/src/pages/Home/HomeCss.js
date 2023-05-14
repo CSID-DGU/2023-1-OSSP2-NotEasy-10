@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const Entire = styled.div`
 	display: flex;
-	flexdirection: row;
+	flex-direction: row;
 `;
 
 export const NonSidebar = styled.div`
