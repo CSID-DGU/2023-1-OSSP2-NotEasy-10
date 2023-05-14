@@ -30,6 +30,19 @@ public class CocktailService {
     }
 
     public Page<CocktailResponseDto> getCocktailByUpdate(Pageable pageable){
-        return cocktailRepository.getCocktailByCocktailReplyCreationTime(pageable).map(CocktailResponseDto::toEntity);
+        return cocktailRepository.findAllByCocktailReplyCreationTime(pageable).map(CocktailResponseDto::toEntity);
     }
+
+    public Page<CocktailResponseDto> getCocktailByName(String name, Pageable pageable){
+        return cocktailRepository.findAllByNameContaining(name, pageable).map(CocktailResponseDto::toEntity);
+    }
+
+    public Page<CocktailResponseDto> getCocktailByTagAnd(List<String> tags, Pageable pageable){
+        return cocktailRepository.findByTagsByAnd(tags, tags.size(), pageable).map(CocktailResponseDto::toEntity);
+    }
+
+    public Page<CocktailResponseDto> getCocktailByTagOr(List<String> tags, Pageable pageable){
+        return cocktailRepository.findByTagsByOr(tags, pageable).map(CocktailResponseDto::toEntity);
+    }
+
 }

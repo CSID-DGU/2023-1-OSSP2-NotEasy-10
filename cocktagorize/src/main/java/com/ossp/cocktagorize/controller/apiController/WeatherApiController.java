@@ -34,14 +34,12 @@ public class WeatherApiController {
 
     private final VillagePositionRepository villagePositionRepository;
     private final CocktailTagRepository cocktailTagRepository;
-    private final CocktailRepository cocktailRepository;
     private final TagRepository tagRepository;
     private final ApiUtils apiUtils;
 
-    public WeatherApiController(VillagePositionRepository villagePositionRepository, CocktailTagRepository cocktailTagRepository, CocktailRepository cocktailRepository, TagRepository tagRepository, ApiUtils apiUtils) {
+    public WeatherApiController(VillagePositionRepository villagePositionRepository, CocktailTagRepository cocktailTagRepository, TagRepository tagRepository, ApiUtils apiUtils) {
         this.villagePositionRepository = villagePositionRepository;
         this.cocktailTagRepository = cocktailTagRepository;
-        this.cocktailRepository = cocktailRepository;
         this.tagRepository = tagRepository;
         this.apiUtils = apiUtils;
     }

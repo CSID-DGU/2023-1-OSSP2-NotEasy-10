@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-public class CocktailDetailcontroller {
+public class CocktailDetailController {
 
     @Autowired
     private CocktailDetailservice cocktailDetailservice;

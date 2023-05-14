@@ -30,7 +30,7 @@ public class CocktailController {
     }
 
     @GetMapping("/dictionary")
-    public ResponseEntity<Page<CocktailResponseDto>> getCocktailByDic(@PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByDic(@PageableDefault Pageable pageable) {
         Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
                 (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
         Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByDic(modifiedPageable);
@@ -38,7 +38,7 @@ public class CocktailController {
     }
 
     @GetMapping("/liked")
-    public ResponseEntity<Page<CocktailResponseDto>> getCocktailByLiked(@PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByLiked(@PageableDefault Pageable pageable) {
         Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
                 (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
         Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByLiked(modifiedPageable);
@@ -46,10 +46,34 @@ public class CocktailController {
     }
 
     @GetMapping("/update")
-    public ResponseEntity<Page<CocktailResponseDto>> getCocktailByUpdate(@PageableDefault Pageable pageable) {
+    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByUpdate(@PageableDefault Pageable pageable) {
         Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
                 (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
-        Page<CocktailResponseDto> cocktailList=cocktailService.getCocktailByUpdate(modifiedPageable);
+        Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByUpdate(modifiedPageable);
+        return ResponseEntity.ok(cocktailList);
+    }
+
+    @GetMapping("/cocktail/search/{name}")
+    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByName(@PathVariable String name, @PageableDefault Pageable pageable) {
+        Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
+                (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
+        Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByName(name, modifiedPageable);
+        return ResponseEntity.ok(cocktailList);
+    }
+
+    @GetMapping("/cocktail/tag/and")
+    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByTagAnd(@RequestParam List<String> tags, @PageableDefault Pageable pageable) {
+        Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
+                (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
+        Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByTagAnd(tags, modifiedPageable);
+        return ResponseEntity.ok(cocktailList);
+    }
+
+    @GetMapping("/cocktail/tag/or")
+    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByTagOr(@RequestParam List<String> tags, @PageableDefault Pageable pageable) {
+        Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
+                (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
+        Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByTagOr(tags, modifiedPageable);
         return ResponseEntity.ok(cocktailList);
     }
 }
