@@ -61,11 +61,17 @@ public class CocktailController {
         return ResponseEntity.ok(cocktailList);
     }
 
+    // null일 때도 추가
     @GetMapping("/cocktail/tag/and")
     public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByTagAnd(@RequestParam List<String> tags, @PageableDefault Pageable pageable) {
         Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
                 (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
-        Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByTagAnd(tags, modifiedPageable);
+        Page<CocktailResponseDto> cocktailList;
+        if (tags.size() != 0) {
+            cocktailList = cocktailService.getCocktailByTagAnd(tags, modifiedPageable);
+        } else {
+            cocktailList = cocktailService.getCocktailList(modifiedPageable);
+        }
         return ResponseEntity.ok(cocktailList);
     }
 
@@ -73,7 +79,13 @@ public class CocktailController {
     public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByTagOr(@RequestParam List<String> tags, @PageableDefault Pageable pageable) {
         Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(),
                 (pageable.getPageNumber() == 0) ? firstPageSize : defaultPageSize);
-        Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByTagOr(tags, modifiedPageable);
+        Page<CocktailResponseDto> cocktailList;
+        System.out.println(tags.size());
+        if (tags.size() != 0) {
+            cocktailList = cocktailService.getCocktailByTagOr(tags, modifiedPageable);
+        } else {
+            cocktailList = cocktailService.getCocktailList(modifiedPageable);
+        }
         return ResponseEntity.ok(cocktailList);
     }
 }
