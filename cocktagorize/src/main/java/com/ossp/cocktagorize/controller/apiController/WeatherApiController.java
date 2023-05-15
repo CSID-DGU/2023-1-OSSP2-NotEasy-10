@@ -14,10 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -84,14 +81,8 @@ public class WeatherApiController {
         return -1;
     }
 
-    @GetMapping("/hahaha")
-    public ResponseEntity<Boolean> haha() {
-        return ResponseEntity.ok(true);
-    }
-
-
     @GetMapping("/cocktail/weather")
-    public List<CocktailResponseDto> getWeatherMatchCocktails(@RequestBody WeatherRequestDto weatherRequestDto) {
+    public List<CocktailResponseDto> getWeatherMatchCocktails(WeatherRequestDto weatherRequestDto) {
         // 사용자 위치 x, y
         String city = weatherRequestDto.getCity();
         String dong = weatherRequestDto.getDong();
@@ -175,7 +166,7 @@ public class WeatherApiController {
         List<CocktailResponseDto> weatherCocktails = new ArrayList<>();
 
         weatherCocktailTags.forEach(cocktailTag -> {
-            weatherCocktails.add(CocktailResponseDto.toEntity(cocktailTag.getCocktail()));
+            weatherCocktails.add(new CocktailResponseDto(cocktailTag.getCocktail()));
         });
 
         // 태그 리스트 담아서 보내기 구현해야 함.

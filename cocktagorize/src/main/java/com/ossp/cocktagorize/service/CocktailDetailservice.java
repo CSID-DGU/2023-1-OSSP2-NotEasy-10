@@ -1,6 +1,6 @@
 package com.ossp.cocktagorize.service;
 
-import com.ossp.cocktagorize.data.dto.response.CocktailDetailResponseDto;
+import com.ossp.cocktagorize.data.dto.CocktailDetailResponseDto;
 import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.entity.CocktailTag;
 import com.ossp.cocktagorize.data.repository.CocktailDetailrepository;

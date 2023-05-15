@@ -1,8 +1,5 @@
-package com.ossp.cocktagorize.data.dto.response;
+package com.ossp.cocktagorize.data.dto;
 
-import com.ossp.cocktagorize.data.dto.CocktailReplyDto;
-import com.ossp.cocktagorize.data.dto.SimilarDto;
-import com.ossp.cocktagorize.data.dto.TagDto;
 import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.entity.CocktailReply;
 import com.ossp.cocktagorize.data.entity.CocktailTag;

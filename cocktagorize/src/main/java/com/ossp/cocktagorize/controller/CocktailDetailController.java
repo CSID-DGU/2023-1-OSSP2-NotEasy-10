@@ -1,6 +1,6 @@
 package com.ossp.cocktagorize.controller;
 
-import com.ossp.cocktagorize.data.dto.response.CocktailDetailResponseDto;
+import com.ossp.cocktagorize.data.dto.CocktailDetailResponseDto;
 import com.ossp.cocktagorize.service.CocktailDetailservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
