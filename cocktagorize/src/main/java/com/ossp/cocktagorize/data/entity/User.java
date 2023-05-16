@@ -40,10 +40,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
-
     @OneToMany(mappedBy = "user")
     private List<CocktailReply> cocktailReplyList = new ArrayList<CocktailReply>();
-
 
     @OneToMany(mappedBy = "user")
     private List<UserLikeBoard> likeBoardList = new ArrayList<UserLikeBoard>();
