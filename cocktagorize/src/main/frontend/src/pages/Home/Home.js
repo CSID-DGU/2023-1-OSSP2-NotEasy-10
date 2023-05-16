@@ -256,12 +256,12 @@ const Home = () => {
 	const modalOff = (tags) => {
 		setIsModal(false);
 		setCurrentTagData(tags);
-		console.log("Off");
+		setSortType(5);
+		sort();
 	};
 
 	const modalOn = () => {
 		setIsModal(true);
-		console.log("On");
 	};
 
 	const onSortChanged = (e) => {
@@ -300,7 +300,15 @@ const Home = () => {
 			case 4:
 				getCocktailBySearchName(page);
 				break;
+			case 5:
+				getCocktailByTagAnd(page);
+				break;
+			case 6:
+				getCocktailByTagOr(page);
+				break;
 		}
+		console.log("sortType : " + sortType);
+		console.log(cocktailList);
 	};
 
 	function pageScrollIndexButton() {

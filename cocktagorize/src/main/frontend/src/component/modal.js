@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Tag from "./common/tag.js";
 import styled from "styled-components";
+import axios from "axios";
 
 const BlackScreen = styled.div`
 	width: 100vw;
@@ -276,7 +277,29 @@ const TagSearch = styled.div`
 `;
 
 const Modal = (props) => {
+	useEffect(() => {
+		getAllTag();
+	}, []);
+	const getAllTag = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8080/tag/all`);
+
+			response.data.map((info) => {
+				info.mode = "add";
+				categoryTagData
+					.find((x) => x.categoryCode === info.category)
+					.tags.push(info);
+			});
+			setIsLoading(false);
+			//setIsLoading(false);
+		} catch (error) {
+			// Handle the error
+			console.error(error);
+		}
+	};
+
 	const [tagDB, setTagDB] = useState([
+		/*
 		{
 			id: 1,
 			name: "태그1",
@@ -313,6 +336,7 @@ const Modal = (props) => {
 			category: "WEATHER",
 			mode: "add",
 		},
+		*/
 	]);
 
 	const [currentTagData, setCurrentTagData] = useState(props.parentTag);
@@ -355,7 +379,7 @@ const Modal = (props) => {
 			tags: [],
 		},
 	]);
-
+	/*
 	useEffect(() => {
 		tagDB.map((info) =>
 			categoryTagData
@@ -364,7 +388,7 @@ const Modal = (props) => {
 		);
 		setIsLoading(false);
 	}, []);
-
+*/
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTagData, setSearchTagData] = useState([]);
 
