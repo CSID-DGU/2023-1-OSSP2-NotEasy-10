@@ -1,24 +1,37 @@
 .SignUp {
     display: flex;
     flex-direction: column;
-    width: 50vw;
+    width: 40vw;
     height: auto;
-    align-items: center;
     background-color: white;
-    text-align: center;
     margin: auto;
     margin-top: 3rem;
+    margin-bottom: 3rem;
     border-radius: 0.5rem;
+    padding: 2rem 7rem;
 }
 
-.SignUp > label {
-    margin-top: 1.2rem;
+.SignUp > p {
+    margin: 1.4rem 0 0 0;
 }
 
 .SignUp .submit {
-    margin-top: 3rem;
+    margin-top: 4rem;
     margin-bottom: 1.5rem;
-    width: 20vw;
     height: 5vh;
     background-color: lightgrey;
+}
+
+.SignUp > button {
+    width: 10vh;
+    margin-left: auto;
+}
+
+.location {
+    display: flex;
+    margin: 0;
+}
+
+.location > select {
+    width: 100%;
 }
