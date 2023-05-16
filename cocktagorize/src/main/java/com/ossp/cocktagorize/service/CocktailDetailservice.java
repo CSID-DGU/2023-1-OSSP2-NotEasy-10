@@ -18,6 +18,7 @@ public class CocktailDetailservice {
 
     @Autowired
     private CocktailDetailrepository cocktailDetailrepository;
+
     @Autowired
     private CocktailTagRepository cocktailTagRepository;
     public CocktailDetailResponseDto getCocktailDetail(int id){

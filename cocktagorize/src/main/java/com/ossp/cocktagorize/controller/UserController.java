@@ -1,6 +1,8 @@
 package com.ossp.cocktagorize.controller;
 
+import com.ossp.cocktagorize.data.dto.NicknameRequestDto;
 import com.ossp.cocktagorize.data.dto.UserJoinDto;
+import com.ossp.cocktagorize.data.dto.UsernameRequestDto;
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +21,19 @@ public class UserController {
     @PostMapping("/user/join")
     public ResponseEntity<String> signUp(@RequestBody UserJoinDto userJoinDto) {
         userService.join(userJoinDto);
+        userService.registerPreferTag(userJoinDto);
         return ResponseEntity.ok("회원가입 완료");
     }
 
     @PostMapping("/user/join/id")
-    public ResponseEntity<Boolean> idCheck(@RequestParam("username") String username) {
-        boolean duplicateIdExist = userService.checkDuplicateId(username);
+    public ResponseEntity<Boolean> idCheck(@RequestBody UsernameRequestDto usernameRequestDto) {
+        boolean duplicateIdExist = userService.checkDuplicateId(usernameRequestDto.getUsername());
         return ResponseEntity.ok(duplicateIdExist);
     }
 
     @PostMapping("/user/join/nickname")
-    public ResponseEntity<Boolean> nicknameCheck(@RequestParam("nickname") String nickname) {
-        boolean duplicateNicknameExist = userService.checkDuplicateNickname(nickname);
+    public ResponseEntity<Boolean> nicknameCheck(@RequestBody NicknameRequestDto nicknameRequestDto) {
+        boolean duplicateNicknameExist = userService.checkDuplicateNickname(nicknameRequestDto.getNickname());
         return ResponseEntity.ok(duplicateNicknameExist);
     }
 }

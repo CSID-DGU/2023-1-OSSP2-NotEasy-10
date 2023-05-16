@@ -1,10 +1,11 @@
 package com.ossp.cocktagorize.data.dto;
 
+import com.ossp.cocktagorize.data.entity.PreferTag;
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.type.RoleType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -18,8 +19,10 @@ public class UserJoinDto {
     private String city;
     private String dong;
     private String gu;
+    private List<String> preferTagList;
 
     public User toEntity(String encryptPassword, RoleType role) {
+
         return User.builder()
                 .username(this.getUsername())
                 .password(encryptPassword)
@@ -33,6 +36,4 @@ public class UserJoinDto {
                 .role(role)
                 .build();
     }
-
-
 }
