@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CocktailRepository extends JpaRepository<Cocktail, Integer> {
+    Cocktail findById(int id);
     Page<Cocktail> findAll(Pageable pageable);
     Page<Cocktail> findAllByOrderByName(Pageable pageable);
     Page<Cocktail> findAllByOrderByLiked(Pageable pageable);
