@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const Entire = styled.div`
 	display: flex;
-	flexdirection: row;
+	flex-direction: row;
 `;
 
 export const NonSidebar = styled.div`
@@ -214,6 +214,11 @@ export const WeatherScrollArrow = styled.div`
 	border-radius: 10px;
 	background-color: white;
 
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
 	&:hover {
 		background-color: gray;
 	}
@@ -230,6 +235,11 @@ export const WeatherScrollIndex = styled.div`
 	border-color: black;
 	border-radius: 10px;
 	background-color: white;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 
 	&:hover {
 		background-color: #ccccff;
@@ -361,4 +371,50 @@ export const NormalRecommandCocktail = styled.div`
 export const Hr = styled.hr`
 	margin: 50px 50px 50px 0px;
 	width: inherit;
+`;
+
+export const PageScroll = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: auto;
+	margin-top: 20px;
+	padding: 0px;
+`;
+
+export const PageScrollIndex = styled.div`
+	width: 40px;
+	height: 50px;
+	margin: 2px;
+	padding: 0px;
+	border: solid;
+	border-color: black;
+	border-radius: 10px;
+	background-color: white;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	&:hover {
+		background-color: #ccccff;
+		${(props) => {
+			if (props.page === props.btnIndex)
+				return css`
+					background-color: #6666ff;
+				`;
+		}};
+	}
+
+	${(props) => {
+		if (props.page === props.btnIndex)
+			return css`
+				background-color: #6666ff;
+			`;
+	}};
+
+	transition: background-color 0.2s;
 `;
