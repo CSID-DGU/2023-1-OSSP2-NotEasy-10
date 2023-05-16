@@ -51,7 +51,7 @@ const SignUp = () => {
     }
 
     const [alcohol, setAlcohol] = useState("");
-    const [preferTag, setPreferTag] = useState("");
+    const [preferTag, setPreferTag] = useState(["Vodka", "Gin"]);
     const [city, setCity] = useState("");
     const [dong, setDong] = useState("");
     const [gu, setGu] = useState("");
@@ -111,9 +111,9 @@ const SignUp = () => {
                 "city": "서울특별시",
                 "dong": "",
                 "gu": "",
-                "preferTag": preferTag,
+                "preferTagList": preferTag,
             }).then((response) => {
-                console.log("성공");
+                alert("회원가입에 성공하였습니다!");
                 navigate("/");
             })
         } catch (error) {
