@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag, Integer> {
     Tag findTagByName(String name);
-    @Override
     List<Tag> findAll();
 }
