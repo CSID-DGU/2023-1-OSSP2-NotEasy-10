@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag, Integer> {
     Tag findTagByName(String name);
+    @SuppressWarnings("all")
     List<Tag> findAll();
 }
