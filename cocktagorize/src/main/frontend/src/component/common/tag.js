@@ -57,7 +57,7 @@ const Entire = styled.div`
 		} else {
 		}
 
-		switch (props.type) {
+		switch (props.category) {
 			case "INGREDIENT":
 				return css`
 					background-color: #6e41e2;
@@ -128,7 +128,7 @@ const Image = styled.img`
 function Tag(props) {
 	return (
 		<Entire
-			type={props.info.type}
+			category={props.info.category}
 			isOverlap={props.isOverlap}
 			onClick={() => {
 				if (props.info.mode === "delete" || props.isOverlap === true) {
@@ -154,7 +154,7 @@ Tag.defaultProps = {
 	info: {
 		id: 0,
 		name: "불러오기 실패",
-		type: "오류",
+		category: "오류",
 		mode: "none",
 		isOverlap: "false",
 	},

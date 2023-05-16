@@ -105,7 +105,7 @@ const CurrentTagText = styled.p`
 	user-select: none;
 	font-weight: bold;
 	white-space: nowrap;
-	margin: 0px 0px 0px 20px;
+	margin: 0px 0px 0px 30px;
 	width: auto;
 
 	@media (max-width: 600px) {
@@ -278,112 +278,39 @@ const TagSearch = styled.div`
 const Modal = (props) => {
 	const [tagDB, setTagDB] = useState([
 		{
-			id: 10,
-			name: "태그10",
-			type: "INGREDIENT",
-			mode: "add",
-		},
-		{
-			id: 11,
-			name: "태그11",
-			type: "ALCOHOL",
-			mode: "add",
-		},
-		{
-			id: 12,
-			name: "태그12",
-			type: "TASTE",
-			mode: "add",
-		},
-		{
-			id: 4,
-			name: "태그4",
-			type: "INGREDIENT",
-			mode: "add",
-		},
-		{
-			id: 5,
-			name: "태그5",
-			type: "WEATHER",
-			mode: "add",
-		},
-		{
-			id: 6,
-			name: "태그6",
-			type: "TASTE",
-			mode: "add",
-		},
-
-		{
-			id: 7,
-			name: "태그7",
-			type: "ALCOHOL",
-			mode: "add",
-		},
-		{
-			id: 8,
-			name: "태그8",
-			type: "ETC",
-			mode: "add",
-		},
-		{
-			id: 9,
-			name: "태그9",
-			type: "TASTE",
-			mode: "add",
-		},
-		{
 			id: 1,
 			name: "태그1",
-			type: "COLOR",
+			category: "INGREDIENT",
 			mode: "add",
 		},
 		{
 			id: 2,
 			name: "태그2",
-			type: "WEATHER",
+			category: "ALCOHOL",
 			mode: "add",
 		},
 		{
 			id: 3,
 			name: "태그3",
-			type: "ETC",
+			category: "COLOR",
 			mode: "add",
 		},
 		{
-			id: 13,
-			name: "태그133333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
-			type: "INGREDIENT",
+			id: 4,
+			name: "태그4",
+			category: "TASTE",
 			mode: "add",
 		},
 		{
-			id: 14,
-			name: "태그14444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444",
-			type: "INGREDIENT",
+			id: 5,
+			name: "태그5",
+			category: "ETC",
 			mode: "add",
 		},
 		{
-			id: 15,
-			name: "태그15",
-			type: "INGREDIENT",
-			mode: "add",
-		},
-		{
-			id: 16,
-			name: "태그16",
-			type: "INGREDIENT",
-			mode: "add",
-		},
-		{
-			id: 17,
-			name: "태그17",
-			type: "INGREDIENT",
-			mode: "add",
-		},
-		{
-			id: 18,
-			name: "태그18",
-			type: "INGREDIENT",
+			id: 6,
+			name: "태그6",
+			category: "WEATHER",
 			mode: "add",
 		},
 	]);
@@ -432,7 +359,7 @@ const Modal = (props) => {
 	useEffect(() => {
 		tagDB.map((info) =>
 			categoryTagData
-				.find((x) => x.categoryCode === info.type)
+				.find((x) => x.categoryCode === info.category)
 				.tags.push(info)
 		);
 		setIsLoading(false);
@@ -450,6 +377,7 @@ const Modal = (props) => {
 					{ ...tagInfo, mode: "delete" },
 				]);
 			}
+			console.log(currentTagData);
 		}
 	};
 
