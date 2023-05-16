@@ -286,11 +286,13 @@ const Modal = (props) => {
 
 			response.data.map((info) => {
 				info.mode = "add";
+				tagDB.push(info);
 				categoryTagData
 					.find((x) => x.categoryCode === info.category)
 					.tags.push(info);
 			});
 			setIsLoading(false);
+
 			//setIsLoading(false);
 		} catch (error) {
 			// Handle the error
@@ -392,16 +394,18 @@ const Modal = (props) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTagData, setSearchTagData] = useState([]);
 
+	const [, updateState] = React.useState();
+	const forceUpdate = React.useCallback(() => updateState({}), []);
+
 	const addTag = (tagInfo) => {
 		if (tagInfo.id !== 0) {
 			const temp = currentTagData.find((x) => x.id === tagInfo.id);
 			if (temp == undefined) {
-				setCurrentTagData([
+				setCurrentTagData((currentTagData) => [
 					...currentTagData,
 					{ ...tagInfo, mode: "delete" },
 				]);
 			}
-			console.log(currentTagData);
 		}
 	};
 
@@ -430,6 +434,7 @@ const Modal = (props) => {
 				ref={outSection}
 				onClick={(e) => {
 					if (outSection.current === e.target) {
+						// forceUpdate();
 						props.modalOff(currentTagData);
 					}
 				}}

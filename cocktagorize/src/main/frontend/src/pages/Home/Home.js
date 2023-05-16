@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import Modal from "../../component/modal.js";
@@ -21,7 +21,6 @@ const Home = () => {
 
 	const [page, setPage] = useState(0);
 	const [maxPage, setMaxPage] = useState(1);
-	const [sortType, setSortType] = useState(0);
 	const [isLoading, setIsLoading] = useState(true);
 	const port = 8080;
 
@@ -123,19 +122,20 @@ const Home = () => {
 	};
 
 	// 태그로 검색하기 AND 연산
-	const getCocktailByTagAnd = async (page) => {
+	const getCocktailByTagAnd = async (page, tagData) => {
 		try {
+			// console.log(tagData);
 			const tags =
-				Array.isArray(currentTagData) && !currentTagData.length
+				Array.isArray(tagData) && !tagData.length
 					? "tags="
-					: currentTagData
+					: tagData
 							.map((tag) => `tags=${encodeURIComponent(tag)}`)
 							.join("&");
 			const response = await axios.get(
 				`http://localhost:${port}/cocktail/tag/and?${tags}&page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-			console.log(response.data);
+			// console.log(response.data);
 			setCocktailList(response.data.content);
 			setMaxPage(response.data.totalPages);
 			setIsLoading(false);
@@ -147,12 +147,12 @@ const Home = () => {
 	};
 
 	// 태그로 검색하기 OR 연산
-	const getCocktailByTagOr = async (page) => {
+	const getCocktailByTagOr = async (page, tagData) => {
 		try {
 			const tags =
-				Array.isArray(currentTagData) && !currentTagData.length
+				Array.isArray(tagData) && !tagData.length
 					? "tags="
-					: currentTagData
+					: tagData
 							.map((tag) => `tags=${encodeURIComponent(tag)}`)
 							.join("&");
 			const response = await axios.get(
@@ -256,8 +256,7 @@ const Home = () => {
 	const modalOff = (tags) => {
 		setIsModal(false);
 		setCurrentTagData(tags);
-		setSortType(5);
-		sort();
+		sort(tags, 5);
 	};
 
 	const modalOn = () => {
@@ -265,23 +264,24 @@ const Home = () => {
 	};
 
 	const onSortChanged = (e) => {
+		let sortType = 0;
 		switch (e.target.value) {
 			case "좋아요가 많은 순서":
-				setSortType(1);
+				sortType = 1;
 				break;
 			case "최근 업데이트 순서":
-				setSortType(2);
+				sortType = 2;
 				break;
 			case "사전 순서":
-				setSortType(3);
+				sortType = 3;
 				break;
 			default:
-				setSortType(0);
+				sortType = 0;
 		}
-		sort();
+		sort(currentTagData, sortType);
 	};
 
-	const sort = () => {
+	const sort = (tags, sortType) => {
 		setIsLoading(true);
 
 		switch (sortType) {
@@ -301,10 +301,10 @@ const Home = () => {
 				getCocktailBySearchName(page);
 				break;
 			case 5:
-				getCocktailByTagAnd(page);
+				getCocktailByTagAnd(page, tags);
 				break;
 			case 6:
-				getCocktailByTagOr(page);
+				getCocktailByTagOr(page, tags);
 				break;
 		}
 		console.log("sortType : " + sortType);
