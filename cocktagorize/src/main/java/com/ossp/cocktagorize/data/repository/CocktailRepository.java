@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface CocktailRepository extends JpaRepository<Cocktail, Integer> {
     Cocktail findById(int id);
+    @SuppressWarnings("all")
     Page<Cocktail> findAll(Pageable pageable);
     Page<Cocktail> findAllByOrderByName(Pageable pageable);
     Page<Cocktail> findAllByOrderByLiked(Pageable pageable);
