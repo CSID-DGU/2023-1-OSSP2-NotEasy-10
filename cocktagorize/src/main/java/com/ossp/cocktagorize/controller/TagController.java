@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 @RestController
 
 public class TagController {
