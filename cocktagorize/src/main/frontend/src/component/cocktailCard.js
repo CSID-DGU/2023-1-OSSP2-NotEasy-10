@@ -4,6 +4,7 @@ import blackHeartImage from "../images/blackHeart.png";
 import soundImage from "../images/sound.png";
 import Tag from "./common/tag.js";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 const Card = styled.div`
 	width: 15.625vw;
@@ -73,25 +74,27 @@ const TitleContainer = styled.div`
 `;
 
 const NameText = styled.p`
-	width: 70%;
+	width: 75%;
 	color: black;
 	@media (max-width: 600px) {
 		font-size: 12px;
 	}
 	@media (min-width: 600px) and (max-width: 900px) {
-		font-size: 15px;
+		font-size: 14px;
 	}
 	@media (min-width: 900px) and (max-width: 1200px) {
-		font-size: 18px;
+		font-size: 16px;
 	}
 	@media (min-width: 1200px) and (max-width: 1600px) {
-		font-size: 21px;
+		font-size: 18px;
 	}
 	@media (min-width: 1600px) {
-		font-size: 24px;
+		font-size: 20px;
 	}
+	text-size-adjust: auto;
 	font-weight: bold;
 	white-space: nowrap;
+	overflow-x: hidden;
 	margin: 0px 0px 0px 10px;
 	-webkit-user-select: none;
 	height: inherit;
@@ -178,31 +181,56 @@ const HeartText = styled.div`
 
 function CocktailCard(props) {
 	return (
-		<Card
-			horizontalMargin={props.horizontalMargin}
-			verticalMargin={props.verticalMargin}
-		>
-			<Image src={cocktailImage} alt={cocktailImage} />
-			<Container>
-				<TitleContainer>
-					<NameText>Card title</NameText>
-					<SoundImage src={soundImage} alt={soundImage} />
-				</TitleContainer>
-				<TagContainer>
-					<Tag name="태그1" />
-					<Tag name="태그2" />
-					<Tag name="태그123123123123123123" />
-				</TagContainer>
-				<HeartContainer>
-					<BlackHeartImage
-						src={blackHeartImage}
-						alt={blackHeartImage}
-					/>
-					<HeartText>123</HeartText>
-				</HeartContainer>
-			</Container>
-		</Card>
+		<Link to={`/cocktail/${props.info.id}`}>
+			<Card
+				horizontalMargin={props.horizontalMargin}
+				verticalMargin={props.verticalMargin}
+			>
+				<Image
+					src={require(`../images/${props.info.id}.jpeg`)}
+					alt={cocktailImage}
+				/>
+				<Container>
+					<TitleContainer>
+						<NameText>{props.info.name}</NameText>
+						<SoundImage src={soundImage} alt={soundImage} />
+					</TitleContainer>
+					<TagContainer>
+						{props.info.cocktailTagList &&
+							props.info.cocktailTagList.map((info, index) => (
+								<Tag info={info} key={index} />
+							))}
+					</TagContainer>
+					<HeartContainer>
+						<BlackHeartImage
+							src={blackHeartImage}
+							alt={blackHeartImage}
+						/>
+						<HeartText>{props.info.liked}</HeartText>
+					</HeartContainer>
+				</Container>
+			</Card>
+		</Link>
 	);
 }
+
+CocktailCard.defaultProps = {
+	info: {
+		id: 0,
+		name: "불러오기 실패",
+		liked: 0,
+		glassType: "none",
+		alcoholDegree: 0,
+		cocktailTagList: [
+			{
+				id: 0,
+				name: "불러오기 실패",
+				type: "오류",
+				mode: "none",
+				isOverlap: "false",
+			},
+		],
+	},
+};
 
 export default CocktailCard;

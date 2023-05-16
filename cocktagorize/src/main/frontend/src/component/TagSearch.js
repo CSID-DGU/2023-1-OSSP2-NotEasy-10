@@ -31,19 +31,19 @@ const TagSearch = (props) => {
 		{
 			id: 1,
 			name: "태그1",
-			type: "알코올",
+			category: "알코올",
 			mode: "delete",
 		},
 		{
 			id: 2,
 			name: "태그2",
-			type: "알코올",
+			category: "알코올",
 			mode: "delete",
 		},
 		{
 			id: 3,
 			name: "태그3",
-			type: "알코올",
+			category: "알코올",
 			mode: "delete",
 		},
 	]);
