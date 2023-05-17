@@ -6,6 +6,7 @@ import Tag from "../../component/common/tag.js";
 import useInterval from "../../component/common/UseInterval.js";
 import CocktailCard from "../../component/cocktailCard.js";
 import plusImage from "../../images/plusButton.png";
+import blackXImage from "../../images/blackXButton.png";
 import * as home from "./HomeCss.js";
 import axios from "axios";
 
@@ -24,11 +25,15 @@ const Home = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
+	const [searchText, setSearchText] = useState();
 
-	function forceUpdate() {
-		console.log("forceUpdate");
-		setCurrentTagData([...currentTagData]);
-	}
+	useEffect(() => {
+		sort(currentTagData, sortType);
+	}, [page, sortType]);
+
+	useEffect(() => {
+		sort(currentTagData, 4);
+	}, [searchText]);
 
 	useEffect(() => {
 		// page는 0부터 시작 -> 사용자한테 보여지는 1 page = 받아온 data 0 page
@@ -36,7 +41,7 @@ const Home = () => {
 
 		// 처음 페이지 랜더링 될 때 칵테일 id 순으로 불러옴
 
-		getAllCocktailById(page);
+		sort(currentTagData, sortType);
 	}, []);
 
 	const getAllCocktailById = async (page) => {
@@ -112,6 +117,10 @@ const Home = () => {
 
 	// 이름으로 검색하기
 	const getCocktailBySearchName = async (name, page) => {
+		if (name === "") {
+			getAllCocktailById(page);
+			return;
+		}
 		try {
 			const response = await axios.get(
 				`http://localhost:${port}/cocktail/search/${name}?page=${page}`
@@ -289,7 +298,7 @@ const Home = () => {
 		sort(currentTagData, sortType);
 	};
 
-	const sort = (tags, type) => {
+	function sort(tags, type) {
 		setIsLoading(true);
 		let tempTags = [];
 		tags.map((tag) => tempTags.push(tag.name));
@@ -309,7 +318,7 @@ const Home = () => {
 				getAllCocktailByName(page);
 				break;
 			case 4:
-				getCocktailBySearchName(page);
+				getCocktailBySearchName(searchText, page);
 				break;
 			case 5:
 				getCocktailByTagAnd(page, tempTags);
@@ -321,7 +330,7 @@ const Home = () => {
 		setSortType(realSortType);
 		// console.log("sortType : " + sortType);
 		// console.log(cocktailList);
-	};
+	}
 
 	function pageScrollIndexButton() {
 		let result = [];
@@ -332,7 +341,6 @@ const Home = () => {
 					btnIndex={0}
 					onClick={() => {
 						setPage(0);
-						sort(currentTagData, 5);
 					}}
 				>
 					<home.Text>{1}</home.Text>
@@ -348,7 +356,6 @@ const Home = () => {
 					btnIndex={i}
 					onClick={() => {
 						setPage(i);
-						sort(currentTagData, 5);
 					}}
 				>
 					<home.Text>{i + 1}</home.Text>
@@ -363,7 +370,6 @@ const Home = () => {
 					btnIndex={maxPage - 1}
 					onClick={() => {
 						setPage(maxPage - 1);
-						sort(currentTagData, 5);
 					}}
 				>
 					<home.Text>{maxPage}</home.Text>
@@ -384,10 +390,16 @@ const Home = () => {
 					<home.Search
 						type="text"
 						placeholder="Search"
-						onChange={(e) =>
-							getCocktailBySearchName(e.target.value)
-						}
+						onChange={(e) => setSearchText(e.target.value)}
+						value={searchText}
 					></home.Search>
+					<home.blackXButton
+						src={blackXImage}
+						onClick={() => {
+							setSortType(0);
+							setSearchText("");
+						}}
+					/>
 					<home.TagSearchDiv>
 						<home.ModalButton
 							onClick={() => {
@@ -472,11 +484,11 @@ const Home = () => {
 							vMargin: 20,
 						})}
 					</home.NormalRecommandCocktail>
-					{/*isLoading ? <home.Loading></home.Loading> : null*/}
 				</home.NonExplore>
 
 				<home.PageScroll>{pageScrollIndexButton()}</home.PageScroll>
 			</home.NonSidebar>
+			{/*isLoading ? <home.Loading></home.Loading> : null*/}
 		</home.Entire>
 	);
 };

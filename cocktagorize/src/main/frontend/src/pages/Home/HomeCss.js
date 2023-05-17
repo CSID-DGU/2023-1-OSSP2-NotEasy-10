@@ -420,8 +420,16 @@ export const PageScrollIndex = styled.div`
 `;
 
 export const Loading = styled.div`
-	width: 100%;
-	height: 100%;
-	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
 	background-color: rgba(0, 0, 0, 0.5);
+`;
+export const blackXButton = styled.img`
+	width: 15px;
+	height: 15px;
+	margin-left: -30px;
+	float: left;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
 `;
