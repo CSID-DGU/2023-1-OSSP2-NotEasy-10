@@ -1,18 +1,30 @@
 package com.ossp.cocktagorize.controller;
 
 import com.ossp.cocktagorize.data.dto.*;
+import com.ossp.cocktagorize.service.PreferCocktailService;
 import com.ossp.cocktagorize.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
 public class UserController {
 
     private final UserService userService;
+    private final PreferCocktailService preferCocktailService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PreferCocktailService preferCocktailService) {
         this.userService = userService;
+        this.preferCocktailService = preferCocktailService;
+    }
+
+    @GetMapping("/cocktail/prefer/{username}")
+    @ResponseBody
+    public ResponseEntity<List<CocktailResponseDto>> getPrefer(@PathVariable String username){
+        List<CocktailResponseDto> preferList=preferCocktailService.getPreferTagCocktail(username);
+        return ResponseEntity.ok(preferList);
     }
 
     @PostMapping("/user/login")

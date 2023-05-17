@@ -34,7 +34,7 @@ public class PreferCocktailService {
         random.setSeed(System.currentTimeMillis());
         for(int i=0;i<3;i++){
             int n=random.nextInt(tags.size());
-            prefercocktail.add(CocktailResponseDto.toEntity(cocktailRepository.findById(tags.get(n).getCocktail().getId())));
+            prefercocktail.add(new CocktailResponseDto(cocktailRepository.findById(tags.get(n).getCocktail().getId())));
             tags.remove(n);
         }
         return prefercocktail;
