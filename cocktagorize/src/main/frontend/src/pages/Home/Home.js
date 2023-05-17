@@ -256,7 +256,10 @@ const Home = () => {
 	const modalOff = (tags) => {
 		setIsModal(false);
 		setCurrentTagData(tags);
-		sort(tags, 5);
+		let a = [];
+		tags.map(tag => a.push(tag.name))
+		console.log(a);
+		sort(a, 5);
 	};
 
 	const modalOn = () => {

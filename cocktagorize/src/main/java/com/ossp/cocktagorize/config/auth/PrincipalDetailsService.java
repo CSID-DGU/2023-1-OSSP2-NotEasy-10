@@ -1,6 +1,5 @@
 package com.ossp.cocktagorize.config.auth;
 
-
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -8,10 +8,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
 @NoArgsConstructor
-//@Builder
-//@AllArgsConstructor
 public class CocktailResponseDto {
     private int id;
     private String name;

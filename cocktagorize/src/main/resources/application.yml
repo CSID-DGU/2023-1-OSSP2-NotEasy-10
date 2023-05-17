@@ -13,3 +13,8 @@ spring:
         properties:
             hibernate:
                 format_sql: true
+logging:
+    level:
+        com.tutorial: debug
+jwt:
+    secret: "v9yBEHMbQeThWmZq4t7wzCFJaNdRfUjXn2r5uDGKbPeShVkYpJaNdRfUjXn2r5u8xJaNdRfUjXn2opi2990s90sd0sdk283l5u8x"

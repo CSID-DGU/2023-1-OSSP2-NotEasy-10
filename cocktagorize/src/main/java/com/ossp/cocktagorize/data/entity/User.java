@@ -28,9 +28,6 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String realName;
-
-    @Column(nullable = false)
     private String nickname;
 
     @Column(nullable = false)

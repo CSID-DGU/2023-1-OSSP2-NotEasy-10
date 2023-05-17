@@ -1,10 +1,10 @@
 package com.ossp.cocktagorize.data.dto;
 
-import com.ossp.cocktagorize.data.entity.PreferTag;
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.type.RoleType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Getter
@@ -13,7 +13,6 @@ public class UserJoinDto {
     private String username;
     private String password;
     private String email;
-    private String realName;
     private String nickname;
     private Double alcoholCapacity;
     private String city;
@@ -27,7 +26,6 @@ public class UserJoinDto {
                 .username(this.getUsername())
                 .password(encryptPassword)
                 .email(this.getEmail())
-                .realName(this.getRealName())
                 .nickname(this.getNickname())
                 .alcoholCapacity(this.getAlcoholCapacity())
                 .city(this.getCity())

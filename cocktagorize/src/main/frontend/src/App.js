@@ -14,6 +14,12 @@ import Header from "./component/common/Header";
 import Footer from "./component/common/Footer";
 import Layout from "./Layout";
 
+const config = {
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+  },
+};
+
 function App() {
   return (
     <Routes>

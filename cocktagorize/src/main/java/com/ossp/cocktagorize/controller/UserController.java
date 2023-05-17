@@ -1,11 +1,12 @@
 package com.ossp.cocktagorize.controller;
 
-import com.ossp.cocktagorize.data.dto.NicknameRequestDto;
-import com.ossp.cocktagorize.data.dto.UserJoinDto;
-import com.ossp.cocktagorize.data.dto.UsernameRequestDto;
-import com.ossp.cocktagorize.data.entity.User;
+import com.ossp.cocktagorize.config.jwt.TokenProvider;
+import com.ossp.cocktagorize.data.dto.*;
+import com.ossp.cocktagorize.data.repository.UserRepository;
 import com.ossp.cocktagorize.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -13,9 +14,30 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final AuthenticationManagerBuilder managerBuilder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final TokenProvider tokenProvider;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationManagerBuilder managerBuilder, UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, TokenProvider tokenProvider) {
         this.userService = userService;
+
+        this.managerBuilder = managerBuilder;
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.tokenProvider = tokenProvider;
+    }
+
+    @PostMapping("/user/login")
+    public ResponseEntity<TokenDto> login(@RequestBody UserRequestDto requestDto) {
+        return ResponseEntity.ok(userService.login(requestDto));
+    }
+
+    @GetMapping("/user/info")
+    public ResponseEntity<UserResponseDto> getMyMemberInfo() {
+        UserResponseDto myInfoBySecurity = userService.getMyInfoBySecurity();
+        return ResponseEntity.ok(myInfoBySecurity);
+        // return ResponseEntity.ok(memberService.getMyInfoBySecurity());
     }
 
     @PostMapping("/user/join")
@@ -26,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/user/join/id")
-    public ResponseEntity<Boolean> idCheck(@RequestBody UsernameRequestDto usernameRequestDto) {
+    public ResponseEntity<Boolean> idCheck(@RequestBody UserRequestDto usernameRequestDto) {
         boolean duplicateIdExist = userService.checkDuplicateId(usernameRequestDto.getUsername());
         return ResponseEntity.ok(duplicateIdExist);
     }
