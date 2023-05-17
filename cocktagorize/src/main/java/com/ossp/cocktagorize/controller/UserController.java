@@ -1,12 +1,8 @@
 package com.ossp.cocktagorize.controller;
 
-import com.ossp.cocktagorize.config.jwt.TokenProvider;
 import com.ossp.cocktagorize.data.dto.*;
-import com.ossp.cocktagorize.data.repository.UserRepository;
 import com.ossp.cocktagorize.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -14,18 +10,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final AuthenticationManagerBuilder managerBuilder;
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final TokenProvider tokenProvider;
 
-    public UserController(UserService userService, AuthenticationManagerBuilder managerBuilder, UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, TokenProvider tokenProvider) {
+    public UserController(UserService userService) {
         this.userService = userService;
-
-        this.managerBuilder = managerBuilder;
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.tokenProvider = tokenProvider;
     }
 
     @PostMapping("/user/login")

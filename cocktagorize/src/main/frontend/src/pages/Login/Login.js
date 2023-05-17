@@ -1,21 +1,20 @@
-import React, {useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import '../Login/Login.css'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
 
-const config = {
-    headers: {
-        "Content-Type": "application/json; charset=utf-8",
-    },
-};
 
 const Login = () => {
 
     const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
 
+    const [isLoading, setIsLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [isUsername, setIsUsername] = useState(false);
+
 
     const onChangeUsername = (e) => {
         setUsername(e.target.value);
@@ -38,21 +37,13 @@ const Login = () => {
         }
     }
 
-    const onClickSubmit = async () => {
-        const response = await axios.post(
-            "http://localhost:8080/login",
-            {
-                username: username,
-                password: password
-            },
-            config
-        );
-        const data = response.data;
-        if (data.isSuccess === true) {
-            console.log(data.accessToken);
-            navigate("/");
-        } else {
-            alert("로그인 실패!");
+    const handleLoginClick = async (event) => {
+        event.preventDefault();
+
+        authCtx.login(username, password);
+
+        if (authCtx.isLoggedIn) {
+            navigate("/", { replace: true });
         }
     }
 
@@ -64,7 +55,7 @@ const Login = () => {
             <label htmlFor="password">password </label>
             <input type="password" name="password" value={password} onChange={onChangePassword}/>
             <p className="toSignUp"><Link to='/SignUp'>Sign Up</Link></p>
-            <button variant="primary" className="submit" onClick={onClickSubmit} disabled={!isUsername || !isPassword}>Login</button>
+            <button variant="primary" className="submit" onClick={handleLoginClick} disabled={!isUsername || !isPassword}>Login</button>
         </div>
     );
 };

@@ -80,23 +80,19 @@ const SignUp = () => {
         e.preventDefault();
 
         if (isDuplicateIdExist) {
-            console.log("여기야");
             alert("아이디 중복체크를 해주세요!")
             return;
         }
         else if (isDuplicateIdExist) {
-            console.log("여기야");
             alert("아이디 중복체크를 해주세요!")
             return;
         }
 
         if (isDuplicateNicknameExist) {
-            console.log("여기야");
             alert("닉네임 중복체크를 해주세요!")
             return;
         }
         else if (isDuplicateNicknameExist) {
-            console.log("여기야");
             alert("닉네임 중복체크를 해주세요!")
             return;
         }

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, {useCallback, useContext} from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import Modal from "../../component/modal.js";
@@ -8,6 +8,7 @@ import CocktailCard from "../../component/cocktailCard.js";
 import plusImage from "../../images/plusButton.png";
 import * as home from "./HomeCss.js";
 import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
 
 const Home = () => {
 	const [weatherScrollIndex, setWeatherScrollIndex] = useState(0);
@@ -23,6 +24,10 @@ const Home = () => {
 	const [maxPage, setMaxPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(true);
 	const port = 8080;
+
+	const authCtx = useContext(AuthContext);
+
+	console.log("isLoggedIn : " + authCtx.isLoggedIn);
 
 	useEffect(() => {
 		// page는 0부터 시작 -> 사용자한테 보여지는 1 page = 받아온 data 0 page
