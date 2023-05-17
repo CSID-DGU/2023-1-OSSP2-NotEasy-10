@@ -26,6 +26,7 @@ const Home = () => {
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
 	const [searchText, setSearchText] = useState();
+	const [searchMode, setSearchMode] = useState("AND");
 
 	useEffect(() => {
 		sort(currentTagData, sortType);
@@ -266,14 +267,14 @@ const Home = () => {
 		if (mode === "delete" && targetId !== 0) {
 			const newData = currentTagData.filter((x) => x.id !== targetId);
 			setCurrentTagData(newData);
-			sort(newData, 5);
+			sort(newData, 7);
 		}
 	};
 
 	const modalOff = (tags) => {
 		setIsModal(false);
 		setCurrentTagData(tags);
-		sort(tags, 5);
+		sort(tags, 7);
 	};
 
 	const modalOn = () => {
@@ -291,6 +292,12 @@ const Home = () => {
 				break;
 			case "사전 순서":
 				sortType = 3;
+				break;
+			case "AND":
+				sortType = 5;
+				break;
+			case "OR":
+				sortType = 6;
 				break;
 			default:
 				sortType = 0;
@@ -325,6 +332,13 @@ const Home = () => {
 				break;
 			case 6:
 				getCocktailByTagOr(page, tempTags);
+				break;
+			case 7:
+				if (searchMode === "AND") {
+					getCocktailByTagAnd(page, tempTags);
+				} else {
+					getCocktailByTagOr(page, tempTags);
+				}
 				break;
 		}
 		setSortType(realSortType);
@@ -401,6 +415,17 @@ const Home = () => {
 						}}
 					/>
 					<home.TagSearchDiv>
+						<home.SearchOption
+							onChange={(e) => {
+								onSortChanged(e);
+								setSearchMode(e.target.value);
+							}}
+						>
+							<home.SearchOptionBase selected="selected">
+								AND
+							</home.SearchOptionBase>
+							<home.SearchOptionBase>OR</home.SearchOptionBase>
+						</home.SearchOption>
 						<home.ModalButton
 							onClick={() => {
 								modalOn();
