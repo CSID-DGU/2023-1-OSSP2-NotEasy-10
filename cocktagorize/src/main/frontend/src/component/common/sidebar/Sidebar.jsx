@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import "../sidebar/Sidebar.css";
 import {
   VscHome,
@@ -9,9 +9,19 @@ import {
   VscArrowCircleRight,
   VscAccount,
 } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import AuthContext from "../../../jwt/auth-context";
+
 
 export default function Sidebar() {
+
+    const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
+    const logoutHandler = () => {
+        authCtx.logout();
+        navigate(1);
+    }
+
   return (
     <div className="sidebar">
       <div className="menu">MENU</div>
@@ -36,7 +46,10 @@ export default function Sidebar() {
           <VscWand /> <span className="list myPage"><Link to="/myPage">My Page</Link></span>
         </li>
         <li>
-          <VscArrowCircleRight /> <span className="list Logout">Logout</span>
+            <VscArrowCircleRight /> {authCtx.isLoggedIn ?  <span className="list Logout" onClick={logoutHandler}>Logout</span> :
+            <Link to="/login"><span className="list Logout">Login</span></Link>}
+
+
         </li>
       </ul>
       <hr></hr>

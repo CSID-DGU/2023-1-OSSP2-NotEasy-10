@@ -18,7 +18,7 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Integer> {
     @Query(value = "select c.*, MAX(cr.created_date) as creation_time from cocktail c left outer join cocktail_reply cr on c.cocktail_id = cr.cocktail_id group by c.cocktail_id order by creation_time", nativeQuery = true)
     Page<Cocktail> findAllByCocktailReplyCreationTime(Pageable pageable);
     @Query("SELECT c FROM Cocktail c JOIN c.cocktailTagList ct WHERE ct.tag.name IN :tagNames GROUP BY c HAVING COUNT(DISTINCT ct.tag) = :tagCount")
-    Page<Cocktail> findByTagsByAnd(List<String> tagNames, long tagCount, Pageable pageable);
+    Page<Cocktail> findByTagsByAnd(@Param("tagNames") List<String> tagNames, @Param("tagCount") long tagCount, Pageable pageable);
     @Query("SELECT DISTINCT c FROM Cocktail c JOIN c.cocktailTagList ct WHERE ct.tag.name IN :tagNames")
-    Page<Cocktail> findByTagsByOr(List<String> tagNames, Pageable pageable);
+    Page<Cocktail> findByTagsByOr(@Param("tagNames") List<String> tagNames, Pageable pageable);
 }

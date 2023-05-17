@@ -1,60 +1,63 @@
-import React from "react";
-import "../Login/Login.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, {useContext, useEffect} from "react";
+import '../Login/Login.css'
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useState} from "react";
+import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
+
 
 const Login = () => {
-	const [id, setId] = useState();
-	const [isId, setIsId] = useState(false);
 
-	const onChangeId = (e) => {
-		setId(e.target.value);
-		if (e.target.value.length < 1) {
-			setIsId(false);
-		} else {
-			setIsId(true);
-		}
-	};
+    const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
 
-	const [password, setPassword] = useState();
-	const [isPassword, setIsPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [username, setUsername] = useState("");
+    const [isUsername, setIsUsername] = useState(false);
 
-	const onChangePassword = (e) => {
-		setPassword(e.target.value);
-		if (e.target.value.length < 1) {
-			setIsPassword(false);
-		} else {
-			setIsPassword(true);
-		}
-	};
 
-	const onClickSubmit = () => {
-		alert("로그인 완료");
-	};
+    const onChangeUsername = (e) => {
+        setUsername(e.target.value);
+        if (e.target.value.length < 1) {
+            setIsUsername(false);
+        } else {
+            setIsUsername(true);
+        }
+    }
 
-	return (
-		<form className="Login" action="">
-			<label for="id">ID </label>
-			<input type="text" name="id" value={id} onChange={onChangeId} />
-			<label for="password">password </label>
-			<input
-				type="password"
-				name="password"
-				value={password}
-				onChange={onChangePassword}
-			/>
-			<p className="toSignUp">
-				<Link to="/SignUp">Sign Up</Link>
-			</p>
-			<input
-				className="submit"
-				type="submit"
-				value="Login"
-				onClick={onClickSubmit}
-				disabled={!isId || !isPassword}
-			/>
-		</form>
-	);
+    const [password, setPassword] = useState("");
+    const [isPassword, setIsPassword] = useState(false);
+
+    const onChangePassword = (e) => {
+        setPassword(e.target.value);
+        if (e.target.value.length < 1) {
+            setIsPassword(false);
+        } else {
+            setIsPassword(true);
+        }
+    }
+
+    const handleLoginClick = async (event) => {
+        event.preventDefault();
+
+        authCtx.login(username, password);
+
+        if (authCtx.isLoggedIn) {
+            navigate("/", { replace: true });
+        }
+    }
+
+    return (
+        // 밑에 button 태그 무조건 밖에 있어야되요
+        <div className="Login">
+            <label htmlFor="username">ID </label>
+            <input type="text" name="username" value={username} onChange={onChangeUsername}/>
+            <label htmlFor="password">password </label>
+            <input type="password" name="password" value={password} onChange={onChangePassword}/>
+            <p className="toSignUp"><Link to='/SignUp'>Sign Up</Link></p>
+            <button variant="primary" className="submit" onClick={handleLoginClick} disabled={!isUsername || !isPassword}>Login</button>
+        </div>
+    );
 };
 
 export default Login;

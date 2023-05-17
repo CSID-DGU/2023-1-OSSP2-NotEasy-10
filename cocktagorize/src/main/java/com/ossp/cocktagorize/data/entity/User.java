@@ -1,5 +1,6 @@
 package com.ossp.cocktagorize.data.entity;
 
+import com.ossp.cocktagorize.data.type.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,12 +28,22 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String realName;
-
-    @Column(nullable = false)
     private String nickname;
 
+    @Column(nullable = false)
     private Double alcoholCapacity;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column
+    private String dong;
+
+    @Column
+    private String gu;
+
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 
     @OneToMany(mappedBy = "user")
     private List<Board> boardList = new ArrayList<Board>();

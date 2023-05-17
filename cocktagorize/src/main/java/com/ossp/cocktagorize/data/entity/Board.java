@@ -1,6 +1,5 @@
 package com.ossp.cocktagorize.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ossp.cocktagorize.data.type.BoardType;
 import jakarta.persistence.*;
 import lombok.*;
