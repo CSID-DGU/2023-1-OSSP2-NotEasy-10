@@ -145,6 +145,21 @@ export const SortBase = styled.option`
 	font-size: 18px;
 `;
 
+export const SearchOption = styled.select`
+	width: 100px;
+	height: 30px;
+	border-width: 2px;
+	border-radius: 15px;
+	margin: 0px 5px;
+	padding: 0px 10px;
+	border-color: black;
+	font-size: 18px;
+`;
+
+export const SearchOptionBase = styled.option`
+	font-size: 18px;
+`;
+
 export const WeatherNUserCocktail = styled.div`
 	display: flex;
 	flex-direction: row;
