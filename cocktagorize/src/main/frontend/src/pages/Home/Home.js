@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useReducer } from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import Modal from "../../component/modal.js";
@@ -6,6 +6,7 @@ import Tag from "../../component/common/tag.js";
 import useInterval from "../../component/common/UseInterval.js";
 import CocktailCard from "../../component/cocktailCard.js";
 import plusImage from "../../images/plusButton.png";
+import blackXImage from "../../images/blackXButton.png";
 import * as home from "./HomeCss.js";
 import axios from "axios";
 
@@ -23,6 +24,16 @@ const Home = () => {
 	const [maxPage, setMaxPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(true);
 	const port = 8080;
+	const [sortType, setSortType] = useState(0);
+	const [searchText, setSearchText] = useState();
+
+	useEffect(() => {
+		sort(currentTagData, sortType);
+	}, [page, sortType]);
+
+	useEffect(() => {
+		sort(currentTagData, 4);
+	}, [searchText]);
 
 	useEffect(() => {
 		// page는 0부터 시작 -> 사용자한테 보여지는 1 page = 받아온 data 0 page
@@ -30,18 +41,19 @@ const Home = () => {
 
 		// 처음 페이지 랜더링 될 때 칵테일 id 순으로 불러옴
 
-		getAllCocktailById(page);
+		sort(currentTagData, sortType);
 	}, []);
+
 	const getAllCocktailById = async (page) => {
 		try {
 			const response = await axios.get(
 				`http://localhost:${port}/?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-			console.log(response.data);
+			// console.log(response.data);
 			setCocktailList(response.data.content);
 			setMaxPage(response.data.totalPages);
-			//setIsLoading(false);
+			setIsLoading(false);
 			// Handle the cocktail data as needed
 		} catch (error) {
 			// Handle the error
@@ -105,6 +117,10 @@ const Home = () => {
 
 	// 이름으로 검색하기
 	const getCocktailBySearchName = async (name, page) => {
+		if (name === "") {
+			getAllCocktailById(page);
+			return;
+		}
 		try {
 			const response = await axios.get(
 				`http://localhost:${port}/cocktail/search/${name}?page=${page}`
@@ -124,13 +140,13 @@ const Home = () => {
 	// 태그로 검색하기 AND 연산
 	const getCocktailByTagAnd = async (page, tagData) => {
 		try {
-			// console.log(tagData);
 			const tags =
 				Array.isArray(tagData) && !tagData.length
 					? "tags="
 					: tagData
 							.map((tag) => `tags=${encodeURIComponent(tag)}`)
 							.join("&");
+			// console.log(tags);
 			const response = await axios.get(
 				`http://localhost:${port}/cocktail/tag/and?${tags}&page=${page}`
 			);
@@ -250,6 +266,7 @@ const Home = () => {
 		if (mode === "delete" && targetId !== 0) {
 			const newData = currentTagData.filter((x) => x.id !== targetId);
 			setCurrentTagData(newData);
+			sort(newData, 5);
 		}
 	};
 
@@ -281,10 +298,13 @@ const Home = () => {
 		sort(currentTagData, sortType);
 	};
 
-	const sort = (tags, sortType) => {
+	function sort(tags, type) {
 		setIsLoading(true);
-
-		switch (sortType) {
+		let tempTags = [];
+		tags.map((tag) => tempTags.push(tag.name));
+		let realSortType = type;
+		if (type === -1) realSortType = sortType;
+		switch (realSortType) {
 			case 0:
 				getAllCocktailById(page);
 				break;
@@ -298,18 +318,19 @@ const Home = () => {
 				getAllCocktailByName(page);
 				break;
 			case 4:
-				getCocktailBySearchName(page);
+				getCocktailBySearchName(searchText, page);
 				break;
 			case 5:
-				getCocktailByTagAnd(page, tags);
+				getCocktailByTagAnd(page, tempTags);
 				break;
 			case 6:
-				getCocktailByTagOr(page, tags);
+				getCocktailByTagOr(page, tempTags);
 				break;
 		}
-		console.log("sortType : " + sortType);
-		console.log(cocktailList);
-	};
+		setSortType(realSortType);
+		// console.log("sortType : " + sortType);
+		// console.log(cocktailList);
+	}
 
 	function pageScrollIndexButton() {
 		let result = [];
@@ -320,7 +341,6 @@ const Home = () => {
 					btnIndex={0}
 					onClick={() => {
 						setPage(0);
-						sort();
 					}}
 				>
 					<home.Text>{1}</home.Text>
@@ -336,7 +356,6 @@ const Home = () => {
 					btnIndex={i}
 					onClick={() => {
 						setPage(i);
-						sort();
 					}}
 				>
 					<home.Text>{i + 1}</home.Text>
@@ -351,7 +370,6 @@ const Home = () => {
 					btnIndex={maxPage - 1}
 					onClick={() => {
 						setPage(maxPage - 1);
-						sort();
 					}}
 				>
 					<home.Text>{maxPage}</home.Text>
@@ -372,10 +390,16 @@ const Home = () => {
 					<home.Search
 						type="text"
 						placeholder="Search"
-						onChange={(e) =>
-							getCocktailBySearchName(e.target.value)
-						}
+						onChange={(e) => setSearchText(e.target.value)}
+						value={searchText}
 					></home.Search>
+					<home.blackXButton
+						src={blackXImage}
+						onClick={() => {
+							setSortType(0);
+							setSearchText("");
+						}}
+					/>
 					<home.TagSearchDiv>
 						<home.ModalButton
 							onClick={() => {
@@ -460,11 +484,11 @@ const Home = () => {
 							vMargin: 20,
 						})}
 					</home.NormalRecommandCocktail>
-					{/*isLoading ? <home.Loading></home.Loading> : null*/}
 				</home.NonExplore>
 
 				<home.PageScroll>{pageScrollIndexButton()}</home.PageScroll>
 			</home.NonSidebar>
+			{/*isLoading ? <home.Loading></home.Loading> : null*/}
 		</home.Entire>
 	);
 };

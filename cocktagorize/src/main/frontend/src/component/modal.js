@@ -300,46 +300,7 @@ const Modal = (props) => {
 		}
 	};
 
-	const [tagDB, setTagDB] = useState([
-		/*
-		{
-			id: 1,
-			name: "태그1",
-			category: "INGREDIENT",
-			mode: "add",
-		},
-		{
-			id: 2,
-			name: "태그2",
-			category: "ALCOHOL",
-			mode: "add",
-		},
-		{
-			id: 3,
-			name: "태그3",
-			category: "COLOR",
-			mode: "add",
-		},
-		{
-			id: 4,
-			name: "태그4",
-			category: "TASTE",
-			mode: "add",
-		},
-		{
-			id: 5,
-			name: "태그5",
-			category: "ETC",
-			mode: "add",
-		},
-		{
-			id: 6,
-			name: "태그6",
-			category: "WEATHER",
-			mode: "add",
-		},
-		*/
-	]);
+	const [tagDB, setTagDB] = useState([]);
 
 	const [currentTagData, setCurrentTagData] = useState(props.parentTag);
 
@@ -353,7 +314,7 @@ const Modal = (props) => {
 		{
 			categoryName: "알코올",
 			categoryCode: "ALCOHOL",
-			height: 100,
+			height: 120,
 			tags: [],
 		},
 		{
@@ -381,21 +342,9 @@ const Modal = (props) => {
 			tags: [],
 		},
 	]);
-	/*
-	useEffect(() => {
-		tagDB.map((info) =>
-			categoryTagData
-				.find((x) => x.categoryCode === info.category)
-				.tags.push(info)
-		);
-		setIsLoading(false);
-	}, []);
-*/
+
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTagData, setSearchTagData] = useState([]);
-
-	const [, updateState] = React.useState();
-	const forceUpdate = React.useCallback(() => updateState({}), []);
 
 	const addTag = (tagInfo) => {
 		if (tagInfo.id !== 0) {
@@ -423,7 +372,11 @@ const Modal = (props) => {
 	};
 
 	const getSearchValue = (e) => {
-		setSearchTagData(tagDB.filter((x) => x.name.includes(e.target.value)));
+		setSearchTagData(
+			tagDB.filter((x) =>
+				x.name.toLowerCase().includes(e.target.value.toLowerCase())
+			)
+		);
 	};
 
 	const outSection = useRef();

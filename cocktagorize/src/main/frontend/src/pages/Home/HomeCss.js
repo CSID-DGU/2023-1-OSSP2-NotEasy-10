@@ -418,3 +418,18 @@ export const PageScrollIndex = styled.div`
 
 	transition: background-color 0.2s;
 `;
+
+export const Loading = styled.div`
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.5);
+`;
+export const blackXButton = styled.img`
+	width: 15px;
+	height: 15px;
+	margin-left: -30px;
+	float: left;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+`;
