@@ -70,6 +70,13 @@ export const ModalButton = styled.div`
 
 export const TagSearchDiv = styled.div`
 	width: 36vw;
+	${(props) => {
+		if (props.width) {
+			return css`
+				width: ${props.width};
+			`;
+		}
+	}};
 	height: 50px;
 	background-color: white;
 	border: solid;
