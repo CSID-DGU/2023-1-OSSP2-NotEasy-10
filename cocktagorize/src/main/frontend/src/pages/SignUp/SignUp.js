@@ -118,6 +118,8 @@ const SignUp = () => {
 			return;
 		}
 
+		const preferTagList = currentTagData.map((tag) => tag.name);
+
 		try {
 			const response = await axios
 				.post("http://localhost:8080/user/join", {
@@ -129,7 +131,7 @@ const SignUp = () => {
 					city: "서울특별시",
 					dong: "",
 					gu: "",
-					preferTagList: preferTag,
+					preferTagList: preferTagList,
 				})
 				.then((response) => {
 					alert("회원가입에 성공하였습니다!");
