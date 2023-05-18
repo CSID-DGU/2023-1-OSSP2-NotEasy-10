@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, {useContext, useReducer} from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import Modal from "../../component/modal.js";
@@ -9,8 +9,10 @@ import plusImage from "../../images/plusButton.png";
 import blackXImage from "../../images/blackXButton.png";
 import * as home from "./HomeCss.js";
 import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
 
 const Home = () => {
+	const authCtx = useContext(AuthContext);
 	const [weatherScrollIndex, setWeatherScrollIndex] = useState(0);
 	const [maxWeatherScrollIndex, setMaxWeatherScrollIndex] = useState(4);
 	const [isModal, setIsModal] = useState("true");
@@ -41,7 +43,7 @@ const Home = () => {
 		// 따라서 함수를 호출 할 때 page 매개 변수의 값이 0이면은 사용자에게 보여지는 1 page 의 정보를 갖고오는 것
 
 		// 처음 페이지 랜더링 될 때 칵테일 id 순으로 불러옴
-
+		if (authCtx.isLoggedIn) authCtx.getUser();
 		sort(currentTagData, sortType);
 	}, []);
 
@@ -127,7 +129,6 @@ const Home = () => {
 				`http://localhost:${port}/cocktail/search/${name}?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-			console.log(response.data);
 			setCocktailList(response.data.content);
 			setMaxPage(response.data.totalPages);
 			setIsLoading(false);

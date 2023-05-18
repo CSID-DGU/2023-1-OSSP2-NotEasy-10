@@ -5,7 +5,7 @@ let logoutTimer;
 
 const AuthContext = React.createContext({
     token: '',
-    userObj: { username: '' },
+    userObj: { username: '', email: '', alcoholCapacity: '', nickname: ''},
     isLoggedIn: false,
     isSuccess: false,
     isGetSuccess: false,
@@ -26,7 +26,7 @@ export const AuthContextProvider = (props) => {
 
     const [token, setToken] = useState(initialToken);
     const [userObj, setUserObj] = useState({
-        username: ''
+        username: '', email: '', alcoholCapacity: '', nickname: ''
     });
 
     const [isSuccess, setIsSuccess] = useState(false);
