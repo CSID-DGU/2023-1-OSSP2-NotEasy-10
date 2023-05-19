@@ -451,6 +451,7 @@ export const blackXButton = styled.img`
 	width: 15px;
 	height: 15px;
 	margin-left: -30px;
+	margin-right: 10px;
 	float: left;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
