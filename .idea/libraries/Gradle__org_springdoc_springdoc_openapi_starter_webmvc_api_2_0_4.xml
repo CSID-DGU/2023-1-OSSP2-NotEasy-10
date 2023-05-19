@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springdoc:springdoc-openapi-starter-webmvc-api:2.0.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.springdoc" artifactId="springdoc-openapi-starter-webmvc-api" version="2.0.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springdoc/springdoc-openapi-starter-webmvc-api/2.0.4/ac649fe3103e0159226dca0c2a570a325a26391f/springdoc-openapi-starter-webmvc-api-2.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springdoc/springdoc-openapi-starter-webmvc-api/2.0.4/7579393a6dc3b2d53044177a02e0aabd2d339211/springdoc-openapi-starter-webmvc-api-2.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
