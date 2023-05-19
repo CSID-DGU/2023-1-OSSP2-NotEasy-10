@@ -22,16 +22,14 @@ public class CocktailReplyService {
 
     public CocktailReplyDto createReply(CocktailReplyRequestDto cocktailReplyDto,int cocktail_id){
         String content=cocktailReplyDto.getContent();
-        int cocktailId=cocktail_id;
         int userId=cocktailReplyDto.getUserId();
         CocktailReply cocktailReply=new CocktailReply();
         cocktailReply.setContent(content);
         cocktailReply.setCreatedDate(new Timestamp(System.currentTimeMillis()));
         cocktailReply.setUser(userRepository.findById(userId));
-        cocktailReply.setCocktail(cocktailDetailrepository.findById(cocktailId));
+        cocktailReply.setCocktail(cocktailDetailrepository.findById(cocktail_id));
         CocktailReply saveReply=cocktailReplyRepository.save(cocktailReply);
-        CocktailReplyDto saveReplyDto=new CocktailReplyDto(saveReply,cocktailId,userId);
-        return saveReplyDto;
+        return new CocktailReplyDto(saveReply,cocktail_id,userId);
     }
 
 

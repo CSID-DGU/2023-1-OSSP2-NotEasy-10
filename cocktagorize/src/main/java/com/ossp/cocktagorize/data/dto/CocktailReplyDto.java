@@ -18,6 +18,7 @@ public class CocktailReplyDto {
     private int cocktailId;
     @Getter
     @NoArgsConstructor
+    static
     class UserDto{
         private int id;
         private String name;
@@ -31,7 +32,7 @@ public class CocktailReplyDto {
         content= cocktailReply.getContent();
         liked= cocktailReply.getLiked();
         createdDate=cocktailReply.getCreatedDate();
-        user=new UserDto(cocktailReply.getUser());
+        user= new UserDto(cocktailReply.getUser());
         cocktailId=cocktailReply.getCocktail().getId();
         userId=user.getId();
     }
