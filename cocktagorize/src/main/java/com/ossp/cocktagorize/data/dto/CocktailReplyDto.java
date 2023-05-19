@@ -1,5 +1,6 @@
 package com.ossp.cocktagorize.data.dto;
 
+import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.entity.CocktailReply;
 import com.ossp.cocktagorize.data.entity.User;
 import lombok.Getter;
@@ -14,6 +15,8 @@ public class CocktailReplyDto {
     private int liked;
     private Timestamp createdDate;
     private UserDto user;
+    private int userId;
+    private int cocktailId;
     @Getter
     @NoArgsConstructor
     class UserDto{
@@ -30,6 +33,16 @@ public class CocktailReplyDto {
         liked= cocktailReply.getLiked();
         createdDate=cocktailReply.getCreatedDate();
         user=new UserDto(cocktailReply.getUser());
+        cocktailId=cocktailReply.getCocktail().getId();
+        userId=user.getId();
+    }
+    public CocktailReplyDto(CocktailReply cocktailReply, int cocktailId1, int userId1){
+        id=cocktailReply.getId();
+        content=cocktailReply.getContent();
+        liked=cocktailReply.getLiked();
+        createdDate=cocktailReply.getCreatedDate();
+        userId=userId1;
+        cocktailId=cocktailId1;
     }
 
 }
