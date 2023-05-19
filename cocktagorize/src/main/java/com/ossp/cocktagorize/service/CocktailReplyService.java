@@ -7,6 +7,7 @@ import com.ossp.cocktagorize.data.repository.CocktailDetailrepository;
 import com.ossp.cocktagorize.data.repository.CocktailReplyRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -20,9 +21,9 @@ public class CocktailReplyService {
     @Autowired
     private UserRepository userRepository;
 
-    public CocktailReplyDto createReply(CocktailReplyRequestDto cocktailReplyDto,int cocktail_id){
+    public CocktailReplyDto createReply(CocktailReplyRequestDto cocktailReplyDto, int cocktail_id, Authentication authentication){
         String content=cocktailReplyDto.getContent();
-        int userId=cocktailReplyDto.getUserId();
+        int userId=userRepository.findByUsername(authentication.getName()).getId();
         CocktailReply cocktailReply=new CocktailReply();
         cocktailReply.setContent(content);
         cocktailReply.setCreatedDate(new Timestamp(System.currentTimeMillis()));

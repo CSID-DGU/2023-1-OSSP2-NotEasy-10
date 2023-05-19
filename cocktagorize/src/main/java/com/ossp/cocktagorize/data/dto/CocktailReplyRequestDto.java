@@ -6,9 +6,5 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CocktailReplyRequestDto {
-    int id;
     String content;
-    int liked;
-    int userId;
-    int cocktailId;
 }
