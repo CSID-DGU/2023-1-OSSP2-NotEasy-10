@@ -1,7 +1,7 @@
 .SignUp {
     display: flex;
     flex-direction: column;
-    width: 40vw;
+    width: 550px;
     height: auto;
     background-color: white;
     margin: auto;
@@ -23,7 +23,7 @@
 }
 
 .SignUp > button {
-    width: 10vh;
+    width: 70px;
     margin-left: auto;
 }
 

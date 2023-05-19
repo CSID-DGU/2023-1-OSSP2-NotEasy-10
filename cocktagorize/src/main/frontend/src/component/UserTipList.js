@@ -21,10 +21,14 @@ const H4 = styled.h4`
 
 const TipList = styled.div`
   border-radius: 0.25rem;
-  padding: 1rem;
+  padding: 1.5rem 2rem;
   background-color: white;
   -webkit-box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.1);
+`;
+
+const WriteTip = styled.input`
+  width: 100%;
 `;
 
 const UserTipList = () => {
@@ -33,7 +37,8 @@ const UserTipList = () => {
       <H4> User's TIP</H4>
       <TipList>
         <UserTip />
-        <UserTip />
+        {/* <UserTip />
+        <WriteTip type="text" placeholder="여기에 댓글을 입력하세요."/> */}
       </TipList>
     </UserTipListBlock>
   );

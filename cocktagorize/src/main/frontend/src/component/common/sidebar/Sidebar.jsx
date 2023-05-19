@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import "../sidebar/Sidebar.css";
 import {
   VscHome,
@@ -9,18 +9,26 @@ import {
   VscArrowCircleRight,
   VscAccount,
 } from "react-icons/vsc";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../jwt/auth-context";
 
 
 export default function Sidebar() {
 
-    const navigate = useNavigate();
-    const authCtx = useContext(AuthContext);
-    const logoutHandler = () => {
-        authCtx.logout();
-        navigate(1);
-    }
+  const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+  const logoutHandler = () => {
+    authCtx.logout();
+    navigate(1);
+  }
+
+  useEffect(() => {
+
+    if (authCtx.isLoggedIn) {
+      console.log('start');
+      authCtx.getUser();
+    };
+  }, [authCtx.isLoggedIn]);
 
   return (
     <div className="sidebar">
@@ -46,7 +54,7 @@ export default function Sidebar() {
           <VscWand /> <span className="list myPage"><Link to="/myPage">My Page</Link></span>
         </li>
         <li>
-            <VscArrowCircleRight /> {authCtx.isLoggedIn ?  <span className="list Logout" onClick={logoutHandler}>Logout</span> :
+          <VscArrowCircleRight /> {authCtx.isLoggedIn ? <span className="list Logout" onClick={logoutHandler}>Logout</span> :
             <Link to="/login"><span className="list Logout">Login</span></Link>}
 
 
@@ -54,7 +62,7 @@ export default function Sidebar() {
       </ul>
       <hr></hr>
       <div className="dropdown">
-        <VscAccount /> <div className="user">User name</div>
+        <VscAccount /> {authCtx.isLoggedIn ? <div className="user">{authCtx.userObj.username}</div> : <div className="user">로그인하세요</div>}
       </div>
     </div>
   );
