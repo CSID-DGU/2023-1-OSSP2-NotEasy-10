@@ -23,7 +23,7 @@ public class PreferCocktailService {
     private UserRepository userRepository;
 
     public List<CocktailResponseDto> getPreferTagCocktail(String username){
-        List<CocktailResponseDto> prefercocktail=new ArrayList<>();
+        List<CocktailResponseDto> preferCocktail=new ArrayList<>();
         User user=userRepository.findByUsername(username);//유저이름으로 유저 찾기
         List<PreferTag> taglist=preferTagRepository.findPreferTagsByUserId(user.getId());
         List<CocktailTag> tags=new ArrayList<>();
@@ -34,9 +34,9 @@ public class PreferCocktailService {
         random.setSeed(System.currentTimeMillis());
         for(int i=0;i<3;i++){
             int n=random.nextInt(tags.size());
-            prefercocktail.add(new CocktailResponseDto(cocktailRepository.findById(tags.get(n).getCocktail().getId())));
+            preferCocktail.add(new CocktailResponseDto(cocktailRepository.findById(tags.get(n).getCocktail().getId())));
             tags.remove(n);
         }
-        return prefercocktail;
+        return preferCocktail;
     }
 }

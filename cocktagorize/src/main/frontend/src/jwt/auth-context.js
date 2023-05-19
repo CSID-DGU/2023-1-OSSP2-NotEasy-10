@@ -8,7 +8,7 @@ const AuthContext = React.createContext({
     userObj: { username: '', email: '', alcoholCapacity: '', nickname: ''},
     isLoggedIn: false,
     isSuccess: false,
-    isGetSuccess: false,
+    isGetUserSuccess: false,
     login: (username, password) => { },
     logout: () => { },
     getUser: () => { },
@@ -30,13 +30,12 @@ export const AuthContextProvider = (props) => {
     });
 
     const [isSuccess, setIsSuccess] = useState(false);
-    const [isGetSuccess, setIsGetSuccess] = useState(false);
+    const [isGetUserSuccess, setIsGetUserSuccess] = useState(false);
 
     const userIsLoggedIn = !!token;
 
     const loginHandler = (username, password) => {
         setIsSuccess(false);
-        console.log(isSuccess);
         const data = authAction.loginActionHandler(username, password);
         data.then((result) => {
             if (result !== null) {
@@ -61,14 +60,14 @@ export const AuthContextProvider = (props) => {
     }, []);
 
     const getUserHandler = () => {
-        setIsGetSuccess(false);
+        setIsGetUserSuccess(false);
         const data = authAction.getUserActionHandler(token);
         data.then((result) => {
             if (result !== null) {
                 console.log('get user start!');
                 const userData = result.data;
                 setUserObj(userData);
-                setIsGetSuccess(true);
+                setIsGetUserSuccess(true);
             }
         });
     };
@@ -87,7 +86,7 @@ export const AuthContextProvider = (props) => {
         userObj,
         isLoggedIn: userIsLoggedIn,
         isSuccess,
-        isGetSuccess,
+        isGetUserSuccess,
         login: loginHandler,
         logout: logoutHandler,
         getUser: getUserHandler,

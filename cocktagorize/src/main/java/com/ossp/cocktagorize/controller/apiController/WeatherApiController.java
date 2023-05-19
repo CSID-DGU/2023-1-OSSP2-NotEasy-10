@@ -2,19 +2,22 @@ package com.ossp.cocktagorize.controller.apiController;
 
 import com.ossp.cocktagorize.controller.setUpController.ApiUtils;
 import com.ossp.cocktagorize.data.dto.CocktailResponseDto;
-import com.ossp.cocktagorize.data.dto.WeatherRequestDto;
-import com.ossp.cocktagorize.data.entity.CocktailTag;
+import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.entity.VillagePosition;
-import com.ossp.cocktagorize.data.repository.CocktailRepository;
 import com.ossp.cocktagorize.data.repository.CocktailTagRepository;
 import com.ossp.cocktagorize.data.repository.TagRepository;
+import com.ossp.cocktagorize.data.repository.UserRepository;
 import com.ossp.cocktagorize.data.repository.VillagePositionRepository;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -22,19 +25,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @CrossOrigin
 @RestController
 public class WeatherApiController {
 
     private final String encodedServiceKey = "LRZW5zkCYDpglLoZvNXqEhT0z%2Fe%2B7%2FeOl9BGjVA8A8i%2B2Pfg%2BTwRe47iFRTT1rynQSd%2BzEUqBrvx3oX3VyxCdw%3D%3D";
 
+    private final UserRepository userRepository;
     private final VillagePositionRepository villagePositionRepository;
     private final CocktailTagRepository cocktailTagRepository;
     private final TagRepository tagRepository;
     private final ApiUtils apiUtils;
 
-    public WeatherApiController(VillagePositionRepository villagePositionRepository, CocktailTagRepository cocktailTagRepository, TagRepository tagRepository, ApiUtils apiUtils) {
+    public WeatherApiController(UserRepository userRepository, VillagePositionRepository villagePositionRepository, CocktailTagRepository cocktailTagRepository, TagRepository tagRepository, ApiUtils apiUtils) {
+        this.userRepository = userRepository;
         this.villagePositionRepository = villagePositionRepository;
         this.cocktailTagRepository = cocktailTagRepository;
         this.tagRepository = tagRepository;
@@ -82,11 +90,13 @@ public class WeatherApiController {
     }
 
     @GetMapping("/cocktail/weather")
-    public List<CocktailResponseDto> getWeatherMatchCocktails(WeatherRequestDto weatherRequestDto) {
+    public List<CocktailResponseDto> getWeatherMatchCocktails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(authentication.getName());
         // 사용자 위치 x, y
-        String city = weatherRequestDto.getCity();
-        String dong = weatherRequestDto.getDong();
-        String gu = weatherRequestDto.getGu();
+        String city = user.getCity();
+        String dong = user.getDong();
+        String gu = user.getGu();
 
         VillagePosition villagePosition = null;
 
@@ -162,12 +172,25 @@ public class WeatherApiController {
 //        int weatherTagId = getTagIdByTempAndRain(temp, isRainy);
         int weatherTagId = getTagIdByTempAndRain(temp, isRainy);
         // 받아온 태그 정보들 갖고 칵테일 검색해서 JSON 으로 반환하는 로직 짜기
-        List<CocktailTag> weatherCocktailTags = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId);
+//        List<CocktailTag> weatherCocktailTags = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId);
+        long qty = cocktailTagRepository.countByTagId(weatherTagId);
         List<CocktailResponseDto> weatherCocktails = new ArrayList<>();
+        Set<Integer> uniqueValues = new HashSet<>();
 
-        weatherCocktailTags.forEach(cocktailTag -> {
-            weatherCocktails.add(new CocktailResponseDto(cocktailTag.getCocktail()));
-        });
+        int count = 0;
+        while (count < 5) {
+            int idx = (int) (Math.random() * qty);
+            if (!uniqueValues.contains(idx)) {
+                uniqueValues.add(idx);
+
+                weatherCocktails.add(new CocktailResponseDto(
+                        cocktailTagRepository.findCocktailTagsByTagId(weatherTagId, PageRequest.of(idx, 1))
+                                .getContent().get(0).getCocktail()));
+
+                count++;
+            }
+        }
+
 
         // 태그 리스트 담아서 보내기 구현해야 함.
         return weatherCocktails;

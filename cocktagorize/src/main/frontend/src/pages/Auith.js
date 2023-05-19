@@ -10,7 +10,7 @@ export function login(data) {
         }).catch(err => {
             const errorCode = err.response.status;
             console.log(errorCode);
-            alert("잘못된 아이디 혹은 비밀번호입니다!");
+            alert("Auth.js : 잘못된 아이디 혹은 비밀번호입니다!");
         })
     }
 }
