@@ -50,9 +50,9 @@ const Login = () => {
     return (
         // 밑에 button 태그 무조건 밖에 있어야되요
         <div className="Login">
-            <label htmlFor="username">ID </label>
+            <p>ID </p>
             <input type="text" name="username" value={username} onChange={onChangeUsername}/>
-            <label htmlFor="password">password </label>
+            <p>password </p>
             <input type="password" name="password" value={password} onChange={onChangePassword}/>
             <p className="toSignUp"><Link to='/SignUp'>Sign Up</Link></p>
             <button variant="primary" className="submit" onClick={handleLoginClick} disabled={!isUsername || !isPassword}>Login</button>
