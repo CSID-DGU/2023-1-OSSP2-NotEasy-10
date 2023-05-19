@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CocktailReplyRepository extends JpaRepository<CocktailReply,Integer> {
+     @SuppressWarnings("all")
      CocktailReply save(CocktailReply cocktailReply);
 }
