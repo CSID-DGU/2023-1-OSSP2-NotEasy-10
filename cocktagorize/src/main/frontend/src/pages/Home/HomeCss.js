@@ -70,6 +70,13 @@ export const ModalButton = styled.div`
 
 export const TagSearchDiv = styled.div`
 	width: 36vw;
+	${(props) => {
+		if (props.width) {
+			return css`
+				width: ${props.width};
+			`;
+		}
+	}};
 	height: 50px;
 	background-color: white;
 	border: solid;
@@ -444,6 +451,7 @@ export const blackXButton = styled.img`
 	width: 15px;
 	height: 15px;
 	margin-left: -30px;
+	margin-right: 10px;
 	float: left;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;

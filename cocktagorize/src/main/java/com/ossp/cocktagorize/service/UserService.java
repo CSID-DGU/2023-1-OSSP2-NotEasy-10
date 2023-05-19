@@ -73,7 +73,5 @@ public class UserService {
     public boolean checkDuplicateNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
     }
-
-
 }
 

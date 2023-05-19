@@ -1,0 +1,35 @@
+.tip {
+    border: 2px;
+    border-style: solid;
+    border-color: gray;
+    border-radius: 0.25rem;
+    padding: 0 1rem;
+}
+
+.write {
+    display: flex;
+    height: 8vh;
+}
+
+.write > textarea {
+    flex:1;
+}
+
+.edit {
+    margin-bottom: 1.5rem;
+    text-align: end;
+}
+
+.likeAndTime {
+    display: flex;
+    justify-content: space-between;
+}
+
+.writeEdit {
+    display: flex;
+    height: auto;
+}
+
+.writeEdit > textarea {
+    flex:1;
+}

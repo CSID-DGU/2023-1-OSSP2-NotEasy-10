@@ -21,4 +21,5 @@ public class UserLikeBoard {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
 }
