@@ -10,10 +10,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
 	const [email, setEmail] = useState("");
-	const [nickname, setNickname] = useState("");
-
-	const [id, setId] = useState();
-	const [isId, setIsId] = useState(false);
+    const [isEmail, setIsEmail] = useState(false);
+    const [nickname, setNickname] = useState("");
+    const [id, setId] = useState("");
 
 	const [currentTagData, setCurrentTagData] = useState([]);
 	const [isModal, setIsModal] = useState("true");
@@ -29,16 +28,20 @@ const SignUp = () => {
 
 	const onChangeId = (e) => {
 		setId(e.target.value);
-		if (e.target.value.length < 1) {
-			setIsId(false);
-		} else {
-			setIsId(true);
-		}
 	};
 
-	const [password, setPassword] = useState();
-	const [passwordConfirm, setPasswordConfirm] = useState();
-	const [passwordConfirmMessage, setPasswordConfirmMessage] = useState();
+	const onChangeEmail = (e) => {
+        setEmail(e.target.value);
+        if (e.target.value.length < 1) {
+            setIsEmail(false);
+        } else {
+            setIsEmail(true);
+        }
+    };
+
+	const [password, setPassword] = useState('');
+	const [passwordConfirm, setPasswordConfirm] = useState('');
+	const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
 	const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
 	const onChangePassword = (e) => {
@@ -60,15 +63,11 @@ const SignUp = () => {
 	const [alcohol, setAlcohol] = useState("");
 	const [preferTag, setPreferTag] = useState(["Vodka", "Gin"]);
 	const [city, setCity] = useState("");
-	const [dong, setDong] = useState("");
 	const [gu, setGu] = useState("");
+	const [dong, setDong] = useState("");
 
 	const onChangeAlcohol = (e) => {
 		setAlcohol(e.target.value);
-	};
-
-	const onChangePreferTag = (e) => {
-		setPreferTag(e.target.value);
 	};
 
 	const onChangeCity = (e) => {
@@ -82,6 +81,7 @@ const SignUp = () => {
 	const onChangeGu = (e) => {
 		setGu(e.target.value);
 	};
+
 
 	const modalOff = (tags) => {
 		setIsModal(false);
@@ -128,9 +128,9 @@ const SignUp = () => {
 					email: email,
 					nickname: nickname,
 					alcoholCapacity: alcohol,
-					city: "서울특별시",
-					dong: "",
-					gu: "",
+					city: city,
+					gu: gu,
+					dong: dong,
 					preferTagList: preferTagList,
 				})
 				.then((response) => {
@@ -201,7 +201,7 @@ const SignUp = () => {
 			<button type="button" onClick={onClickCheckId}>
 				중복확인
 			</button>
-			<p for="password">비밀번호 </p>
+			<p>비밀번호 </p>
 			<input
 				type="password"
 				name="password"
@@ -232,15 +232,15 @@ const SignUp = () => {
 				placeholder="youremail@gmail.com"
 				name="email"
 				value={email}
-				onChange={(e) => setEmail(e.target.value)}
+				onChange={onChangeEmail}
 			/>
 			<p>주량 </p>
-			<select name="alchol" value={alcohol} onChange={onChangeAlcohol}>
+			<select name="alcoholCapacity" value={alcohol} onChange={onChangeAlcohol}>
 				<option disabled>소주_잔</option>
-				<option value={"alchol1"}>소주1잔</option>
-				<option value={"alchol2"}>소주2잔</option>
-				<option value={"alchol3"}>소주3잔</option>
-				<option value={"alchol4"}>소주4잔</option>
+				<option value={"1"}>소주1잔</option>
+				<option value={"2"}>소주2잔</option>
+				<option value={"3"}>소주3잔</option>
+				<option value={"4"}>소주4잔</option>
 			</select>
 			<p>선호하는 태그 </p>
 
@@ -261,23 +261,22 @@ const SignUp = () => {
 			<p>지역 </p>
 			<div className="location">
 				<select
-					name="location_city"
+					name="city"
 					value={city}
 					onChange={onChangeCity}
 				>
 					<option disabled>시</option>
 					<option value={"서울특별시"}>서울특별시</option>
 				</select>
-				<select
-					name="location_dong"
-					value={dong}
-					onChange={onChangeDong}
-				>
-					<option disabled>동</option>
-					<option value={"종로구"}>종로구</option>
-				</select>
 				<select name="location_gu" value={gu} onChange={onChangeGu}>
 					<option disabled>구</option>
+					<option value={"종로구"}>종로구</option>
+				</select>
+				<select
+					name="dong"
+					value={dong}
+					onChange={onChangeDong}>
+					<option disabled>동</option>
 					<option value={"청운효자동"}>청운효자동</option>
 				</select>
 			</div>
@@ -286,7 +285,7 @@ const SignUp = () => {
 				type="submit"
 				value="가입하기"
 				onClick={onClickSubmit}
-				disabled={!isPasswordConfirm || !isId}
+				disabled={!isPasswordConfirm || !isEmail}
 			/>
 		</form>
 	);
