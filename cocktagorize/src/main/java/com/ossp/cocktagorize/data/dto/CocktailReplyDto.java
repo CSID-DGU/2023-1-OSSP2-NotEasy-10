@@ -14,8 +14,8 @@ public class CocktailReplyDto {
     private int liked;
     private Timestamp createdDate;
     private UserDto user;
-    private int userId;
-    private int cocktailId;
+    private int user_id;
+    private int cocktail_id;
     @Getter
     @NoArgsConstructor
     static
@@ -33,16 +33,16 @@ public class CocktailReplyDto {
         liked= cocktailReply.getLiked();
         createdDate=cocktailReply.getCreatedDate();
         user= new UserDto(cocktailReply.getUser());
-        cocktailId=cocktailReply.getCocktail().getId();
-        userId=user.getId();
+        cocktail_id=cocktailReply.getCocktail().getId();
+        user_id=user.getId();
     }
     public CocktailReplyDto(CocktailReply cocktailReply, int cocktailId1, int userId1){
         id=cocktailReply.getId();
         content=cocktailReply.getContent();
         liked=cocktailReply.getLiked();
         createdDate=cocktailReply.getCreatedDate();
-        userId=userId1;
-        cocktailId=cocktailId1;
+        user_id=userId1;
+        cocktail_id=cocktailId1;
     }
 
 }
