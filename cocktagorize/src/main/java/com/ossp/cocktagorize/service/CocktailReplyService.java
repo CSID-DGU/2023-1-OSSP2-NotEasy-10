@@ -32,4 +32,18 @@ public class CocktailReplyService {
         CocktailReply saveReply=cocktailReplyRepository.save(cocktailReply);
         return new CocktailReplyDto(saveReply,cocktail_id,userId);
     }
+    public String deleteReply(int replyId,int cocktailId,Authentication authentication){
+        CocktailReply cocktailReply=cocktailReplyRepository.findById(replyId);
+        if(cocktailId==cocktailReply.getCocktail().getId()&&cocktailReply.getUser().getId()==userRepository.findByUsername(authentication.getName()).getId()){
+            cocktailReplyRepository.deleteById(replyId);
+            return "success";
+        }
+        return "fail";
+    }
+    public CocktailReplyDto editReply(int replyId,int cocktailId,Authentication authentication,CocktailReplyDto cocktailReplyDto){
+        CocktailReply cocktailReply=cocktailReplyRepository.findById(replyId);
+        cocktailReply.setContent(cocktailReplyDto.getContent());
+        cocktailReplyRepository.save(cocktailReply);
+        return new CocktailReplyDto(cocktailReply);
+    }
 }
