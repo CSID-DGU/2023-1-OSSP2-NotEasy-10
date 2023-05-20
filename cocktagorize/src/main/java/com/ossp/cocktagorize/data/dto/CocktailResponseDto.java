@@ -49,7 +49,7 @@ public class CocktailResponseDto {
                 .collect(Collectors.toList());
         userLikeCocktail=false;
     }
-    public CocktailResponseDto (Cocktail cocktail, Optional<UserLikeCocktail> userLike) {
+    public CocktailResponseDto (Cocktail cocktail, Optional<UserLikeCocktail> userLikedCocktail) {
         id = cocktail.getId();
         name = cocktail.getName();
         recipe = cocktail.getRecipe();
@@ -59,6 +59,6 @@ public class CocktailResponseDto {
         cocktailTagList = cocktail.getCocktailTagList().stream()
                 .map(cocktailTag -> new TagDto(cocktailTag.getTag()))
                 .collect(Collectors.toList());
-        userLikeCocktail=userLike.isPresent();
+        userLikeCocktail=userLikedCocktail.isPresent();
     }
 }
