@@ -58,7 +58,7 @@ import '../component/UserTip.css'
 
 // `;
 
-const UserTip = () => {
+const UserTip = (tip) => {
   // return (
   //   <UserTipBlock>
   //     <InfoBlock>
@@ -74,116 +74,21 @@ const UserTip = () => {
   //     <Input type="checkbox" />
   //   </UserTipBlock>
   // );
-  const [name, setName] = useState('');
-  const [comment, setComment] = useState('');
-  const [comments, setComments] = useState([]);
-  const [likedComments, setLikedComments] = useState([]);
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editedComment, setEditedComment] = useState('');
-
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newComment = {
-      id: new Date().getTime(),
-      name,
-      comment,
-      timestamp: new Date().toLocaleString(),
-      liked: false,
-    };
-    setComments([...comments, newComment]);
-    setName('');
-    setComment('');
-  };
-
-  const handleLike = (commentId) => {
-    const updatedComments = comments.map((comment) => {
-      if (comment.id === commentId) {
-        const updatedComment = { ...comment, liked: !comment.liked };
-        if (updatedComment.liked) {
-          setLikedComments([...likedComments, commentId]);
-        } else {
-          const filteredLikedComments = likedComments.filter(
-            (id) => id !== commentId
-          );
-          setLikedComments(filteredLikedComments);
-        }
-        return updatedComment;
-      }
-      return comment;
-    });
-    setComments(updatedComments);
-  };
-
-  const handleEdit = (commentId, commentText) => {
-    setEditingCommentId(commentId);
-    setEditedComment(commentText);
-  };
-
-  const handleSave = (commentId) => {
-    const updatedComments = comments.map((comment) => {
-      if (comment.id === commentId) {
-        return { ...comment, comment: editedComment };
-      }
-      return comment;
-    });
-    setComments(updatedComments);
-    setEditingCommentId(null);
-  };
-
-  const handleDelete = (commentId) => {
-    const updatedComments = comments.filter((comment) => comment.id !== commentId);
-    setComments(updatedComments);
-    setEditingCommentId(null);
-  };
 
   return (
-    <div>
-      {comments.map((comment) => (
-        <div key={comment.id}>
-          <div className="tip">
-            <p>이름: {comment.name}</p>
-            {editingCommentId === comment.id ? (
-              <div className="writeEdit">
-                <textarea
-                  type="text"
-                  value={editedComment}
-                  onChange={(event) =>
-                    setEditedComment(event.target.value)
-                  }
-                />
-                <button onClick={() => handleSave(comment.id)}>저장</button>
-              </div>
-            ) : (
-              <p>댓글 내용: {comment.comment}</p>
-            )}
-            <div className="likeAndTime">
-              <p>좋아요 수: <button onClick={() => handleLike(comment.id)}>
-                {comment.liked ? <VscHeartFilled /> : <VscHeart />}</button>
-                {likedComments.filter(id => id === comment.id).length}</p>
-              <p>댓글 작성 시간: {comment.timestamp}</p>
-            </div>
-          </div>
-          <div className="edit">
-            <button onClick={() => handleEdit(comment.id, comment.comment)}>
-              {editingCommentId === comment.id ? '취소' : '수정'}
-            </button>
-            <button onClick={() => handleDelete(comment.id)}>삭제</button>
-          </div>
+    <div className="UserTip">
+      <div>
+        <div className="tip">
+          <p className="tip_name">{tip.tip.user.name}</p>
+          <p className="tip_content">{tip.tip.content}</p>
+          <p className="tip_createdDate">{tip.tip.createdDate}</p>
+          <hr/>
         </div>
-      ))}
-      <form onSubmit={handleSubmit} className="write">
-        <textarea
-          type="text"
-          placeholder="댓글 작성"
-          value={comment}
-          onChange={handleCommentChange}
-        />
-        <button type="submit">댓글 작성</button>
-      </form>
+        <div className="tool">
+          <button className="tool_edit">수정</button>
+          <button className="tool_delete">삭제</button>
+        </div>
+      </div>
     </div>
   );
 };
