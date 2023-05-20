@@ -13,6 +13,7 @@ import CommunityPostWrite from "./pages/community/CommunityPostWrite";
 import Layout from "./Layout";
 import {useContext} from "react";
 import AuthContext from "./jwt/auth-context";
+import Weather from "./Weather";
 
 function App() {
 

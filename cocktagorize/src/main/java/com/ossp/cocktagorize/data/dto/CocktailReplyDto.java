@@ -11,11 +11,13 @@ import java.sql.Timestamp;
 public class CocktailReplyDto {
     private int id;
     private String content;
-    private int liked;
     private Timestamp createdDate;
     private UserDto user;
+    private int userId;
+    private int cocktailId;
     @Getter
     @NoArgsConstructor
+    static
     class UserDto{
         private int id;
         private String name;
@@ -26,10 +28,18 @@ public class CocktailReplyDto {
     }
     public CocktailReplyDto(CocktailReply cocktailReply){
         id=cocktailReply.getId();
-        content= cocktailReply.getContent();;
-        liked= cocktailReply.getLiked();
+        content= cocktailReply.getContent();
         createdDate=cocktailReply.getCreatedDate();
-        user=new UserDto(cocktailReply.getUser());
+        user= new UserDto(cocktailReply.getUser());
+        cocktailId=cocktailReply.getCocktail().getId();
+        userId=user.getId();
+    }
+    public CocktailReplyDto(CocktailReply cocktailReply, int cocktailId1, int userId1){
+        id=cocktailReply.getId();
+        content=cocktailReply.getContent();
+        createdDate=cocktailReply.getCreatedDate();
+        userId=userId1;
+        cocktailId=cocktailId1;
     }
 
 }

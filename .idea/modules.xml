@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/2023-1-OSSP2-NotEasy-10.iml" filepath="$PROJECT_DIR$/.idea/2023-1-OSSP2-NotEasy-10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cocktagorize.iml" filepath="$PROJECT_DIR$/.idea/modules/cocktagorize.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cocktagorize.main.iml" filepath="$PROJECT_DIR$/.idea/modules/cocktagorize.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cocktagorize.test.iml" filepath="$PROJECT_DIR$/.idea/modules/cocktagorize.test.iml" />
     </modules>
   </component>
 </project>

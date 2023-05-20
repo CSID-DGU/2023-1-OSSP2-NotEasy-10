@@ -1,7 +1,8 @@
 import { GET, POST } from "./fetch-auth-action";
+import AuthContext from "./auth-context";
 
 // 토큰을 만드는 함수
-const createTokenHeader = (token) => {
+export const createTokenHeader = (token) => {
     return {
         headers: {
             'Authorization': token

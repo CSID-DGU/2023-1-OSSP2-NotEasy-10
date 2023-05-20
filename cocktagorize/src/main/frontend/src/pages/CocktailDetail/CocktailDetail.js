@@ -6,11 +6,13 @@ import Tag from "../../component/common/tag.js";
 import { VscHeartFilled, VscUnmute, VscLinkExternal } from "react-icons/vsc";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
 
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
 	const [cocktail, setCocktail] = useState(null);
 
+	//기본으로 계속 보여줘야 할 칵테일 정보들
 	useEffect(() => {
 		const getCocktailDetails = async () => {
 			try {
@@ -21,10 +23,10 @@ const CocktailDetail = () => {
 				setCocktail(response.data);
 				// Handle the cocktail data as needed
 			} catch (error) {
-				// Handle the error
 				console.error(error);
 			}
 		};
+
 		getCocktailDetails();
 	}, []);
 
@@ -66,17 +68,14 @@ const CocktailDetail = () => {
 								src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
 								alt="유사 칵테일 이미지"
 							></img>
-							{/* 유사 칵테일 링크 클릭 시 바로 안넘어가지고 새로고침을 해야함 -> 수정 필요*/}
 							<div
 								className="cocktail_similar_name"
 								key={cocktail.similarCocktail.id}
 							>
 								{cocktail.similarCocktail.name}{" "}
-								<Link
-									to={`/cocktail/${cocktail.similarCocktail.id}`}
-								>
+								<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
 									<VscLinkExternal />
-								</Link>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -97,7 +96,7 @@ const CocktailDetail = () => {
 									</span>
 									<p>도수: </p>
 									<span className="alchol" key={cocktail.id}>
-										{cocktail.alcholeDegree}
+										소주 {cocktail.alcholeDegree}잔
 									</span>
 									<p>추천잔: </p>
 									<span className="glass" key={cocktail.id}>
@@ -114,7 +113,6 @@ const CocktailDetail = () => {
 						</div>
 					</div>
 				</div>
-				{/* 댓글 기능 -> 추가 필요 */}
 				<UserTipList />
 			</div>
 		</div>
