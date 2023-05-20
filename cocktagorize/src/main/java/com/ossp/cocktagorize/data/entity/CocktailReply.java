@@ -1,9 +1,7 @@
 package com.ossp.cocktagorize.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
@@ -22,9 +20,6 @@ public class CocktailReply {
     @Lob
     private String content;
 
-    @Column(nullable = false)
-    @ColumnDefault("0")
-    private int liked;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cocktail_id")

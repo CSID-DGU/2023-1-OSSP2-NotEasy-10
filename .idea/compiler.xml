@@ -12,5 +12,10 @@
         <module name="cocktagorize.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cocktagorize" target="17" />
+      <module name="cocktagorize.main" target="17" />
+      <module name="cocktagorize.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

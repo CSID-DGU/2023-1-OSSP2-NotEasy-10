@@ -19,7 +19,6 @@ public class UserController {
         this.userService = userService;
         this.preferCocktailService = preferCocktailService;
     }
-
     @GetMapping("/cocktail/prefer/{username}")
     @ResponseBody
     public ResponseEntity<List<CocktailResponseDto>> getPrefer(@PathVariable String username){

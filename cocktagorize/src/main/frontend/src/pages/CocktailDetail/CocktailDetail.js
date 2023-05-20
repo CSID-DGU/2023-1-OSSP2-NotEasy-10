@@ -6,11 +6,13 @@ import Tag from "../../component/common/tag.js";
 import { VscHeartFilled, VscUnmute, VscLinkExternal } from "react-icons/vsc";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
 
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
 	const [cocktail, setCocktail] = useState(null);
 
+	//기본으로 계속 보여줘야 할 칵테일 정보들
 	useEffect(() => {
 		const getCocktailDetails = async () => {
 			try {
@@ -21,10 +23,10 @@ const CocktailDetail = () => {
 				setCocktail(response.data);
 				// Handle the cocktail data as needed
 			} catch (error) {
-				// Handle the error
 				console.error(error);
 			}
 		};
+
 		getCocktailDetails();
 	}, []);
 
