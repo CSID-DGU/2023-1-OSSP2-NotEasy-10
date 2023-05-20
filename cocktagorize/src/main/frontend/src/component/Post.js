@@ -8,8 +8,8 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 const Card = styled.div`
-	width: 40vw;
-	height: calc(11.75vh);
+	width: ${(props) => props.width || "40vw"};
+	height: ${(props) => props.height || "110px"};
 	background-color: #ffffff;
 	margin: 0px;
 	margin-left: ${(props) => props.horizontalMargin || "0px"};
@@ -23,7 +23,7 @@ const Card = styled.div`
 `;
 
 const TitleContainer = styled.div`
-	margin: 8px 10px;
+	margin: 12px 10px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -58,22 +58,27 @@ const TitleText = styled.p`
 
 const InfoContainer = styled.div`
 	width: 100%;
-	height: 50%;
+	height: calc(100% - 50px);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin: 0px 5px;
+	margin: 0px 10px;
 `;
 
 const InfoText = styled.p`
-	height: 80%;
+	height: 2.4em;
+	line-height: 1.2;
 	margin: 0px 8px;
 	overflow: hidden;
+	text-align: left;
 	text-overflow: ellipsis;
 	white-space: normal;
 	word-break: keep-all;
+	word-wrap: break-word;
+	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-user-select: none;
+	-webkit-box-orient: vertical;
 `;
 
 const BlackHeartImage = styled.img`
@@ -95,6 +100,8 @@ function Post(props) {
 			<Card
 				horizontalMargin={props.horizontalMargin}
 				verticalMargin={props.verticalMargin}
+				width={props.width}
+				height={props.height}
 			>
 				<TitleContainer>
 					<TitleText>{props.info.title}</TitleText>

@@ -53,19 +53,19 @@ const NameText = styled.div`
 	-webkit-user-select: none;
 
 	@media (max-width: 600px) {
-		font-size: 6px;
+		font-size: 4px;
 	}
 	@media (min-width: 600px) and (max-width: 900px) {
-		font-size: 8px;
+		font-size: 6px;
 	}
 	@media (min-width: 900px) and (max-width: 1200px) {
-		font-size: 10px;
+		font-size: 8px;
 	}
 	@media (min-width: 1200px) and (max-width: 1600px) {
-		font-size: 12px;
+		font-size: 10px;
 	}
 	@media (min-width: 1600px) {
-		font-size: 14px;
+		font-size: 12px;
 	}
 `;
 

@@ -7,8 +7,8 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 const Card = styled.div`
-	width: 15.625vw;
-	height: calc(75vh - 270px);
+	width: ${(props) => props.width || "25vw"};
+	height: ${(props) => props.height || "144px"};
 	background-color: #ffffff;
 	margin: 0px;
 	margin-left: ${(props) => props.horizontalMargin || "0px"};
@@ -18,55 +18,36 @@ const Card = styled.div`
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 `;
 
 const Image = styled.img`
-	width: 100%;
-	-webkit-user-drag: none;
-	-webkit-user-select: none;
-
-	@media (max-width: 600px) {
-		height: 40%;
-	}
-	@media (min-width: 600px) and (max-width: 900px) {
-		height: 45%;
-	}
-	@media (min-width: 900px) and (max-width: 1200px) {
-		height: 50%;
-	}
-	@media (min-width: 1200px) and (max-width: 1600px) {
-		height: 55%;
-	}
-	@media (min-width: 1600px) {
-		height: 60%;
-	}
+	width: 30%;
+	height: calc(100% - 16px);
+	margin: 8px 8px;
 `;
 
 const Container = styled.div`
-	margin: 0px 16px;
+	margin: 8px 8px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	width: 70%;
+	height: 100%;
+`;
 
-	@media (max-width: 600px) {
-		height: 55%;
-	}
-	@media (min-width: 600px) and (max-width: 900px) {
-		height: 50%;
-	}
-	@media (min-width: 900px) and (max-width: 1200px) {
-		height: 45%;
-	}
-	@media (min-width: 1200px) and (max-width: 1600px) {
-		height: 40%;
-	}
-	@media (min-width: 1600px) {
-		height: 35%;
-	}
+const TopContainer = styled.div`
+	margin: 0px 0px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 30%;
 `;
 
 const TitleContainer = styled.div`
+	width: 75%;
 	margin: 5px 0px;
 	display: flex;
 	flex-direction: row;
@@ -74,7 +55,7 @@ const TitleContainer = styled.div`
 `;
 
 const NameText = styled.p`
-	width: 75%;
+	width: 100%;
 	color: black;
 	@media (max-width: 600px) {
 		font-size: 12px;
@@ -95,36 +76,9 @@ const NameText = styled.p`
 	font-weight: bold;
 	white-space: nowrap;
 	overflow-x: hidden;
-	margin: 0px 0px 0px 10px;
+	margin: 0px 0px 0px 0px;
 	-webkit-user-select: none;
 	height: inherit;
-`;
-
-const SoundImage = styled.img`
-	margin: auto;
-	-webkit-user-drag: none;
-	-webkit-user-select: none;
-
-	@media (max-width: 600px) {
-		width: 12px;
-		height: 12px;
-	}
-	@media (min-width: 600px) and (max-width: 900px) {
-		width: 14px;
-		height: 14px;
-	}
-	@media (min-width: 900px) and (max-width: 1200px) {
-		width: 16px;
-		height: 16px;
-	}
-	@media (min-width: 1200px) and (max-width: 1600px) {
-		width: 18px;
-		height: 18px;
-	}
-	@media (min-width: 1600px) {
-		width: 20px;
-		height: 20px;
-	}
 `;
 
 const TagContainer = styled.div`
@@ -135,7 +89,7 @@ const TagContainer = styled.div`
 	overflow-x: hidden;
 	overflow-y: auto;
 	width: 100%;
-	height: calc(100% - 50px);
+	height: calc(70%);
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -162,14 +116,14 @@ const HeartContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin: 8px 8px;
+	margin: 8px 0px;
 	height: 16px;
 `;
 
 const BlackHeartImage = styled.img`
 	width: 16px;
 	height: 16px;
-	margin: 8px 8px;
+	margin: 0px 8px;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
 `;
@@ -179,48 +133,32 @@ const HeartText = styled.div`
 	-webkit-user-select: none;
 `;
 
-const styles = {
-	link: {
-		margin: "0px 8px",
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		height: "calc(100% - 40px)",
-	},
-};
-
-function CocktailCard(props) {
-	const likeClicked = (event) => {
-		console.log("클릭됨!");
-		// 로그인을 했다면
-		// if (authCtx.isLoggedIn) {
-		//     const result = PUT(`http://localhost:8080/cocktail/${props.info.id}/like`, null, createTokenHeader(authCtx.token));
-		//     // 만약 이미 좋아요를 누른 칵테일이라면
-		//     result.then((result) => {
-		//         if (result !== null) {
-		//             setLike(result.data.liked);
-		//         }
-		//     });
-		// } else {
-		//     alert("로그인을 해주세요!");
-		// }
-	};
-
+function Recipe(props) {
 	return (
-		<Card
-			horizontalMargin={props.horizontalMargin}
-			verticalMargin={props.verticalMargin}
-		>
-			<Link to={`/cocktail/${props.info.id}`} style={styles.link}>
+		<Link to={`/cocktail/${props.info.id}`}>
+			<Card
+				horizontalMargin={props.horizontalMargin}
+				verticalMargin={props.verticalMargin}
+				width={props.width}
+				height={props.height}
+			>
 				<Image
 					src={require(`../images/${props.info.id}.jpeg`)}
 					alt={cocktailImage}
 				/>
 				<Container>
-					<TitleContainer>
-						<NameText>{props.info.name}</NameText>
-						<SoundImage src={soundImage} alt={soundImage} />
-					</TitleContainer>
+					<TopContainer>
+						<TitleContainer>
+							<NameText>{props.info.name}</NameText>
+						</TitleContainer>
+						<HeartContainer>
+							<BlackHeartImage
+								src={blackHeartImage}
+								alt={blackHeartImage}
+							/>
+							<HeartText>{props.info.liked}</HeartText>
+						</HeartContainer>
+					</TopContainer>
 					<TagContainer>
 						{props.info.cocktailTagList &&
 							props.info.cocktailTagList.map((info, index) => (
@@ -228,16 +166,12 @@ function CocktailCard(props) {
 							))}
 					</TagContainer>
 				</Container>
-			</Link>
-			<HeartContainer onClick={() => likeClicked()}>
-				<BlackHeartImage src={blackHeartImage} alt={blackHeartImage} />
-				<HeartText>{props.info.liked}</HeartText>
-			</HeartContainer>
-		</Card>
+			</Card>
+		</Link>
 	);
 }
 
-CocktailCard.defaultProps = {
+Recipe.defaultProps = {
 	info: {
 		id: 0,
 		name: "불러오기 실패",
@@ -256,4 +190,4 @@ CocktailCard.defaultProps = {
 	},
 };
 
-export default CocktailCard;
+export default Recipe;

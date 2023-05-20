@@ -330,70 +330,47 @@ const Home = () => {
 		}
 		return result;
 	}
-	function weatherScrollIndexButton() {
-		let result = [];
-		for (let i = 0; i < 5; i++) {
-			result.push(
-				<home.WeatherScrollIndex
-					index={weatherScrollIndex}
-					btnIndex={i}
-					onClick={() => setWeatherScrollIndex(i)}
-				>
-					<home.Text>{i + 1}</home.Text>
-				</home.WeatherScrollIndex>
-			);
-		}
-		return result;
-	}
 
 	function weatherScrollCocktailCard() {
 		let result = [];
 		for (let i = 0; i < 5; i++) {
-			result.push(
-				<home.WeatherCocktailCard
-					index={weatherScrollIndex}
-					cardIndex={i}
-					key={i}
-				>
-					<CocktailCard
-						info={cocktailList[i]}
-						key={cocktailList[i].id}
-					/>
-				</home.WeatherCocktailCard>
-			);
-		}
-		return result;
-	}
-	function weatherScrollCocktailCard() {
-		let result = [];
-		for (let i = 0; i < 5; i++) {
-			result.push(
-				<home.WeatherCocktailCard
-					index={weatherScrollIndex}
-					cardIndex={i}
-				>
-					<CocktailCard info={cocktailList[i]} />
-				</home.WeatherCocktailCard>
-			);
+			if (weatherCocktailList.length > i) {
+				result.push(
+					<home.WeatherCocktailCard
+						index={weatherScrollIndex}
+						cardIndex={i}
+						key={i}
+					>
+						<CocktailCard
+							info={weatherCocktailList[i]}
+							key={weatherCocktailList[i].id}
+						/>
+					</home.WeatherCocktailCard>
+				);
+			}
 		}
 		return result;
 	}
 
-	function cocktailCard(props) {
+	function userCocktailCard(props) {
+		if (userCocktailList == undefined) {
+			return;
+		}
 		let result = [];
 		for (let i = 0; i < props.amount; i++) {
-			if (cocktailList.length > i)
+			if (userCocktailList.length > i)
 				result.push(
 					<CocktailCard
 						horizontalMargin={props.hMargin + "px"}
 						verticalMargin={props.vMargin + "px"}
-						info={cocktailList[i]}
-						key={cocktailList[i].id}
+						info={userCocktailList[i]}
+						key={userCocktailList[i].id}
 					/>
 				);
 		}
 		return result;
 	}
+
 	function cocktailCard(props) {
 		let result = [];
 		for (let i = 0; i < props.amount; i++) {
@@ -403,6 +380,7 @@ const Home = () => {
 						horizontalMargin={props.hMargin + "px"}
 						verticalMargin={props.vMargin + "px"}
 						info={cocktailList[i]}
+						key={cocktailList[i].id}
 					/>
 				);
 		}
@@ -451,47 +429,6 @@ const Home = () => {
 		sort(currentTagData, sortType);
 	};
 
-	function sort(tags, type) {
-		if (isLoading) return;
-		setIsLoading(true);
-		let tempTags = [];
-		tags.map((tag) => tempTags.push(tag.name));
-		let realSortType = type;
-		if (type === -1) realSortType = sortType;
-		switch (realSortType) {
-			case 0:
-				getAllCocktailById(page);
-				break;
-			case 1:
-				getAllCocktailByLiked(page);
-				break;
-			case 2:
-				getAllCocktailByUpdate(page);
-				break;
-			case 3:
-				getAllCocktailByName(page);
-				break;
-			case 4:
-				getCocktailBySearchName(searchText, page);
-				break;
-			case 5:
-				getCocktailByTagAnd(page, tempTags);
-				break;
-			case 6:
-				getCocktailByTagOr(page, tempTags);
-				break;
-			case 7:
-				if (searchMode === "AND") {
-					getCocktailByTagAnd(page, tempTags);
-				} else {
-					getCocktailByTagOr(page, tempTags);
-				}
-				break;
-		}
-		setSortType(realSortType);
-		console.log("sortType : " + sortType);
-		// console.log(cocktailList);
-	}
 	function sort(tags, type) {
 		setIsLoading(true);
 		let tempTags = [];
@@ -582,52 +519,6 @@ const Home = () => {
 		);
 		return result;
 	}
-	function pageScrollIndexButton() {
-		let result = [];
-		result.push(
-			<>
-				<home.PageScrollIndex
-					page={page}
-					btnIndex={0}
-					onClick={() => {
-						setPage(0);
-					}}
-				>
-					<home.Text>{1}</home.Text>
-				</home.PageScrollIndex>
-				<home.Text>...</home.Text>
-			</>
-		);
-		for (let i = page - 5; i <= page + 5; i++) {
-			if (i < 0 || i >= maxPage) continue;
-			result.push(
-				<home.PageScrollIndex
-					page={page}
-					btnIndex={i}
-					onClick={() => {
-						setPage(i);
-					}}
-				>
-					<home.Text>{i + 1}</home.Text>
-				</home.PageScrollIndex>
-			);
-		}
-		result.push(
-			<>
-				<home.Text>...</home.Text>
-				<home.PageScrollIndex
-					page={page}
-					btnIndex={maxPage - 1}
-					onClick={() => {
-						setPage(maxPage - 1);
-					}}
-				>
-					<home.Text>{maxPage}</home.Text>
-				</home.PageScrollIndex>
-			</>
-		);
-		return result;
-	}
 
 	return (
 		<home.Entire>
@@ -684,7 +575,7 @@ const Home = () => {
 					</home.Sort>
 				</home.Explore>
 				<home.NonExplore>
-					{isLogin ? (
+					{/*isLogin ? (
 						<>
 							<home.WeatherNUserCocktail>
 								<home.Weather>
@@ -726,7 +617,7 @@ const Home = () => {
 										</home.UserRecommandInfo>
 									</home.UserRecommandInfoBox>
 									<home.UserRecommandCocktail>
-										{cocktailCard({
+										{userCocktailCard({
 											amount: 3,
 											hMargin: 10,
 											vMargin: 0,
@@ -737,7 +628,7 @@ const Home = () => {
 							</home.WeatherNUserCocktail>
 							<home.Hr></home.Hr>
 						</>
-					) : null}
+					) : null*/}
 
 					<home.NormalRecommandCocktail>
 						{cocktailCard({
