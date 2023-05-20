@@ -21,8 +21,6 @@ public class CocktailReplyService {
     private CocktailDetailrepository cocktailDetailrepository;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private UserLikeCocktailRepository userLikeCocktailRepository;
 
     public CocktailReplyDto createReply(CocktailReplyRequestDto cocktailReplyDto, int cocktail_id, Authentication authentication){
         String content=cocktailReplyDto.getContent();
