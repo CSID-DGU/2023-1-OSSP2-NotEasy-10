@@ -31,7 +31,7 @@ public class CocktailReplyController {
         return ResponseEntity.ok("fail");
     }
     @PutMapping("/reply/{reply_id}")
-    public ResponseEntity<CocktailReplyDto> editReply(@PathVariable int reply_id,@PathVariable int cocktail_id,@RequestBody CocktailReplyDto cocktailReplyDto){
+    public ResponseEntity<CocktailReplyDto> editReply(@PathVariable int reply_id,@RequestBody CocktailReplyDto cocktailReplyDto){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.getPrincipal() != "anonymousUser"){
             return ResponseEntity.ok(cocktailReplyService.editReply(reply_id,cocktailReplyDto));
