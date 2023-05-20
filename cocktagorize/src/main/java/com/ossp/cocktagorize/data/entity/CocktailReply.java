@@ -22,9 +22,6 @@ public class CocktailReply {
     @Lob
     private String content;
 
-    @Column(nullable = false)
-    @ColumnDefault("0")
-    private int liked;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cocktail_id")

@@ -5,6 +5,7 @@ import com.ossp.cocktagorize.data.dto.CocktailReplyRequestDto;
 import com.ossp.cocktagorize.data.entity.CocktailReply;
 import com.ossp.cocktagorize.data.repository.CocktailDetailrepository;
 import com.ossp.cocktagorize.data.repository.CocktailReplyRepository;
+import com.ossp.cocktagorize.data.repository.UserLikeCocktailRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,8 @@ public class CocktailReplyService {
     private CocktailDetailrepository cocktailDetailrepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserLikeCocktailRepository userLikeCocktailRepository;
 
     public CocktailReplyDto createReply(CocktailReplyRequestDto cocktailReplyDto, int cocktail_id, Authentication authentication){
         String content=cocktailReplyDto.getContent();
@@ -32,6 +35,4 @@ public class CocktailReplyService {
         CocktailReply saveReply=cocktailReplyRepository.save(cocktailReply);
         return new CocktailReplyDto(saveReply,cocktail_id,userId);
     }
-
-
 }
