@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 public class CocktailReplyDto {
     private int id;
     private String content;
-    private int liked;
     private Timestamp createdDate;
     private UserDto user;
     private int userId;
@@ -30,7 +29,6 @@ public class CocktailReplyDto {
     public CocktailReplyDto(CocktailReply cocktailReply){
         id=cocktailReply.getId();
         content= cocktailReply.getContent();
-        liked= cocktailReply.getLiked();
         createdDate=cocktailReply.getCreatedDate();
         user= new UserDto(cocktailReply.getUser());
         cocktailId=cocktailReply.getCocktail().getId();
@@ -39,7 +37,6 @@ public class CocktailReplyDto {
     public CocktailReplyDto(CocktailReply cocktailReply, int cocktailId1, int userId1){
         id=cocktailReply.getId();
         content=cocktailReply.getContent();
-        liked=cocktailReply.getLiked();
         createdDate=cocktailReply.getCreatedDate();
         userId=userId1;
         cocktailId=cocktailId1;

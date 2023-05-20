@@ -9,7 +9,7 @@ import {AuthContextProvider} from "./jwt/auth-context";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-    <AuthContextProvider>
+    <AuthContextProvider displayName="Context Display Name">
         <BrowserRouter>
             <App />
         </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
@@ -11,25 +11,6 @@ import AuthContext from "../../jwt/auth-context";
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
 	const [cocktail, setCocktail] = useState(null);
-	const [replyList, setReplyList] = useState([]);
-
-	const authCtx = useContext(AuthContext);
-	let isLogin = authCtx.isLoggedIn;
-	let isGetUser = authCtx.isGetUserSuccess;
-
-	//로그인 시 유저정보 가져오기
-	useEffect(() => {
-		if (isLogin) {
-			authCtx.getUser();
-		}
-	}, [isLogin]);
-
-	//얜 뭐지, 아 그냥 유저 닉네임 콘솔에 보여주는 용도
-	useEffect(() => {
-		if (isGetUser) {
-			console.log(authCtx.userObj.nickname);
-		}
-	}, [isGetUser]);
 
 	//기본으로 계속 보여줘야 할 칵테일 정보들
 	useEffect(() => {
@@ -38,13 +19,14 @@ const CocktailDetail = () => {
 				const response = await axios.get(
 					`http://localhost:8080/cocktail/${cocktail_id}`
 				);
-				console.log("댓글 response 정보들 : " + JSON.stringify(response.data.cocktailReplyList, null, 2));
+				console.log(response.data);
 				setCocktail(response.data);
-				setReplyList(response.data.cocktailReplyList);
+				// Handle the cocktail data as needed
 			} catch (error) {
 				console.error(error);
 			}
 		};
+
 		getCocktailDetails();
 	}, []);
 
@@ -59,19 +41,6 @@ const CocktailDetail = () => {
 		(tag) => tag.category === "INGREDIENT" || tag.category === "ALCOHOL"
 	);
 	const ingredient = ingre.map((tag) => <p key={tag.id}>{tag.name}</p>);
-
-	// 작성자
-	replyList.map((reply) => console.log(reply.user.name));
-
-	// 작성날짜
-	replyList.map((reply) => console.log(reply.createdDate));
-
-	// 댓글 나용
-	replyList.map((reply) => console.log(reply.content));
-
-	// 좋아요 수
-	replyList.map((reply) => console.log(reply.liked));
-
 
 	return (
 		<div className="CocktailDetail">

@@ -10,11 +10,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/cocktail/{cocktail_id}")
 public class CocktailReplyController {
     @Autowired
     private CocktailReplyService cocktailReplyService;
-    @PostMapping("/cocktail/{cocktail_id}/reply")
+    @PostMapping("/reply")
     public ResponseEntity<CocktailReplyDto> createReply(@RequestBody CocktailReplyRequestDto cocktailReplyDto, @PathVariable int cocktail_id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() != "anonymousUser") {
