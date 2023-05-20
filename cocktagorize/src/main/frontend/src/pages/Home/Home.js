@@ -8,6 +8,7 @@ import CocktailCard from "../../component/cocktailCard.js";
 import plusImage from "../../images/plusButton.png";
 import blackXImage from "../../images/blackXButton.png";
 import * as home from "./HomeCss.js";
+import * as auth from "../../jwt/auth-context.js";
 import axios from "axios";
 
 const Home = () => {
@@ -22,7 +23,7 @@ const Home = () => {
 
 	const [page, setPage] = useState(0);
 	const [maxPage, setMaxPage] = useState(1);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
 	const [searchText, setSearchText] = useState();
@@ -39,9 +40,7 @@ const Home = () => {
 	useEffect(() => {
 		// page는 0부터 시작 -> 사용자한테 보여지는 1 page = 받아온 data 0 page
 		// 따라서 함수를 호출 할 때 page 매개 변수의 값이 0이면은 사용자에게 보여지는 1 page 의 정보를 갖고오는 것
-
 		// 처음 페이지 랜더링 될 때 칵테일 id 순으로 불러옴
-
 		sort(currentTagData, sortType);
 	}, []);
 
@@ -224,6 +223,7 @@ const Home = () => {
 				<home.WeatherScrollIndex
 					index={weatherScrollIndex}
 					btnIndex={i}
+					key={i}
 					onClick={() => setWeatherScrollIndex(i)}
 				>
 					<home.Text>{i + 1}</home.Text>
@@ -240,8 +240,12 @@ const Home = () => {
 				<home.WeatherCocktailCard
 					index={weatherScrollIndex}
 					cardIndex={i}
+					key={i}
 				>
-					<CocktailCard info={cocktailList[i]} />
+					<CocktailCard
+						info={cocktailList[i]}
+						key={cocktailList[i].id}
+					/>
 				</home.WeatherCocktailCard>
 			);
 		}
@@ -257,6 +261,7 @@ const Home = () => {
 						horizontalMargin={props.hMargin + "px"}
 						verticalMargin={props.vMargin + "px"}
 						info={cocktailList[i]}
+						key={cocktailList[i].id}
 					/>
 				);
 		}
@@ -306,6 +311,7 @@ const Home = () => {
 	};
 
 	function sort(tags, type) {
+		if (isLoading) return;
 		setIsLoading(true);
 		let tempTags = [];
 		tags.map((tag) => tempTags.push(tag.name));
@@ -342,7 +348,7 @@ const Home = () => {
 				break;
 		}
 		setSortType(realSortType);
-		// console.log("sortType : " + sortType);
+		console.log("sortType : " + sortType);
 		// console.log(cocktailList);
 	}
 
@@ -353,6 +359,7 @@ const Home = () => {
 				<home.PageScrollIndex
 					page={page}
 					btnIndex={0}
+					key={-1}
 					onClick={() => {
 						setPage(0);
 					}}
@@ -368,6 +375,7 @@ const Home = () => {
 				<home.PageScrollIndex
 					page={page}
 					btnIndex={i}
+					key={i}
 					onClick={() => {
 						setPage(i);
 					}}
@@ -382,6 +390,7 @@ const Home = () => {
 				<home.PageScrollIndex
 					page={page}
 					btnIndex={maxPage - 1}
+					key={maxPage}
 					onClick={() => {
 						setPage(maxPage - 1);
 					}}
@@ -421,9 +430,7 @@ const Home = () => {
 								setSearchMode(e.target.value);
 							}}
 						>
-							<home.SearchOptionBase selected="selected">
-								AND
-							</home.SearchOptionBase>
+							<home.SearchOptionBase>AND</home.SearchOptionBase>
 							<home.SearchOptionBase>OR</home.SearchOptionBase>
 						</home.SearchOption>
 						<home.ModalButton
@@ -437,70 +444,68 @@ const Home = () => {
 							{currentTagData.map((info, index) => (
 								<Tag
 									info={info}
-									key={index}
+									key={info}
 									onDelete={deleteTag}
 								/>
 							))}
 						</home.TagSearch>
 					</home.TagSearchDiv>
 					<home.Sort onChange={(e) => onSortChanged(e)}>
-						<home.SortBase selected="selected">
-							좋아요가 많은 순서
-						</home.SortBase>
+						<home.SortBase>좋아요가 많은 순서</home.SortBase>
 						<home.SortBase>최근 업데이트 순서</home.SortBase>
 						<home.SortBase>사전 순서</home.SortBase>
 					</home.Sort>
 				</home.Explore>
 				<home.NonExplore>
-					{/*
-					<home.WeatherNUserCocktail>
-						<home.Weather>
-							<home.WeatherInfoBox>
-								<home.WeatherInfo>
-									비가 많이 와요!
-								</home.WeatherInfo>
-							</home.WeatherInfoBox>
-							<home.WeatherCarousel>
-								<home.WeatherCocktail>
-									{weatherScrollCocktailCard()}
-								</home.WeatherCocktail>
-								<home.WeatherScroll>
-									<home.WeatherScrollArrow
-										onClick={() =>
-											onWeatherScrollClick("left")
-										}
-									>
-										<home.Text>◀</home.Text>
-									</home.WeatherScrollArrow>
-									{weatherScrollIndexButton()}
-									<home.WeatherScrollArrow
-										onClick={() =>
-											onWeatherScrollClick("right")
-										}
-									>
-										<home.Text>▶</home.Text>
-									</home.WeatherScrollArrow>
-								</home.WeatherScroll>
-							</home.WeatherCarousel>
-						</home.Weather>
-						<home.UserRecommand>
-							<home.UserRecommandInfoBox>
-								<home.UserRecommandInfo>
-									인생은 마치 칵테일처럼, 적절한 양의 조합과
-									꾸미기가 중요하다. -ChatGPT
-								</home.UserRecommandInfo>
-							</home.UserRecommandInfoBox>
-							<home.UserRecommandCocktail>
-								{cocktailCard({
-									amount: 3,
-									hMargin: 10,
-									vMargin: 0,
-								})}
-							</home.UserRecommandCocktail>
-						</home.UserRecommand>
-					</home.WeatherNUserCocktail>
-					<home.Hr></home.Hr>
-							*/}
+					{auth.AuthContextProvider.isLoggedIn ? (
+						<home.WeatherNUserCocktail>
+							<home.Weather>
+								<home.WeatherInfoBox>
+									<home.WeatherInfo>
+										비가 많이 와요!
+									</home.WeatherInfo>
+								</home.WeatherInfoBox>
+								<home.WeatherCarousel>
+									<home.WeatherCocktail>
+										{weatherScrollCocktailCard()}
+									</home.WeatherCocktail>
+									<home.WeatherScroll>
+										<home.WeatherScrollArrow
+											onClick={() =>
+												onWeatherScrollClick("left")
+											}
+										>
+											<home.Text>◀</home.Text>
+										</home.WeatherScrollArrow>
+										{weatherScrollIndexButton()}
+										<home.WeatherScrollArrow
+											onClick={() =>
+												onWeatherScrollClick("right")
+											}
+										>
+											<home.Text>▶</home.Text>
+										</home.WeatherScrollArrow>
+									</home.WeatherScroll>
+								</home.WeatherCarousel>
+							</home.Weather>
+							<home.UserRecommand>
+								<home.UserRecommandInfoBox>
+									<home.UserRecommandInfo>
+										인생은 마치 칵테일처럼, 적절한 양의
+										조합과 꾸미기가 중요하다. -ChatGPT
+									</home.UserRecommandInfo>
+								</home.UserRecommandInfoBox>
+								<home.UserRecommandCocktail>
+									{cocktailCard({
+										amount: 3,
+										hMargin: 10,
+										vMargin: 0,
+									})}
+								</home.UserRecommandCocktail>
+							</home.UserRecommand>
+							<home.Hr></home.Hr>
+						</home.WeatherNUserCocktail>
+					) : null}
 
 					<home.NormalRecommandCocktail>
 						{cocktailCard({
