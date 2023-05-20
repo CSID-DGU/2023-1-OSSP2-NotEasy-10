@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
@@ -11,17 +11,27 @@ import AuthContext from "../../jwt/auth-context";
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
 	const [cocktail, setCocktail] = useState(null);
+	const [replyList, setReplyList] = useState([]);
 
-	//기본으로 계속 보여줘야 할 칵테일 정보들
+	const authCtx = useContext(AuthContext);
+	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
+
+	useEffect(() => {
+		if (isLogin) {
+			authCtx.getUser();
+		}
+	}, [isLogin]);
+
 	useEffect(() => {
 		const getCocktailDetails = async () => {
 			try {
 				const response = await axios.get(
 					`http://localhost:8080/cocktail/${cocktail_id}`
 				);
-				console.log(response.data);
+				console.log("댓글 response 정보들 : " + JSON.stringify(response.data.cocktailReplyList, null, 2));
 				setCocktail(response.data);
-				// Handle the cocktail data as needed
+				setReplyList(response.data.cocktailReplyList);
 			} catch (error) {
 				console.error(error);
 			}
@@ -56,9 +66,9 @@ const CocktailDetail = () => {
 								alt="칵테일 이미지"
 							/>
 							<div className="cocktail_icon">
-								<VscHeartFilled />{" "}
-								<p key={cocktail.id}>{cocktail.liked}</p>{" "}
-								<VscUnmute />
+								<VscHeartFilled />
+								<span key={cocktail.id}>{cocktail.liked}</span>
+								<p>---------------</p><VscUnmute />
 							</div>
 						</div>
 						<p> 유사한 칵테일 </p>
@@ -72,7 +82,8 @@ const CocktailDetail = () => {
 								className="cocktail_similar_name"
 								key={cocktail.similarCocktail.id}
 							>
-								{cocktail.similarCocktail.name}{" "}
+								<p className="cocktail_similar_name2">{cocktail.similarCocktail.name}{" "}</p>
+								<div className="similar_liked"><VscHeartFilled/> <span key={cocktail.similarCocktail.id}>{cocktail.similarCocktail.liked}</span></div>
 								<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
 									<VscLinkExternal />
 								</a>
@@ -96,7 +107,7 @@ const CocktailDetail = () => {
 									</span>
 									<p>도수: </p>
 									<span className="alchol" key={cocktail.id}>
-										소주 {cocktail.alcholeDegree}잔
+										{cocktail.alcholeDegree}도
 									</span>
 									<p>추천잔: </p>
 									<span className="glass" key={cocktail.id}>
@@ -113,7 +124,7 @@ const CocktailDetail = () => {
 						</div>
 					</div>
 				</div>
-				<UserTipList />
+				<UserTipList tips={replyList}/>
 			</div>
 		</div>
 	);
