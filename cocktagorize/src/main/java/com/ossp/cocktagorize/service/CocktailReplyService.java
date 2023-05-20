@@ -32,6 +32,4 @@ public class CocktailReplyService {
         CocktailReply saveReply=cocktailReplyRepository.save(cocktailReply);
         return new CocktailReplyDto(saveReply,cocktail_id,userId);
     }
-
-
 }
