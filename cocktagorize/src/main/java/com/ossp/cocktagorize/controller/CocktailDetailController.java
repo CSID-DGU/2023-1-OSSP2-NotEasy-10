@@ -20,7 +20,14 @@ public class CocktailDetailController {
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<CocktailDetailResponseDto> getCocktail(@PathVariable int id){
-        CocktailDetailResponseDto cocktailDto= cocktailDetailservice.getCocktailDetail(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CocktailDetailResponseDto cocktailDto;
+        if(authentication != null && authentication.getPrincipal() != "anonymousUser") {
+            cocktailDto = cocktailDetailservice.getCocktailDetailAndLike(id, authentication);
+        }
+        else{
+            cocktailDto=cocktailDetailservice.getCocktailDetail(id);
+        }
         return ResponseEntity.ok(cocktailDto);
     }
     @PutMapping("/{cocktail_id}/like")

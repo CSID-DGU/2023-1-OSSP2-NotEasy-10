@@ -31,6 +31,23 @@ public class CocktailDetailservice {
     private UserLikeCocktailRepository userLikeCocktailRepository;
     @Autowired
     private CocktailTagRepository cocktailTagRepository;
+    public CocktailDetailResponseDto getCocktailDetailAndLike(int id,Authentication authentication){
+        Cocktail cocktail=cocktailDetailrepository.findById(id);
+        List<CocktailTag> tagList=new ArrayList<>();
+        for(CocktailTag tag:cocktail.getCocktailTagList()){
+            int tagId=tag.getTag().getId();
+            if(tagId<643||tagId>648) {
+                tagList.addAll(cocktailTagRepository.findCocktailTagsByTagId(tagId));
+            }
+        }
+        Random random=new Random();
+        random.setSeed(System.currentTimeMillis());
+        Cocktail similar=cocktailDetailrepository.findById(tagList.get(random.nextInt(tagList.size())).getCocktail().getId());
+        while(similar.getId()==cocktail.getId()){
+            similar=cocktailDetailrepository.findById(tagList.get(random.nextInt(tagList.size())).getCocktail().getId());
+        }
+        return new CocktailDetailResponseDto(cocktail,similar,userLikeCocktailRepository.findByCocktailIdAndUserId(id,userRepository.findByUsername(authentication.getName()).getId()));
+    }
     public CocktailDetailResponseDto getCocktailDetail(int id){
         Cocktail cocktail=cocktailDetailrepository.findById(id);
         List<CocktailTag> tagList=new ArrayList<>();
