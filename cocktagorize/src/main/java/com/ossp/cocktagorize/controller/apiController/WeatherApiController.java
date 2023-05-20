@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URLEncoder;
@@ -87,6 +88,30 @@ public class WeatherApiController {
         }
 
         return -1;
+    }
+
+    @GetMapping("/cocktail/weather/now")
+    public List<CocktailResponseDto> getNowWeatherMatchCocktails(@RequestParam double temp, @RequestParam int isRainy) {
+        int weatherTagId = getTagIdByTempAndRain(temp, isRainy);
+        long qty = cocktailTagRepository.countByTagId(weatherTagId);
+        List<CocktailResponseDto> weatherCocktails = new ArrayList<>();
+        Set<Integer> uniqueValues = new HashSet<>();
+
+        int count = 0;
+        while (count < 5) {
+            int idx = (int) (Math.random() * qty);
+            if (!uniqueValues.contains(idx)) {
+                uniqueValues.add(idx);
+
+                weatherCocktails.add(new CocktailResponseDto(
+                        cocktailTagRepository.findCocktailTagsByTagId(weatherTagId, PageRequest.of(idx, 1))
+                                .getContent().get(0).getCocktail()));
+
+                count++;
+            }
+        }
+        // 태그 리스트 담아서 보내기 구현해야 함.
+        return weatherCocktails;
     }
 
     @GetMapping("/cocktail/weather")
@@ -190,8 +215,6 @@ public class WeatherApiController {
                 count++;
             }
         }
-
-
         // 태그 리스트 담아서 보내기 구현해야 함.
         return weatherCocktails;
     }

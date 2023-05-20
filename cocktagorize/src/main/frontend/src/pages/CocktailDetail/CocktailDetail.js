@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
@@ -6,10 +6,28 @@ import Tag from "../../component/common/tag.js";
 import { VscHeartFilled, VscUnmute, VscLinkExternal } from "react-icons/vsc";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
 
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
-	const [cocktail, setCocktail] = useState(null);
+	const [ cocktail, setCocktail ] = useState(null);
+	const [ replyList, setReplyList ] = useState([]);
+
+	const authCtx = useContext(AuthContext);
+	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
+
+	useEffect(() => {
+		if (isLogin) {
+			authCtx.getUser();
+		}
+	}, [isLogin]);
+
+	useEffect(() => {
+		if (isGetUser) {
+			console.log(authCtx.userObj.nickname);
+		}
+	}, [isGetUser]);
 
 	useEffect(() => {
 		const getCocktailDetails = async () => {
@@ -17,14 +35,16 @@ const CocktailDetail = () => {
 				const response = await axios.get(
 					`http://localhost:8080/cocktail/${cocktail_id}`
 				);
-				console.log(response.data);
+				console.log("댓글 response 정보들 : " + JSON.stringify(response.data.cocktailReplyList, null, 2)) ;
 				setCocktail(response.data);
+				setReplyList(response.data.cocktailReplyList);
 				// Handle the cocktail data as needed
 			} catch (error) {
 				// Handle the error
 				console.error(error);
 			}
 		};
+
 		getCocktailDetails();
 	}, []);
 
@@ -39,6 +59,18 @@ const CocktailDetail = () => {
 		(tag) => tag.category === "INGREDIENT" || tag.category === "ALCOHOL"
 	);
 	const ingredient = ingre.map((tag) => <p key={tag.id}>{tag.name}</p>);
+
+	// 작성자
+	replyList.map((reply) => console.log(reply.user.name));
+
+	// 작성날짜
+	replyList.map((reply) => console.log(reply.createdDate));
+
+	// 댓글 나용
+	replyList.map((reply) => console.log(reply.content));
+
+	// 좋아요 수
+	replyList.map((reply) => console.log(reply.liked));
 
 	return (
 		<div className="CocktailDetail">

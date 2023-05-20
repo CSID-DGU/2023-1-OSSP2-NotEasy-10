@@ -12,6 +12,7 @@ import axios from "axios";
 import AuthContext from "../../jwt/auth-context";
 import {GET, POST, PUT, DELETE} from "../../jwt/fetch-auth-action";
 import {createTokenHeader} from "../../jwt/auth-action";
+import {getCurrentWeatherData} from "../../Weather";
 
 const Home = () => {
     const [weatherScrollIndex, setWeatherScrollIndex] = useState(0);
@@ -23,6 +24,7 @@ const Home = () => {
     // Database에서 불러온 cocktailList
     const [cocktailList, setCocktailList] = useState([]);
     const [weatherCocktailList, setWeatherCocktailList] = useState([]);
+    const [nowWeatherCocktailList, setNowWeatherCocktailList] = useState([]);
     const [userCocktailList, setUserBasedCocktailList] = useState([]);
 
     const [page, setPage] = useState(0);
@@ -34,16 +36,8 @@ const Home = () => {
     const [searchMode, setSearchMode] = useState("AND");
 
     const authCtx = useContext(AuthContext);
-    const [nickname, setNickname] = useState('');
     let isLogin = authCtx.isLoggedIn;
     let isGetUser = authCtx.isGetUserSuccess;
-    const callback = (str) => {
-        setNickname(str);
-    }
-
-    useEffect(() => {
-        sort(currentTagData, sortType);
-    }, [page, sortType]);
 
     useEffect(() => {
         if (isLogin) {
@@ -53,11 +47,15 @@ const Home = () => {
 
     useEffect(() => {
         if (isGetUser) {
-            callback(authCtx.userObj.nickname);
             getUserCocktailData();
             getWeatherCocktailData();
         }
+        getNowPositionWeatherCocktailData();
     }, [isGetUser]);
+
+    useEffect(() => {
+        sort(currentTagData, sortType);
+    }, [page, sortType]);
 
     useEffect(() => {
         sort(currentTagData, 4);
@@ -68,7 +66,6 @@ const Home = () => {
     }, []);
 
     const getAllCocktailById = async (page) => {
-        console.log("칵테일들 불러오기");
         const allCocktailData = GET(`http://localhost:${port}/?page=${page}`, createTokenHeader(authCtx.token));
         allCocktailData.then((result) => {
             if (result !== null) {
@@ -80,6 +77,47 @@ const Home = () => {
         });
     };
 
+    const getNowPositionWeatherCocktailData = async () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            let nowTemp = 0;
+            let nowIsRainy = 0;
+
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            const data = getCurrentWeatherData(lat, lon);
+            data.then((result) => {
+                if (result !== null) {
+                    const weatherData = result.data;
+                    nowTemp = Number(weatherData.main.temp) - 273.15;
+                    if (weatherData.weather[0].main === "Rain" || weatherData.weather[0].main === "Drizzle" || weatherData.weather[0].description.includes("rain")) {
+                        nowIsRainy = 1;
+                    }
+
+                    // console.log(weatherData.weather[0].main);
+                    // console.log(weatherData.weather[0].description);
+                    // console.log("현재 온도 : " + nowTemp);
+                    // console.log("현재 강우 여부 : " + nowIsRainy);
+
+                    getNowWeatherCocktailData(nowTemp, nowIsRainy);
+                }
+            });
+        });
+    }
+
+    const getNowWeatherCocktailData = async (temp, isRainy) => {
+        // console.log("온도 : " + temp);
+        // console.log("강우 여부 : " + isRainy);
+        const weatherCocktailData = GET(`http://localhost:${port}/cocktail/weather/now?temp=${temp}&isRainy=${isRainy}`, createTokenHeader(authCtx.token));
+        weatherCocktailData.then((result) => {
+            if (result !== null) {
+                const nowWeatherCocktailData = result.data;
+                setNowWeatherCocktailList(nowWeatherCocktailData.content);
+                setIsLoading(false);
+            }
+        });
+    }
+
     const getWeatherCocktailData = async () => {
         const weatherCocktailData = GET(`http://localhost:${port}/cocktail/weather`, createTokenHeader(authCtx.token));
         weatherCocktailData.then((result) => {
@@ -87,8 +125,8 @@ const Home = () => {
                 const weatherCocktailData = result.data;
                 setWeatherCocktailList(weatherCocktailData.content);
                 setIsLoading(false);
-				// console.log("날씨 기반 칵테일 : " + result.data);
-				// result.data.forEach(cocktail => console.log(cocktail));
+                // console.log("날씨 기반 칵테일 : " + result.data);
+                // result.data.forEach(cocktail => console.log(cocktail));
             }
         });
     }
