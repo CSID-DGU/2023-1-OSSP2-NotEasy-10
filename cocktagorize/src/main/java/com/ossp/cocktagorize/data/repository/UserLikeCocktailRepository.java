@@ -8,6 +8,7 @@ import java.util.Optional;
 @Repository
 public interface UserLikeCocktailRepository extends JpaRepository<UserLikeCocktail,Integer> {
     void deleteByCocktailIdAndUserId(int cocktailId,int userId);
+    @SuppressWarnings("all")
     UserLikeCocktail save(UserLikeCocktail userLikeCocktail);
     Optional<UserLikeCocktail> findByCocktailIdAndUserId(int cocktailId, int userId);
 }

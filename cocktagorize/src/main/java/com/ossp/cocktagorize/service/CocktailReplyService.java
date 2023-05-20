@@ -5,7 +5,6 @@ import com.ossp.cocktagorize.data.dto.CocktailReplyRequestDto;
 import com.ossp.cocktagorize.data.entity.CocktailReply;
 import com.ossp.cocktagorize.data.repository.CocktailDetailrepository;
 import com.ossp.cocktagorize.data.repository.CocktailReplyRepository;
-import com.ossp.cocktagorize.data.repository.UserLikeCocktailRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
