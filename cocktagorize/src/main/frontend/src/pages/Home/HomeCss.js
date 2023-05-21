@@ -25,7 +25,7 @@ export const NonExplore = styled.div`
 	border-color: black;
 	border-width: 0px;
 	width: calc(100% - 0px);
-	height: calc(100% - 70px);
+	height: calc(100% + 20px);
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -167,13 +167,21 @@ export const SearchOptionBase = styled.option`
 	font-size: 18px;
 `;
 
+export const LoginContent = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: auto;
+	align-items: center;
+`;
+
 export const WeatherNUserCocktail = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	width: calc(100% - 10px);
 	height: auto;
-	margin: 5px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
 `;
 
 export const Weather = styled.div`
@@ -184,8 +192,6 @@ export const Weather = styled.div`
 	width: auto;
 	height: auto;
 	margin: 0px 10px;
-	border: solid;
-	border-color: black;
 `;
 
 export const WeatherInfoBox = styled.div`
@@ -209,7 +215,7 @@ export const WeatherCarousel = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 15.625vw;
+	width: calc(15.625vw + 6px);
 	height: auto;
 	margin: 0px 40px;
 	padding: 0px;
@@ -327,15 +333,13 @@ export const UserRecommand = styled.div`
 	width: 50%;
 	flex-grow: 1;
 	height: auto;
-	margin: 0px 0px 0px 20px;
-	border: solid;
-	border-color: black;
+	margin: 0px 20px 0px 20px;
 `;
 
 export const UserRecommandInfoBox = styled.div`
 	width: calc(100% - 20px);
 	height: auto;
-	margin: 5px;
+	margin: 5px 20px;
 	padding: auto 10px;
 	border: solid;
 	border-radius: 5px;
@@ -390,9 +394,11 @@ export const NormalRecommandCocktail = styled.div`
 	padding-right: 20px;
 `;
 
-export const Hr = styled.hr`
-	margin: 50px 50px 50px 0px;
-	width: inherit;
+export const Hr = styled.div`
+	width: 90%;
+	height: 1px;
+	margin: 50px 50px 50px 50px;
+	background-color: black;
 `;
 
 export const PageScroll = styled.div`

@@ -201,8 +201,8 @@ function CocktailCard(props) {
 
 	useEffect(() => {
 		console.log("CocktailCard useEffect 호출!");
-		setIsLike(props.info.userLikeCocktail);
-		setLike(props.info.liked);
+		//setIsLike(props.info.userLikeCocktail);
+		//setLike(props.info.liked);
 	}, []);
 
 	const likeClicked = async (event) => {
@@ -252,7 +252,7 @@ function CocktailCard(props) {
 				{isLike ? (
 					<VscHeartFilled style={{ color: "red" }} />
 				) : (
-					<VscHeartFilled />
+					<VscHeartFilled style={{ color: "black" }} />
 				)}
 				<HeartText>{like}</HeartText>
 			</HeartContainer>
