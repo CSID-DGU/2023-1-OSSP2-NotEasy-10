@@ -196,23 +196,25 @@ const styles = {
 
 function CocktailCard(props) {
     const authCtx = useContext(AuthContext);
-    const [name, setName] = useState("");
     const [isLike, setIsLike] = useState(props.info.userLikeCocktail);
     const [like, setLike] = useState(props.info.liked);
 
-    console.log(props.info);
-    const likeClicked = async   (event) => {
+    useEffect(() => {
+        console.log("CocktailCard useEffect 호출!");
+        setIsLike(props.info.userLikeCocktail);
+        setLike(props.info.liked);
+    }, []);
+
+    const likeClicked = async (event) => {
         if (authCtx.isLoggedIn) {
             const result = PUT(`http://localhost:8080/cocktail/${props.info.id}/like`, null, createTokenHeader(authCtx.token));
             // 만약 이미 좋아요를 누른 칵테일이라면
             result.then((result) => {
                 if (result !== null) {
                     setLike(result.data.liked);
-                    console.log(result.data.liked);
+                    setIsLike(!isLike);
                 }
             });
-
-            setIsLike(!isLike);
         } else {
             alert("로그인을 해주세요!");
         }
