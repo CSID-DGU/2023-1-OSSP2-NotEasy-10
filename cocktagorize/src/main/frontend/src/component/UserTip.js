@@ -5,88 +5,74 @@ import {
   VscHeart
 } from "react-icons/vsc";
 import '../component/UserTip.css'
-
-// const UserTipBlock = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   margin-bottom: 1rem;
-// `;
-
-// const Nickname = styled.h5`
-//   margin: 0;
-//   margin-bottom: 0.25rem;
-//   font-size: 0.8rem;
-// `;
-
-// const ReplyContent = styled.div`
-//   // 보이는 줄 수 제한 + 더보기 기능
-//   display: -webkit-box;
-//   -webkit-line-clamp: 4;
-//   -webkit-box-orient: vertical;
-//   overflow: hidden;
-
-//   font-size: 0.75rem;
-//   margin-bottom: 0.3rem;
-
-//   &:has(+ Input:checked) {
-//     -webkit-line-clamp: unset;
-//   }
-// `;
-
-// const Input = styled.input`
-//   margin: 0;
-//   appearance: none;
-//   font-size: 0.25rem;
-//   border-radius: 0.25em;
-//   cursor: pointer;
-
-//   &::before {
-//     color: gray;
-//     content: "자세히 보기";
-//   }
-//   &:checked::before {
-//     content: "간략히";
-//   }
-// `;
-
-// const InfoBlock = styled.div`
-//   display: flex;
-// `;
-
-// const Time = styled.div`
-
-// `;
+import axios from "axios";
 
 const UserTip = (tip) => {
-  // return (
-  //   <UserTipBlock>
-  //     <InfoBlock>
-  //       <Nickname>정재욱</Nickname> <LikeButton/> <Time>2023년 12월 10일 15:30</Time>
-  //     </InfoBlock>
-  //     <ReplyContent>
-  //       하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하
-  //       하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하
-  //       하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하
-  //       하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하
-  //       하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하하
-  //     </ReplyContent>
-  //     <Input type="checkbox" />
-  //   </UserTipBlock>
-  // );
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedComment, setEditedComment] = useState(tip.tip.content);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleDelete = () => {
+    // axios로 삭제요청 보내면 서버에서 replyList 업데이트해야함
+    console.log("삭제된 댓글 아이디:", tip.tip.id);
+  };
+
+  const handleSave = () => {
+    // axios로 수정된 사항('content: editedComment')을 보내면 서버에서 replyList에서 해당 변경내용을 업데이트해야함
+    console.log("수정된 내용:", editedComment);
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedComment(tip.tip.content);
+  };
+
+  const handleEditedCommentChange = (event) => {
+    setEditedComment(event.target.value);
+  };
 
   return (
     <div className="UserTip">
       <div>
         <div className="tip">
           <p className="tip_name">{tip.tip.user.name}</p>
-          <p className="tip_content">{tip.tip.content}</p>
+          {isEditing ? (
+            <textarea
+              className="tip_content"
+              value={editedComment}
+              onChange={handleEditedCommentChange}
+            ></textarea>
+          ) : (
+            <p className="tip_content">{tip.tip.content}</p>
+          )}
           <p className="tip_createdDate">{tip.tip.createdDate}</p>
-          <hr/>
+          <hr />
         </div>
         <div className="tool">
-          <button className="tool_edit">수정</button>
-          <button className="tool_delete">삭제</button>
+          {isEditing ? (
+            <>
+              <button className="tool_save" onClick={handleSave}>
+                저장
+              </button>
+              <button className="tool_cancel" onClick={handleCancelEdit}>
+                취소
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="tool_edit" onClick={handleEdit}>
+                수정
+              </button>
+              <button className="tool_delete" onClick={handleDelete}>
+                삭제
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
