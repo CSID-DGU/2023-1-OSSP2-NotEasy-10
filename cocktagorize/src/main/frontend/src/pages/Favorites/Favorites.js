@@ -1,13 +1,12 @@
 import React, { useReducer } from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
+import * as home from "./FavoritesCSS.js";
+import Recipe from "../../component/Recipe.js";
 import Post from "../../component/Post.js";
-import blackXImage from "../../images/blackXButton.png";
-import CocktailCard from "../../component/cocktailCard.js";
-import * as home from "./CommunityPostListCSS.js";
 import axios from "axios";
 
-const CommunityPostList = () => {
+const Favorites = () => {
 	const [postList, setPostList] = useState([
 		{
 			id: 0,
@@ -144,100 +143,62 @@ const CommunityPostList = () => {
 		// console.log(cocktailList);
 	}
 */
-	function pageScrollIndexButton() {
-		let result = [];
-		result.push(
-			<>
-				<home.PageScrollIndex
-					page={page}
-					btnIndex={0}
-					onClick={() => {
-						setPage(0);
-					}}
-				>
-					<home.Text>{1}</home.Text>
-				</home.PageScrollIndex>
-				<home.Text>...</home.Text>
-			</>
-		);
-		for (let i = page - 5; i <= page + 5; i++) {
-			if (i < 0 || i >= maxPage) continue;
-			result.push(
-				<home.PageScrollIndex
-					page={page}
-					btnIndex={i}
-					onClick={() => {
-						setPage(i);
-					}}
-				>
-					<home.Text>{i + 1}</home.Text>
-				</home.PageScrollIndex>
-			);
-		}
-		result.push(
-			<>
-				<home.Text>...</home.Text>
-				<home.PageScrollIndex
-					page={page}
-					btnIndex={maxPage - 1}
-					onClick={() => {
-						setPage(maxPage - 1);
-					}}
-				>
-					<home.Text>{maxPage}</home.Text>
-				</home.PageScrollIndex>
-			</>
-		);
-		return result;
-	}
 
 	return (
 		<home.Entire>
 			<Sidebar />
 			<home.NonSidebar>
-				<home.Explore>
-					<home.Search
-						type="text"
-						placeholder="Search"
-						onChange={(e) => setSearchText(e.target.value)}
-						value={searchText}
-					></home.Search>
-					<home.blackXButton
-						src={blackXImage}
-						onClick={() => {
-							setSortType(0);
-							setSearchText("");
-						}}
-					/>
-					<home.Sort onChange={(e) => onSortChanged(e)}>
-						<home.SortBase selected="selected">
-							좋아요가 많은 순서
-						</home.SortBase>
-						<home.SortBase>최근 업데이트 순서</home.SortBase>
-						<home.SortBase>사전 순서</home.SortBase>
-					</home.Sort>
-				</home.Explore>
-				<home.NonExplore>
-					<home.PostList>
-						{post({
-							amount: 4,
-							hMargin: 10,
-							vMargin: 10,
-						})}
-					</home.PostList>
-				</home.NonExplore>
-
-				<home.PageScroll>{pageScrollIndexButton()}</home.PageScroll>
+				<home.Title>Favorites</home.Title>
+				<home.Hr />
+				<home.Content>
+					<home.Recipes>
+						<home.RecipesTitle>Recipe</home.RecipesTitle>
+						<home.RecipesContent>
+							<Recipe
+								height={"144px"}
+								horizontalMargin={"10px"}
+								verticalMargin={"10px"}
+							/>
+							<Recipe
+								height={"144px"}
+								horizontalMargin={"10px"}
+								verticalMargin={"10px"}
+							/>
+							<Recipe
+								height={"144px"}
+								horizontalMargin={"10px"}
+								verticalMargin={"10px"}
+							/>
+						</home.RecipesContent>
+					</home.Recipes>
+					<home.Vr />
+					<home.Posts>
+						<home.PostsTitle>Post</home.PostsTitle>
+						<home.PostsContent>
+							<Post
+								width={"25vw"}
+								height={"144px"}
+								horizontalMargin={"10px"}
+								verticalMargin={"10px"}
+							/>
+							<Post
+								width={"25vw"}
+								height={"144px"}
+								horizontalMargin={"10px"}
+								verticalMargin={"10px"}
+							/>
+							<Post
+								width={"25vw"}
+								height={"144px"}
+								horizontalMargin={"10px"}
+								verticalMargin={"10px"}
+							/>
+						</home.PostsContent>
+					</home.Posts>
+				</home.Content>
 			</home.NonSidebar>
-			<home.Cocktailbar>
-				<CocktailCard
-					horizontalMargin={"10px"}
-					verticalMargin={"10px"}
-					//info={cocktailList[i]}
-				/>
-			</home.Cocktailbar>
 		</home.Entire>
 	);
 };
 
-export default CommunityPostList;
+export default Favorites;

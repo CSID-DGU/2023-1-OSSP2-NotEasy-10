@@ -401,7 +401,7 @@ const Modal = (props) => {
 							{currentTagData.map((info, index) => (
 								<Tag
 									info={info}
-									key={index}
+									key={info}
 									onDelete={deleteTag}
 								/>
 							))}
@@ -416,7 +416,7 @@ const Modal = (props) => {
 							{searchTagData.map((info, index) => (
 								<Tag
 									info={info}
-									key={index}
+									key={info}
 									onAdd={addTag}
 									onDelete={deleteTag}
 									isOverlap={checkOverlap(info)}
@@ -441,7 +441,7 @@ const Modal = (props) => {
 										{info.tags.map((info, index) => (
 											<Tag
 												info={info}
-												key={index}
+												key={info}
 												onAdd={addTag}
 												onDelete={deleteTag}
 												isOverlap={checkOverlap(info)}
