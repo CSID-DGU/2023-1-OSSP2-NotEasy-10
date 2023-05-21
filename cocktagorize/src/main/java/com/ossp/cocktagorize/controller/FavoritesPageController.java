@@ -2,10 +2,9 @@ package com.ossp.cocktagorize.controller;
 import com.ossp.cocktagorize.data.dto.CocktailResponseDto;
 import com.ossp.cocktagorize.data.dto.FavoritePageResponseDto;
 import com.ossp.cocktagorize.data.dto.UsernameRequestDto;
-import com.ossp.cocktagorize.data.entity.Cocktail;
-import com.ossp.cocktagorize.data.entity.User;
-import com.ossp.cocktagorize.data.entity.UserLikeCocktail;
+import com.ossp.cocktagorize.data.entity.*;
 import com.ossp.cocktagorize.data.idClass.UserLikeCocktailId;
+import com.ossp.cocktagorize.data.repository.UserLikeBoardRepository;
 import com.ossp.cocktagorize.data.repository.UserLikeCocktailRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,13 @@ public class FavoritesPageController {
     private final UserRepository userRepository;
     private final UserLikeCocktailRepository userLikeCocktailRepository;
 
+    private final UserLikeBoardRepository userLikeBoardRepository;
+
     @Autowired
-    public FavoritesPageController(UserRepository userRepository, UserLikeCocktailRepository userLikeCocktailRepository) {
+    public FavoritesPageController(UserRepository userRepository, UserLikeCocktailRepository userLikeCocktailRepository, UserLikeBoardRepository userLikeBoardRepository) {
         this.userRepository = userRepository;
         this.userLikeCocktailRepository = userLikeCocktailRepository;
+        this.userLikeBoardRepository = userLikeBoardRepository;
     }
 
     @GetMapping("/liked-cocktails")
@@ -38,11 +40,17 @@ public class FavoritesPageController {
 
         List<UserLikeCocktail> userLikedCocktails = userLikeCocktailRepository.findCocktailsByUserId(userId);
 
+        List<UserLikeBoard> userLikedBoards = userLikeBoardRepository.findBoardsByUserId(userId);
+
         List<Cocktail> likedCocktails = userLikedCocktails.stream()
                 .map(UserLikeCocktail::getCocktail)
                 .collect(Collectors.toList());
 
-        FavoritePageResponseDto responseDto = new FavoritePageResponseDto(likedCocktails, userLikedCocktails);
+        List<Board> likedBoards = userLikedBoards.stream()
+                .map(UserLikeBoard::getBoard)
+                .collect(Collectors.toList());
+
+        FavoritePageResponseDto responseDto = new FavoritePageResponseDto(likedCocktails, userLikedCocktails, likedBoards, userLikedBoards);
 
         return ResponseEntity.ok(responseDto);
     }
