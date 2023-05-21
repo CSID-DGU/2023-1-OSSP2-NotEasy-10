@@ -80,6 +80,7 @@ const TitleContainer = styled.div`
 const NameText = styled.p`
 	width: 75%;
 	color: black;
+	font-family: var(--font-Reem-Kufi-Fun);
 	@media (max-width: 600px) {
 		font-size: 12px;
 	}
@@ -166,7 +167,7 @@ const HeartContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin: 8px 8px;
+	margin: 8px 16px;
 	height: 16px;
 `;
 
@@ -194,20 +195,34 @@ const styles = {
 };
 
 function CocktailCard(props) {
-	const likeClicked = (event) => {
-		console.log("클릭됨!");
-		// 로그인을 했다면
-		// if (authCtx.isLoggedIn) {
-		//     const result = PUT(`http://localhost:8080/cocktail/${props.info.id}/like`, null, createTokenHeader(authCtx.token));
-		//     // 만약 이미 좋아요를 누른 칵테일이라면
-		//     result.then((result) => {
-		//         if (result !== null) {
-		//             setLike(result.data.liked);
-		//         }
-		//     });
-		// } else {
-		//     alert("로그인을 해주세요!");
-		// }
+	const authCtx = useContext(AuthContext);
+	const [isLike, setIsLike] = useState(props.info.userLikeCocktail);
+	const [like, setLike] = useState(props.info.liked);
+
+	useEffect(() => {
+		console.log("CocktailCard useEffect 호출!");
+		setIsLike(props.info.userLikeCocktail);
+		setLike(props.info.liked);
+	}, []);
+
+	const likeClicked = async (event) => {
+		if (authCtx.isLoggedIn) {
+			const result = PUT(
+				`http://localhost:8080/cocktail/${props.info.id}/like`,
+				null,
+				createTokenHeader(authCtx.token)
+			);
+			// 만약 이미 좋아요를 누른 칵테일이라면
+			result.then((result) => {
+				if (result !== null) {
+					setLike(result.data.liked);
+					setIsLike(!isLike);
+					console.log(result);
+				}
+			});
+		} else {
+			alert("로그인을 해주세요!");
+		}
 	};
 
 	return (
@@ -234,8 +249,12 @@ function CocktailCard(props) {
 				</Container>
 			</Link>
 			<HeartContainer onClick={() => likeClicked()}>
-				<BlackHeartImage src={blackHeartImage} alt={blackHeartImage} />
-				<HeartText>{props.info.liked}</HeartText>
+				{isLike ? (
+					<VscHeartFilled style={{ color: "red" }} />
+				) : (
+					<VscHeartFilled />
+				)}
+				<HeartText>{like}</HeartText>
 			</HeartContainer>
 		</Card>
 	);
