@@ -1,4 +1,4 @@
-.tip {
+/* .tip {
     border: 2px;
     border-style: solid;
     border-color: gray;
@@ -32,4 +32,38 @@
 
 .writeEdit > textarea {
     flex:1;
+} */
+
+.tip {
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.tip_name {
+    margin: 0.5rem 0;
+    font-weight: bold;
+}
+
+.tip_content {
+    margin: 0;
+    font-size: medium;
+}
+
+.tip_createdDate {
+    text-align: end;
+    margin-bottom: 0.2rem;
+    margin-top: 0.5rem;
+    color: darkgray;
+}
+
+.tool {
+    display: flex;
+    padding: 0 1rem;
+    justify-content: end;
+}
+
+.tool > button {
+    border-color: azure;
+    border-radius: 0.5rem;
 }

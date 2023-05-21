@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
@@ -7,15 +7,11 @@ import { VscHeartFilled, VscUnmute, VscLinkExternal } from "react-icons/vsc";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../jwt/auth-context";
-import {GET, POST, PUT} from "../../jwt/fetch-auth-action";
-import {createTokenHeader} from "../../jwt/auth-action";
 
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
-	const [ cocktail, setCocktail ] = useState(null);
-	const [ replyList, setReplyList ] = useState([]);
-	const [isLike, setIsLike] = useState();
-	const [like, setLike] = useState(0);
+	const [cocktail, setCocktail] = useState(null);
+	const [replyList, setReplyList] = useState([]);
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -28,46 +24,24 @@ const CocktailDetail = () => {
 	}, [isLogin]);
 
 	useEffect(() => {
-		if (isGetUser) {
-
-		}
-	}, [isGetUser]);
-
-	useEffect(() => {
 		const getCocktailDetails = async () => {
-			const result = GET(`http://localhost:8080/cocktail/${cocktail_id}`, createTokenHeader(authCtx.token));
-			result.then((result) => {
-				if (result !== null) {
-					setCocktail(result.data);
-					console.log(result);
-					setReplyList(result.data.cocktailReplyList);
-					setLike(result.data.liked);
-					setIsLike(result.data.userLikeCocktail);
-				}
-			});
+			try {
+				const response = await axios.get(
+					`http://localhost:8080/cocktail/${cocktail_id}`
+				);
+				console.log("댓글 response 정보들 : " + JSON.stringify(response.data.cocktailReplyList, null, 2));
+				setCocktail(response.data);
+				setReplyList(response.data.cocktailReplyList);
+			} catch (error) {
+				console.error(error);
+			}
 		};
+
 		getCocktailDetails();
 	}, []);
 
 	if (!cocktail) {
 		return null;
-	}
-
-
-	const likeClicked = (event) => {
-		// 로그인을 했다면
-		if (authCtx.isLoggedIn) {
-			const result = PUT(`http://localhost:8080/cocktail/${cocktail_id}/like`, null, createTokenHeader(authCtx.token));
-			result.then((result) => {
-				if (result !== null) {
-					setLike(result.data.liked);
-				}
-			});
-
-			setIsLike(!isLike);
-		} else {
-			alert("로그인을 해주세요!");
-		}
 	}
 
 	const tagList = cocktail.cocktailTagList.map((tag) => (
@@ -77,18 +51,6 @@ const CocktailDetail = () => {
 		(tag) => tag.category === "INGREDIENT" || tag.category === "ALCOHOL"
 	);
 	const ingredient = ingre.map((tag) => <p key={tag.id}>{tag.name}</p>);
-
-	// // 작성자
-	// replyList.map((reply) => console.log(reply.user.name));
-	//
-	// // 작성날짜
-	// replyList.map((reply) => console.log(reply.createdDate));
-	//
-	// // 댓글 나용
-	// replyList.map((reply) => console.log(reply.content));
-	//
-	// // 좋아요 수
-	// replyList.map((reply) => console.log(reply.liked));
 
 	return (
 		<div className="CocktailDetail">
@@ -104,9 +66,9 @@ const CocktailDetail = () => {
 								alt="칵테일 이미지"
 							/>
 							<div className="cocktail_icon">
-								{isLike ? <VscHeartFilled onClick={likeClicked} style={{color:"red"}} /> : <VscHeartFilled onClick={likeClicked}/>}
-								<p key={cocktail.id}>{like}</p>{" "}
-								<VscUnmute />
+								<VscHeartFilled />
+								<span key={cocktail.id}>{cocktail.liked}</span>
+								<p>---------------</p><VscUnmute />
 							</div>
 						</div>
 						<p> 유사한 칵테일 </p>
@@ -120,7 +82,8 @@ const CocktailDetail = () => {
 								className="cocktail_similar_name"
 								key={cocktail.similarCocktail.id}
 							>
-								{cocktail.similarCocktail.name}{" "}
+								<p className="cocktail_similar_name2">{cocktail.similarCocktail.name}{" "}</p>
+								<div className="similar_liked"><VscHeartFilled/> <span key={cocktail.similarCocktail.id}>{cocktail.similarCocktail.liked}</span></div>
 								<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
 									<VscLinkExternal />
 								</a>
@@ -144,7 +107,7 @@ const CocktailDetail = () => {
 									</span>
 									<p>도수: </p>
 									<span className="alchol" key={cocktail.id}>
-										소주 {cocktail.alcholeDegree}잔
+										{cocktail.alcholeDegree}도
 									</span>
 									<p>추천잔: </p>
 									<span className="glass" key={cocktail.id}>
