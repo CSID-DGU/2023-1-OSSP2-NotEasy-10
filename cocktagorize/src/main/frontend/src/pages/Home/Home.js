@@ -56,7 +56,7 @@ const Home = () => {
 
 	useEffect(() => {
 		sort(currentTagData, sortType);
-	}, [page, sortType]);
+	}, [page]);
 
 	useEffect(() => {
 		sort(currentTagData, 4);
@@ -123,8 +123,13 @@ const Home = () => {
 		weatherCocktailData.then((result) => {
 			if (result !== null) {
 				const nowWeatherCocktailData = result.data;
-				setNowWeatherCocktailList(nowWeatherCocktailData.content);
+				setNowWeatherCocktailList(result.data);
+				// setNowWeatherCocktailList(nowWeatherCocktailData.content);
 				setIsLoading(false);
+				console.log(
+					"실시간 위치 기반 날씨 기반 칵테일 : " + result.data
+				);
+				result.data.forEach((cocktail) => console.log(cocktail));
 			}
 		});
 	};
@@ -136,11 +141,11 @@ const Home = () => {
 		);
 		weatherCocktailData.then((result) => {
 			if (result !== null) {
-				const weatherCocktailData = result.data;
-				setWeatherCocktailList(weatherCocktailData.content);
+				setWeatherCocktailList(result.data);
+				// setWeatherCocktailList(nowWeatherCocktailData.content);
 				setIsLoading(false);
-				// console.log("날씨 기반 칵테일 : " + result.data);
-				// result.data.forEach(cocktail => console.log(cocktail));
+				console.log("회원가입 저장 날씨 기반 칵테일 : " + result.data);
+				result.data.forEach((cocktail) => console.log(cocktail));
 			}
 		});
 	};
@@ -152,8 +157,7 @@ const Home = () => {
 		);
 		userCocktailData.then((result) => {
 			if (result !== null) {
-				const userCocktailData = result.data;
-				setUserBasedCocktailList(userCocktailData.content);
+				setUserBasedCocktailList(result.data);
 				setIsLoading(false);
 				// console.log("유저 선호 칵테일 : " + result.data);
 				// result.data.forEach(cocktail => console.log(cocktail));
@@ -237,6 +241,11 @@ const Home = () => {
 
 	// 태그로 검색하기 AND 연산
 	const getCocktailByTagAnd = async (page, tagData) => {
+		console.log(tagData.length);
+		if (tagData.length === 0) {
+			getAllCocktailById(page);
+			return;
+		}
 		try {
 			const tags =
 				Array.isArray(tagData) && !tagData.length
@@ -343,7 +352,7 @@ const Home = () => {
 					>
 						<CocktailCard
 							info={weatherCocktailList[i]}
-							key={weatherCocktailList[i].id}
+							key={weatherCocktailList[i].id + 1000000}
 						/>
 					</home.WeatherCocktailCard>
 				);
@@ -452,21 +461,33 @@ const Home = () => {
 				getCocktailBySearchName(searchText, page);
 				break;
 			case 5:
-				getCocktailByTagAnd(page, tempTags);
+				if (tags.length === 0) {
+					getAllCocktailById(page);
+				} else {
+					getCocktailByTagAnd(page, tempTags);
+				}
 				break;
 			case 6:
-				getCocktailByTagOr(page, tempTags);
-				break;
-			case 7:
-				if (searchMode === "AND") {
-					getCocktailByTagAnd(page, tempTags);
+				if (tags.length === 0) {
+					getAllCocktailById(page);
 				} else {
 					getCocktailByTagOr(page, tempTags);
 				}
 				break;
+			case 7:
+				if (tags.length === 0) {
+					getAllCocktailById(page);
+				} else {
+					if (searchMode === "AND") {
+						getCocktailByTagAnd(page, tempTags);
+					} else {
+						getCocktailByTagOr(page, tempTags);
+					}
+				}
+				break;
 		}
 		setSortType(realSortType);
-		// console.log("sortType : " + sortType);
+		console.log("sortType : " + sortType);
 		// console.log(cocktailList);
 	}
 
@@ -575,8 +596,8 @@ const Home = () => {
 					</home.Sort>
 				</home.Explore>
 				<home.NonExplore>
-					{/*isLogin ? (
-						<>
+					{isLogin ? (
+						<home.LoginContent>
 							<home.WeatherNUserCocktail>
 								<home.Weather>
 									<home.WeatherInfoBox>
@@ -624,11 +645,10 @@ const Home = () => {
 										})}
 									</home.UserRecommandCocktail>
 								</home.UserRecommand>
-								<home.Hr></home.Hr>
 							</home.WeatherNUserCocktail>
 							<home.Hr></home.Hr>
-						</>
-					) : null*/}
+						</home.LoginContent>
+					) : null}
 
 					<home.NormalRecommandCocktail>
 						{cocktailCard({
