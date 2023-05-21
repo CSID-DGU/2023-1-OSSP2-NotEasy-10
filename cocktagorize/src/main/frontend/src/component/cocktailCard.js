@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cocktailImage from "../images/cocktailsample.png";
 import blackHeartImage from "../images/blackHeart.png";
 import soundImage from "../images/sound.png";
 import Tag from "./common/tag.js";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import AuthContext from "../jwt/auth-context";
+import { PUT } from "../jwt/fetch-auth-action";
+import { createTokenHeader } from "../jwt/auth-action";
+import { VscHeartFilled } from "react-icons/vsc";
 
 const Card = styled.div`
 	width: 15.625vw;
