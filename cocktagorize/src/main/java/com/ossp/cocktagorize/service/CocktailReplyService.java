@@ -37,7 +37,7 @@ public class CocktailReplyService {
 
     @Transactional
     public String deleteReply(int replyId,int cocktailId,Authentication authentication){
-        CocktailReply cocktailReply=cocktailReplyRepository.findById(replyId);
+        CocktailReply cocktailReply = cocktailReplyRepository.findById(replyId);
         if(cocktailId==cocktailReply.getCocktail().getId()&&cocktailReply.getUser().getId()==userRepository.findByUsername(authentication.getName()).getId()){
             cocktailReplyRepository.deleteById(replyId);
             return "success";
