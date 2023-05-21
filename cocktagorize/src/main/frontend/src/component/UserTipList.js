@@ -31,17 +31,17 @@ const WriteTip = styled.input`
   width: 100%;
 `;
 
-const UserTipList = () => {
-  return (
-    <UserTipListBlock>
-      <H4> User's TIP</H4>
-      <TipList>
-        <UserTip />
-        {/* <UserTip />
-        <WriteTip type="text" placeholder="여기에 댓글을 입력하세요."/> */}
-      </TipList>
-    </UserTipListBlock>
-  );
+const UserTipList = ({tips}) => {
+    return (
+        <UserTipListBlock>
+            <H4> User's TIP</H4>
+            <TipList>
+                {tips.map((tip)=> (
+                    <UserTip key={tip.id} tip={tip}/>
+                ))}
+            </TipList>
+        </UserTipListBlock>
+    );
 };
 
 export default UserTipList;

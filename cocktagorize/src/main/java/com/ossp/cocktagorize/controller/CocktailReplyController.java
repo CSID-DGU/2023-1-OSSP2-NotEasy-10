@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/cocktail/{cocktail_id}")
 public class CocktailReplyController {
@@ -23,7 +24,9 @@ public class CocktailReplyController {
         return ResponseEntity.ok(null);
     }
     @DeleteMapping("/reply/{reply_id}")
-    public ResponseEntity<String> deleteReply(@PathVariable int reply_id,@PathVariable int cocktail_id){
+    public ResponseEntity<String> deleteReply(@PathVariable int reply_id, @PathVariable int cocktail_id){
+        System.out.println("댓글 아이디 : " + reply_id);
+        System.out.println("칵테일 아이디 : " + cocktail_id);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() != "anonymousUser") {
             return ResponseEntity.ok(cocktailReplyService.deleteReply(reply_id,cocktail_id,authentication));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
@@ -7,31 +7,67 @@ import { VscHeartFilled, VscUnmute, VscLinkExternal } from "react-icons/vsc";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../jwt/auth-context";
+import {GET, POST, PUT} from "../../jwt/fetch-auth-action";
+import {createTokenHeader} from "../../jwt/auth-action";
 
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
-	const [cocktail, setCocktail] = useState(null);
+	const [ cocktail, setCocktail ] = useState(null);
+	const [ replyList, setReplyList ] = useState([]);
+	const [isLike, setIsLike] = useState();
+	const [like, setLike] = useState(0);
 
-	//기본으로 계속 보여줘야 할 칵테일 정보들
+	const authCtx = useContext(AuthContext);
+	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
+
+	useEffect(() => {
+		if (isLogin) {
+			authCtx.getUser();
+		}
+	}, [isLogin]);
+
+	useEffect(() => {
+		if (isGetUser) {
+
+		}
+	}, [isGetUser]);
+
 	useEffect(() => {
 		const getCocktailDetails = async () => {
-			try {
-				const response = await axios.get(
-					`http://localhost:8080/cocktail/${cocktail_id}`
-				);
-				console.log(response.data);
-				setCocktail(response.data);
-				// Handle the cocktail data as needed
-			} catch (error) {
-				console.error(error);
-			}
+			const result = GET(`http://localhost:8080/cocktail/${cocktail_id}`, createTokenHeader(authCtx.token));
+			result.then((result) => {
+				if (result !== null) {
+					setCocktail(result.data);
+					console.log(result);
+					setReplyList(result.data.cocktailReplyList);
+					setLike(result.data.liked);
+					setIsLike(result.data.userLikeCocktail);
+				}
+			});
 		};
-
 		getCocktailDetails();
 	}, []);
 
 	if (!cocktail) {
 		return null;
+	}
+
+
+	const likeClicked = (event) => {
+		// 로그인을 했다면
+		if (authCtx.isLoggedIn) {
+			const result = PUT(`http://localhost:8080/cocktail/${cocktail_id}/like`, null, createTokenHeader(authCtx.token));
+			result.then((result) => {
+				if (result !== null) {
+					setLike(result.data.liked);
+				}
+			});
+
+			setIsLike(!isLike);
+		} else {
+			alert("로그인을 해주세요!");
+		}
 	}
 
 	const tagList = cocktail.cocktailTagList.map((tag) => (
@@ -41,6 +77,18 @@ const CocktailDetail = () => {
 		(tag) => tag.category === "INGREDIENT" || tag.category === "ALCOHOL"
 	);
 	const ingredient = ingre.map((tag) => <p key={tag.id}>{tag.name}</p>);
+
+	// // 작성자
+	// replyList.map((reply) => console.log(reply.user.name));
+	//
+	// // 작성날짜
+	// replyList.map((reply) => console.log(reply.createdDate));
+	//
+	// // 댓글 나용
+	// replyList.map((reply) => console.log(reply.content));
+	//
+	// // 좋아요 수
+	// replyList.map((reply) => console.log(reply.liked));
 
 	return (
 		<div className="CocktailDetail">
@@ -56,8 +104,8 @@ const CocktailDetail = () => {
 								alt="칵테일 이미지"
 							/>
 							<div className="cocktail_icon">
-								<VscHeartFilled />{" "}
-								<p key={cocktail.id}>{cocktail.liked}</p>{" "}
+								{isLike ? <VscHeartFilled onClick={likeClicked} style={{color:"red"}} /> : <VscHeartFilled onClick={likeClicked}/>}
+								<p key={cocktail.id}>{like}</p>{" "}
 								<VscUnmute />
 							</div>
 						</div>
@@ -113,7 +161,7 @@ const CocktailDetail = () => {
 						</div>
 					</div>
 				</div>
-				<UserTipList />
+				<UserTipList tips={replyList}/>
 			</div>
 		</div>
 	);

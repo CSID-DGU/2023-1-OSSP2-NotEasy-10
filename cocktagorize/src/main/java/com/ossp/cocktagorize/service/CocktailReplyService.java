@@ -6,6 +6,7 @@ import com.ossp.cocktagorize.data.entity.CocktailReply;
 import com.ossp.cocktagorize.data.repository.CocktailDetailrepository;
 import com.ossp.cocktagorize.data.repository.CocktailReplyRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class CocktailReplyService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public CocktailReplyDto createReply(CocktailReplyRequestDto cocktailReplyDto, int cocktail_id, Authentication authentication){
         String content=cocktailReplyDto.getContent();
         int userId=userRepository.findByUsername(authentication.getName()).getId();
@@ -32,6 +34,8 @@ public class CocktailReplyService {
         CocktailReply saveReply=cocktailReplyRepository.save(cocktailReply);
         return new CocktailReplyDto(saveReply,cocktail_id,userId);
     }
+
+    @Transactional
     public String deleteReply(int replyId,int cocktailId,Authentication authentication){
         CocktailReply cocktailReply=cocktailReplyRepository.findById(replyId);
         if(cocktailId==cocktailReply.getCocktail().getId()&&cocktailReply.getUser().getId()==userRepository.findByUsername(authentication.getName()).getId()){
@@ -40,6 +44,8 @@ public class CocktailReplyService {
         }
         return "fail";
     }
+
+    @Transactional
     public CocktailReplyDto editReply(int replyId,CocktailReplyDto cocktailReplyDto){
         CocktailReply cocktailReply=cocktailReplyRepository.findById(replyId);
         cocktailReply.setContent(cocktailReplyDto.getContent());
