@@ -3,6 +3,7 @@ package com.ossp.cocktagorize.service;
 import com.ossp.cocktagorize.data.dto.CocktailResponseDto;
 import com.ossp.cocktagorize.data.entity.*;
 import com.ossp.cocktagorize.data.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class PreferCocktailService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public List<CocktailResponseDto> getPreferTagCocktail(String username){
         List<CocktailResponseDto> preferCocktail=new ArrayList<>();
         User user=userRepository.findByUsername(username);//유저이름으로 유저 찾기

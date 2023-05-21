@@ -52,6 +52,7 @@ export const AuthContextProvider = (props) => {
 
     const logoutHandler = useCallback(() => {
         setToken('');
+        setIsGetUserSuccess(false)
         authAction.logoutActionHandler();
         if (logoutTimer) {
             clearTimeout(logoutTimer);
@@ -74,7 +75,6 @@ export const AuthContextProvider = (props) => {
 
     useEffect(() => {
         if (tokenData) {
-            console.log(tokenData.duration);
             logoutTimer = setTimeout(logoutHandler, tokenData.duration);
         }
 

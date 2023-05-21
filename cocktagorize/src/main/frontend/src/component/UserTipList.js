@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import UserTip from "./UserTip";
 import styled from "styled-components";
 import './UserTipList.css';
-import axios from "axios";
 
 const UserTipListBlock = styled.div`
   display: flex;
@@ -30,20 +29,6 @@ const WriteTip = styled.input`
 `;
 
 const UserTipList = ({ tips }) => {
-
-  const [newTip, setNewTip] = useState("");
-
-  const handleTipAdd = (e) => {
-    setNewTip(e.target.value);
-  };
-
-  const handleSubmitTip = () => {
-    //axios로 'content: newTip'을 post하는 코드
-    //그럼 서버에서 replyList에 추가된 댓글 객체를 업데이트해야함
-    console.log(`추가된 댓글: ${newTip}`);
-    setNewTip("");
-  }
-
   return (
     <UserTipListBlock>
       <H4>유저들의 꿀팁!</H4>
@@ -54,12 +39,13 @@ const UserTipList = ({ tips }) => {
         <div className="tips_write_wrap">
           <p className="tips_write_nickname">jwt로 받아올 user.nickname</p>
           <div className="tips_wrap">
-            <textarea className="tips_write" value={newTip} onChange={handleTipAdd} placeholder="해당 칵테일에 대한 자신만의 팁을 공유해보세요!">
+            <textarea className="tips_write" placeholder="해당 칵테일에 대한 자신만의 팁을 공유해보세요!">
             </textarea>
-            <button className="tips_write_submit" onClick={handleSubmitTip}>등록</button>
+            <button className="tips_write_submit">등록</button>
           </div>
         </div>
       </TipList>
+
     </UserTipListBlock>
   );
 };

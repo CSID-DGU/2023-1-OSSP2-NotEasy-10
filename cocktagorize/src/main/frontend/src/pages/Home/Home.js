@@ -78,6 +78,7 @@ const Home = () => {
     };
 
     const getNowPositionWeatherCocktailData = async () => {
+        console.log("실시간 날씨 칵테일 불러오기");
         navigator.geolocation.getCurrentPosition((position) => {
             let nowTemp = 0;
             let nowIsRainy = 0;
@@ -119,6 +120,7 @@ const Home = () => {
     }
 
     const getWeatherCocktailData = async () => {
+        console.log("회원정보 기반 날씨 칵테일 불러오기");
         const weatherCocktailData = GET(`http://localhost:${port}/cocktail/weather`, createTokenHeader(authCtx.token));
         weatherCocktailData.then((result) => {
             if (result !== null) {
@@ -146,55 +148,40 @@ const Home = () => {
 
     // 정렬 조건 : 사전 순서
     const getAllCocktailByName = async (page) => {
-        try {
-            const response = await axios.get(
-                `http://localhost:${port}/dictionary?page=${page}`
-            );
-            // data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-            setCocktailList(response.data.content);
-            setMaxPage(response.data.totalPages);
-            setIsLoading(false);
-            // Handle the cocktail data as needed
-        } catch (error) {
-            // Handle the error
-            console.error(error);
-        }
+        const result = GET(`http://localhost:${port}/dictionary?page=${page}`, createTokenHeader(authCtx.token));
+        result.then((result) => {
+            if (result !== null) {
+                setCocktailList(result.data.content);
+                setMaxPage(result.data.totalPages);
+                setIsLoading(false);
+            }
+        });
     };
 
     // 정렬 조건 : 좋아요 많은 순서
     const getAllCocktailByLiked = async (page) => {
-        try {
-            const response = await axios.get(
-                `http://localhost:${port}/liked?page=${page}`
-            );
-            // data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-            console.log(response.data);
-            setCocktailList(response.data.content);
-            setMaxPage(response.data.totalPages);
-            setIsLoading(false);
-            // Handle the cocktail data as needed
-        } catch (error) {
-            // Handle the error
-            console.error(error);
-        }
+        const result = GET(`http://localhost:${port}/liked?page=${page}`, createTokenHeader(authCtx.token));
+        result.then((result) => {
+            if (result !== null) {
+                console.log(result.data);
+                setCocktailList(result.data.content);
+                setMaxPage(result.data.totalPages);
+                setIsLoading(false);
+            }
+        });
     };
 
     // 정렬 조건 : 댓글 최신 업데이트 순서
     const getAllCocktailByUpdate = async (page) => {
-        try {
-            const response = await axios.get(
-                `http://localhost:${port}/update?page=${page}`
-            );
-            // data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-            console.log(response.data);
-            setCocktailList(response.data.content);
-            setMaxPage(response.data.totalPages);
-            setIsLoading(false);
-            // Handle the cocktail data as needed
-        } catch (error) {
-            // Handle the error
-            console.error(error);
-        }
+        const result = GET(`http://localhost:${port}/update?page=${page}`, createTokenHeader(authCtx.token));
+        result.then((result) => {
+            if (result !== null) {
+                console.log(result.data);
+                setCocktailList(result.data.content);
+                setMaxPage(result.data.totalPages);
+                setIsLoading(false);
+            }
+        });
     };
 
     // 이름으로 검색하기
@@ -203,19 +190,15 @@ const Home = () => {
             getAllCocktailById(page);
             return;
         }
-        try {
-            const response = await axios.get(
-                `http://localhost:${port}/cocktail/search/${name}?page=${page}`
-            );
-            // data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-            setCocktailList(response.data.content);
-            setMaxPage(response.data.totalPages);
-            setIsLoading(false);
-            // Handle the cocktail data as needed
-        } catch (error) {
-            // Handle the error
-            console.error(error);
-        }
+
+        const result = GET(`http://localhost:${port}/cocktail/search/${name}?page=${page}`, createTokenHeader(authCtx.token));
+        result.then((result) => {
+            if (result !== null) {
+                setCocktailList(result.data.content);
+                setMaxPage(result.data.totalPages);
+                setIsLoading(false);
+            }
+        });
     };
 
     // 태그로 검색하기 AND 연산
@@ -227,16 +210,15 @@ const Home = () => {
                     : tagData
                         .map((tag) => `tags=${encodeURIComponent(tag)}`)
                         .join("&");
-            // console.log(tags);
-            const response = await axios.get(
-                `http://localhost:${port}/cocktail/tag/and?${tags}&page=${page}`
-            );
-            // data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-            // console.log(response.data);
-            setCocktailList(response.data.content);
-            setMaxPage(response.data.totalPages);
-            setIsLoading(false);
-            // Handle the cocktail data as needed
+
+            const result = GET(`http://localhost:${port}/cocktail/tag/and?${tags}&page=${page}`, createTokenHeader(authCtx.token));
+            result.then((result) => {
+                if (result !== null) {
+                    setCocktailList(result.data.content);
+                    setMaxPage(result.data.totalPages);
+                    setIsLoading(false);
+                }
+            });
         } catch (error) {
             // Handle the error
             console.error(error);
@@ -252,14 +234,16 @@ const Home = () => {
                     : tagData
                         .map((tag) => `tags=${encodeURIComponent(tag)}`)
                         .join("&");
-            const response = await axios.get(
-                `http://localhost:${port}/cocktail/tag/or?${tags}&page=${page}`
-            );
-            // data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-            console.log(response.data);
-            setCocktailList(response.data.content);
-            setMaxPage(response.data.totalPages);
-            setIsLoading(false);
+
+            const result = GET(`http://localhost:${port}/cocktail/tag/or?${tags}&page=${page}`, createTokenHeader(authCtx.token));
+            result.then((result) => {
+                if (result !== null) {
+                    console.log(result.data);
+                    setCocktailList(result.data.content);
+                    setMaxPage(result.data.totalPages);
+                    setIsLoading(false);
+                }
+            });
             // Handle the cocktail data as needed
         } catch (error) {
             // Handle the error

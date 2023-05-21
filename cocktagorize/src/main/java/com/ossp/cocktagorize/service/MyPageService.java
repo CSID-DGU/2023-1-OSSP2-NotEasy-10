@@ -3,6 +3,7 @@ package com.ossp.cocktagorize.service;
 import com.ossp.cocktagorize.data.dto.UserJoinDto;
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
@@ -16,6 +17,7 @@ public class MyPageService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public UserJoinDto getUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -29,6 +31,7 @@ public class MyPageService {
         userJoinDto.setAlcoholCapacity(user.getAlcoholCapacity());
         return userJoinDto;
     }
+    @Transactional
     public UserJoinDto updateUserProfile(String username, UserJoinDto userJoinDto) {
         User user = userRepository.findByUsername(username);
 
@@ -46,6 +49,7 @@ public class MyPageService {
         return userJoinDto;
     }
 
+    @Transactional
     public void deleteUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user != null) {
