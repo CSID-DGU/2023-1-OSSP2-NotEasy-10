@@ -25,9 +25,7 @@ public class CocktailController {
     @GetMapping("/")
     @ResponseBody
     public ResponseEntity<Page<CocktailResponseDto>> getCocktailList(@PageableDefault Pageable pageable) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(), defaultPageSize);
         Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailList(modifiedPageable,authentication);
         return ResponseEntity.ok(cocktailList);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class MyPageController {
     private final MyPageService mypageService;

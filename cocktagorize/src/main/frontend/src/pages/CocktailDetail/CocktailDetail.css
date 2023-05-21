@@ -21,6 +21,7 @@
   display: flex;
   height: auto;
   flex: 1;
+  margin-top: 0.2rem;
 }
 
 .inner_left {
@@ -31,51 +32,78 @@
 }
 
 .cocktail_card {
-  background-color: white;
+  background-color: transparent;
   margin: 0.5rem 0.5rem 0.5rem 0;
-  border-radius: 0.25rem;
+  /* border-radius: 0.25rem; */
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0.5rem 0 0.5rem;
-  height: 40vh;
+  padding: 0.5rem 1rem 0 0.5rem;
+  height: 45vh;
 }
 
 .cocktail_image {
-  height: 32vh;
-  object-fit: contain;
+  height: 37vh;
+  /* object-fit: contain; */
 }
 
 .cocktail_icon {
   display: flex;
   align-items: center;
   flex: 1;
-  margin: 0 4rem;
+  background-color: white;
+  width: auto;
+  border-radius: 0.25rem;
+  padding: 0 40px;
 }
 
 .cocktail_icon > p {
   flex: 1;
   margin: 0;
+  text-align: center;
 }
 
 .inner_left > p {
-  margin: 1rem 5rem 0 5rem;
-  text-align: center;
-  background-color: lightgrey;
+  margin: 2rem 0 0 0;
+  font-weight: bold;
 }
 
 .cocktail_similar {
-  height: 28vh;
+  height: 23vh;
   margin: 0.5rem 0.5rem 0.5rem 0;
   border-radius: 0.25rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* flex-direction: column; */
+  /* align-items: center; */
+  background-color: white;
 }
 
 .cocktail_similar_image {
-  height: 25vh;
-  width: 18vw;
-  object-fit: contain;
+  height: auto;
+  width: 180px;
+  /* object-fit: contain; */
+}
+
+.cocktail_similar_name {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cocktail_similar_name2 {
+  text-align: center;
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.similar_liked {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+ .cocktail_similar_name > a{
+  height: 40px;
+  text-align: end;
+  padding: 20px 2px 0 0;
 }
 
 .inner_right {
@@ -114,6 +142,7 @@
   background-color: lightgray;
   padding: 0.2rem;
   margin-right: 0.4rem;
+  border-radius: 0.5rem;
 }
 
 .info_right{
@@ -127,6 +156,7 @@
   background-color: lightgray;
   padding: 0.2rem;
   margin-right: 0.4rem;
+  border-radius: 0.5rem;
 }
 
 .order {
