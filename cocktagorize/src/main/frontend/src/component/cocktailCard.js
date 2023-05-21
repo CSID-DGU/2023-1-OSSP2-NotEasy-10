@@ -44,7 +44,7 @@ const Image = styled.img`
 `;
 
 const Container = styled.div`
-	margin: 0px 16px;
+	margin: 0px 8px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -67,7 +67,7 @@ const Container = styled.div`
 `;
 
 const TitleContainer = styled.div`
-	margin: 5px 0px;
+	margin: 10px 0px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;

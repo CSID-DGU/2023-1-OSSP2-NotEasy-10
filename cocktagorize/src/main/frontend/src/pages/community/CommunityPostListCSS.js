@@ -14,8 +14,6 @@ export const NonSidebar = styled.div`
 	width: 45vw;
 	height: 80vh;
 	align-items: center;
-	border: solid;
-	border-color: black;
 `;
 
 export const PostList = styled.div`
@@ -35,9 +33,6 @@ export const NonExplore = styled.div`
 	align-items: center;
 	overflow-x: hidden;
 	overflow-y: auto;
-	border: solid;
-	border-color: black;
-	border-width: 0px;
 	width: calc(100% - 0px);
 	height: calc(100% - 70px);
 
@@ -197,6 +192,4 @@ export const Cocktailbar = styled.div`
 	height: 80vh;
 	justify-content: center;
 	align-items: center;
-	border: solid;
-	border-color: black;
 `;
