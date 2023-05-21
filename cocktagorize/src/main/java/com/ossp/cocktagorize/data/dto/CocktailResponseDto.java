@@ -2,10 +2,12 @@ package com.ossp.cocktagorize.data.dto;
 
 
 import com.ossp.cocktagorize.data.entity.Cocktail;
+import com.ossp.cocktagorize.data.entity.UserLikeCocktail;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Getter
@@ -18,6 +20,7 @@ public class CocktailResponseDto {
     private BigDecimal alcoholDegree;
     private int liked;
     private List<TagDto> cocktailTagList;
+    private boolean userLikeCocktail;
 
     // 여유 될 떄 생성자로 바꾸기 builder, allargs 태그도 없애고, cocktailservice도 바꾸기
 //    public static CocktailResponseDto toEntity(Cocktail cocktail) {
@@ -44,5 +47,18 @@ public class CocktailResponseDto {
         cocktailTagList = cocktail.getCocktailTagList().stream()
                 .map(cocktailTag -> new TagDto(cocktailTag.getTag()))
                 .collect(Collectors.toList());
+        userLikeCocktail=false;
+    }
+    public CocktailResponseDto (Cocktail cocktail, Optional<UserLikeCocktail> userLikedCocktail) {
+        id = cocktail.getId();
+        name = cocktail.getName();
+        recipe = cocktail.getRecipe();
+        glassType = cocktail.getGlassType();
+        alcoholDegree = cocktail.getAlcoholDegree();
+        liked = cocktail.getLiked();
+        cocktailTagList = cocktail.getCocktailTagList().stream()
+                .map(cocktailTag -> new TagDto(cocktailTag.getTag()))
+                .collect(Collectors.toList());
+        userLikeCocktail=userLikedCocktail.isPresent();
     }
 }
