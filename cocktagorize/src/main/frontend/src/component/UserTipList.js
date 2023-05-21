@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useCallback, useContext, useState} from "react";
 import UserTip from "./UserTip";
 import styled from "styled-components";
 import './UserTipList.css';
+import axios from "axios";
+import {POST} from "../jwt/fetch-auth-action";
+import {createTokenHeader} from "../jwt/auth-action";
+import AuthContext from "../jwt/auth-context";
+import {useParams} from "react-router-dom";
 
 const UserTipListBlock = styled.div`
   display: flex;
@@ -29,25 +34,53 @@ const WriteTip = styled.input`
 `;
 
 const UserTipList = ({ tips }) => {
-  return (
-    <UserTipListBlock>
-      <H4>유저들의 꿀팁!</H4>
-      <TipList>
-        {tips.map((tip) => (
-          <UserTip key={tip.id} tip={tip} />
-        ))}
-        <div className="tips_write_wrap">
-          <p className="tips_write_nickname">jwt로 받아올 user.nickname</p>
-          <div className="tips_wrap">
-            <textarea className="tips_write" placeholder="해당 칵테일에 대한 자신만의 팁을 공유해보세요!">
-            </textarea>
-            <button className="tips_write_submit">등록</button>
-          </div>
-        </div>
-      </TipList>
+    const { cocktail_id } = useParams();
+    const [newTip, setNewTip] = useState("");
 
-    </UserTipListBlock>
-  );
+    const authCtx = useContext(AuthContext);
+    let isLogin = authCtx.isLoggedIn;
+    let isGetUser = authCtx.isGetUserSuccess;
+    const handleTipAdd = (e) => {
+        setNewTip(e.target.value);
+    };
+
+    const handleSubmitTip = () => {
+        //axios로 'content: newTip'을 post하는 코드
+        //그럼 서버에서 replyList에 추가된 댓글 객체를 업데이트해야함
+        console.log(`추가된 댓글: ${newTip}`);
+        setNewTip("");
+        const result = POST(`http://localhost:8080/cocktail/${cocktail_id}/reply`,
+            {
+                content: newTip
+            },
+            createTokenHeader(authCtx.token)
+        );
+        result.then((result) => {
+            if (result !== null) {
+                alert("댓글이 작성되었습니다!");
+                window.location.replace(`/cocktail/${cocktail_id}`);
+            }
+        });
+    }
+
+    return (
+        <UserTipListBlock>
+            <H4>유저들의 꿀팁!</H4>
+            <TipList>
+                {tips.map((tip) => (
+                    <UserTip key={tip.id} tip={tip} />
+                ))}
+                <div className="tips_write_wrap">
+                    <p className="tips_write_nickname">{authCtx.userObj.nickname}</p>
+                    <div className="tips_wrap">
+            <textarea className="tips_write" value={newTip} onChange={handleTipAdd} placeholder="해당 칵테일에 대한 자신만의 팁을 공유해보세요!">
+            </textarea>
+                        <button className="tips_write_submit" onClick={handleSubmitTip}>등록</button>
+                    </div>
+                </div>
+            </TipList>
+        </UserTipListBlock>
+    );
 };
 
 export default UserTipList;
