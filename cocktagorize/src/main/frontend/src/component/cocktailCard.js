@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cocktailImage from "../images/cocktailsample.png";
 import blackHeartImage from "../images/blackHeart.png";
 import soundImage from "../images/sound.png";
 import Tag from "./common/tag.js";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import AuthContext from "../jwt/auth-context";
+import { PUT } from "../jwt/fetch-auth-action";
+import { createTokenHeader } from "../jwt/auth-action";
+import { VscHeartFilled } from "react-icons/vsc";
 
 const Card = styled.div`
 	width: 15.625vw;
@@ -44,30 +48,30 @@ const Image = styled.img`
 `;
 
 const Container = styled.div`
-	margin: 0px 16px;
+	margin: 0px 8px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 
 	@media (max-width: 600px) {
-		height: 60%;
-	}
-	@media (min-width: 600px) and (max-width: 900px) {
 		height: 55%;
 	}
-	@media (min-width: 900px) and (max-width: 1200px) {
+	@media (min-width: 600px) and (max-width: 900px) {
 		height: 50%;
 	}
-	@media (min-width: 1200px) and (max-width: 1600px) {
+	@media (min-width: 900px) and (max-width: 1200px) {
 		height: 45%;
 	}
-	@media (min-width: 1600px) {
+	@media (min-width: 1200px) and (max-width: 1600px) {
 		height: 40%;
+	}
+	@media (min-width: 1600px) {
+		height: 35%;
 	}
 `;
 
 const TitleContainer = styled.div`
-	margin: 5px 0px;
+	margin: 10px 0px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -76,6 +80,7 @@ const TitleContainer = styled.div`
 const NameText = styled.p`
 	width: 75%;
 	color: black;
+	font-family: var(--font-Reem-Kufi-Fun);
 	@media (max-width: 600px) {
 		font-size: 12px;
 	}
@@ -135,7 +140,7 @@ const TagContainer = styled.div`
 	overflow-x: hidden;
 	overflow-y: auto;
 	width: 100%;
-	height: calc(100% - 90px);
+	height: calc(100% - 50px);
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -162,14 +167,14 @@ const HeartContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin: 8px 0px;
+	margin: 8px 16px;
 	height: 16px;
 `;
 
 const BlackHeartImage = styled.img`
 	width: 16px;
 	height: 16px;
-	margin: 0px 8px;
+	margin: 8px 8px;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
 `;
@@ -179,13 +184,53 @@ const HeartText = styled.div`
 	-webkit-user-select: none;
 `;
 
+const styles = {
+	link: {
+		margin: "0px 8px",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		height: "calc(100% - 40px)",
+	},
+};
+
 function CocktailCard(props) {
+	const authCtx = useContext(AuthContext);
+	const [isLike, setIsLike] = useState(props.info.userLikeCocktail);
+	const [like, setLike] = useState(props.info.liked);
+
+	useEffect(() => {
+		console.log("CocktailCard useEffect 호출!");
+		//setIsLike(props.info.userLikeCocktail);
+		//setLike(props.info.liked);
+	}, []);
+
+	const likeClicked = async (event) => {
+		if (authCtx.isLoggedIn) {
+			const result = PUT(
+				`http://localhost:8080/cocktail/${props.info.id}/like`,
+				null,
+				createTokenHeader(authCtx.token)
+			);
+			// 만약 이미 좋아요를 누른 칵테일이라면
+			result.then((result) => {
+				if (result !== null) {
+					setLike(result.data.liked);
+					setIsLike(!isLike);
+					console.log(result);
+				}
+			});
+		} else {
+			alert("로그인을 해주세요!");
+		}
+	};
+
 	return (
-		<Link to={`/cocktail/${props.info.id}`}>
-			<Card
-				horizontalMargin={props.horizontalMargin}
-				verticalMargin={props.verticalMargin}
-			>
+		<Card
+			horizontalMargin={props.horizontalMargin}
+			verticalMargin={props.verticalMargin}
+		>
+			<Link to={`/cocktail/${props.info.id}`} style={styles.link}>
 				<Image
 					src={require(`../images/${props.info.id}.jpeg`)}
 					alt={cocktailImage}
@@ -201,16 +246,17 @@ function CocktailCard(props) {
 								<Tag info={info} key={index} />
 							))}
 					</TagContainer>
-					<HeartContainer>
-						<BlackHeartImage
-							src={blackHeartImage}
-							alt={blackHeartImage}
-						/>
-						<HeartText>{props.info.liked}</HeartText>
-					</HeartContainer>
 				</Container>
-			</Card>
-		</Link>
+			</Link>
+			<HeartContainer onClick={() => likeClicked()}>
+				{isLike ? (
+					<VscHeartFilled style={{ color: "red" }} />
+				) : (
+					<VscHeartFilled style={{ color: "black" }} />
+				)}
+				<HeartText>{like}</HeartText>
+			</HeartContainer>
+		</Card>
 	);
 }
 

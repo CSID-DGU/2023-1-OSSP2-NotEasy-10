@@ -25,12 +25,12 @@ const fetchAuth = async (fetchData) => {
             const serverError = err;
             if (serverError && serverError.response) {
                 console.log(serverError.response.data);
-                alert("fetch-auth-action.js : 잘못된 아이디 혹은 비밀번호입니다!");
+                alert("서버 오류입니다!");
                 return null;
             }
         }
         console.log(err);
-        alert("fetch-auth-action.js : 잘못된 아이디 혹은 비밀번호입니다!");
+        alert("서버 오류입니다!")
         return null;
     }
 };

@@ -42,7 +42,9 @@ public class CocktailDetailResponseDto {
             cocktailTagList.add(new TagDto(cocktailTag.getTag()));
         }
         similarCocktail=new SimilarDto(similar);
-        userLikeCocktail=userLike.isPresent();
+
+        userLikeCocktail =userLike.isPresent();
+        System.out.println(userLikeCocktail);
     }
     public CocktailDetailResponseDto(Cocktail cocktail, Cocktail similar){
         id=cocktail.getId();

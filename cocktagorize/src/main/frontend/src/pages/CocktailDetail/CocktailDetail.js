@@ -1,37 +1,71 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
 import Tag from "../../component/common/tag.js";
-import { VscHeartFilled, VscUnmute, VscLinkExternal } from "react-icons/vsc";
+import { VscHeartFilled, VscHeart, VscUnmute, VscLinkExternal } from "react-icons/vsc";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../jwt/auth-context";
+import {GET, PUT} from "../../jwt/fetch-auth-action";
+import {createTokenHeader} from "../../jwt/auth-action";
 
 const CocktailDetail = () => {
 	const { cocktail_id } = useParams();
-	const [cocktail, setCocktail] = useState(null);
+	const [ cocktail, setCocktail ] = useState(null);
+	const [ replyList, setReplyList ] = useState([]);
+	const [isLike, setIsLike] = useState();
+	const [like, setLike] = useState(0);
 
-	//기본으로 계속 보여줘야 할 칵테일 정보들
+	const authCtx = useContext(AuthContext);
+	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
+
+	useEffect(() => {
+		if (isLogin) {
+			authCtx.getUser();
+		}
+	}, [isLogin]);
+
+	useEffect(() => {
+		if (isGetUser) {
+
+		}
+	}, [isGetUser]);
+
 	useEffect(() => {
 		const getCocktailDetails = async () => {
-			try {
-				const response = await axios.get(
-					`http://localhost:8080/cocktail/${cocktail_id}`
-				);
-				console.log(response.data);
-				setCocktail(response.data);
-				// Handle the cocktail data as needed
-			} catch (error) {
-				console.error(error);
-			}
+			const result = GET(`http://localhost:8080/cocktail/${cocktail_id}`, createTokenHeader(authCtx.token));
+			result.then((result) => {
+				if (result !== null) {
+					setCocktail(result.data);
+					console.log(result);
+					setReplyList(result.data.cocktailReplyList);
+					setLike(result.data.liked);
+					setIsLike(result.data.userLikeCocktail);
+				}
+			});
 		};
-
 		getCocktailDetails();
 	}, []);
 
+
 	if (!cocktail) {
 		return null;
+	}
+	const likeClicked = (id) => {
+		// 로그인을 했다면
+		if (authCtx.isLoggedIn) {
+			const result = PUT(`http://localhost:8080/cocktail/${id}/like`, null, createTokenHeader(authCtx.token));
+			result.then((result) => {
+				if (result !== null) {
+					setLike(result.data.liked);
+					setIsLike(!isLike);
+				}
+			});
+		} else {
+			alert("로그인을 해주세요!");
+		}
 	}
 
 	const tagList = cocktail.cocktailTagList.map((tag) => (
@@ -56,8 +90,8 @@ const CocktailDetail = () => {
 								alt="칵테일 이미지"
 							/>
 							<div className="cocktail_icon">
-								<VscHeartFilled />{" "}
-								<p key={cocktail.id}>{cocktail.liked}</p>{" "}
+								{isLike ? <VscHeartFilled onClick={() => likeClicked(cocktail.id)} style={{color:"red"}} /> : <VscHeartFilled onClick={() => likeClicked(cocktail.id)} />}
+								<span key={cocktail.id}>{like}</span> <p><hr/></p>
 								<VscUnmute />
 							</div>
 						</div>
@@ -72,7 +106,11 @@ const CocktailDetail = () => {
 								className="cocktail_similar_name"
 								key={cocktail.similarCocktail.id}
 							>
-								{cocktail.similarCocktail.name}{" "}
+								<p className="cocktail_similar_name2">{cocktail.similarCocktail.name}{" "}</p>
+								<div className="similar_liked">
+									<p key={cocktail.similarCocktail.id}></p>{" "}
+									<VscHeart />
+									<span key={cocktail.similarCocktail.id}>{cocktail.similarCocktail.liked}</span></div>
 								<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
 									<VscLinkExternal />
 								</a>
@@ -96,7 +134,7 @@ const CocktailDetail = () => {
 									</span>
 									<p>도수: </p>
 									<span className="alchol" key={cocktail.id}>
-										소주 {cocktail.alcholeDegree}잔
+										{cocktail.alcholeDegree}도
 									</span>
 									<p>추천잔: </p>
 									<span className="glass" key={cocktail.id}>
@@ -113,7 +151,7 @@ const CocktailDetail = () => {
 						</div>
 					</div>
 				</div>
-				<UserTipList />
+				<UserTipList tips={replyList}/>
 			</div>
 		</div>
 	);

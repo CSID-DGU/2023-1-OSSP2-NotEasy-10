@@ -1,7 +1,7 @@
 package com.ossp.cocktagorize.controller;
 
 import com.ossp.cocktagorize.data.dto.CocktailDetailResponseDto;
-import com.ossp.cocktagorize.data.dto.UserLikeCocktailDto;
+import com.ossp.cocktagorize.data.dto.LikedResponseDto;
 import com.ossp.cocktagorize.service.CocktailDetailservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +27,15 @@ public class CocktailDetailController {
         }
         else{
             cocktailDto=cocktailDetailservice.getCocktailDetail(id);
+
         }
         return ResponseEntity.ok(cocktailDto);
     }
     @PutMapping("/{cocktail_id}/like")
-    public ResponseEntity<UserLikeCocktailDto> likeCocktail(@PathVariable int cocktail_id){
+    public ResponseEntity<LikedResponseDto> likeCocktail(@PathVariable int cocktail_id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() != "anonymousUser") {
-            return ResponseEntity.ok(cocktailDetailservice.likeCocktail(cocktail_id,authentication));
+            return ResponseEntity.ok(cocktailDetailservice.likeCocktail(cocktail_id, authentication));
         }
         return ResponseEntity.notFound().build();
     }
