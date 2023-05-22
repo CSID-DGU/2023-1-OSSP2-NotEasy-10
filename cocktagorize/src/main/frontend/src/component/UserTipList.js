@@ -70,14 +70,16 @@ const UserTipList = ({ tips }) => {
                 {tips.map((tip) => (
                     <UserTip key={tip.id} tip={tip} />
                 ))}
-                <div className="tips_write_wrap">
-                    <p className="tips_write_nickname">{authCtx.userObj.nickname}</p>
-                    <div className="tips_wrap">
-            <textarea className="tips_write" value={newTip} onChange={handleTipAdd} placeholder="해당 칵테일에 대한 자신만의 팁을 공유해보세요!">
-            </textarea>
-                        <button className="tips_write_submit" onClick={handleSubmitTip}>등록</button>
+                {authCtx.isLoggedIn && (
+                    <div className="tips_write_wrap">
+                        <p className="tips_write_nickname">{authCtx.userObj.nickname}</p>
+                        <div className="tips_wrap">
+                            <textarea className="tips_write" value={newTip} onChange={handleTipAdd} placeholder="해당 칵테일에 대한 자신만의 팁을 공유해보세요!">
+                            </textarea>
+                            <button className="tips_write_submit" onClick={handleSubmitTip}>등록</button>
+                        </div>
                     </div>
-                </div>
+                )}
             </TipList>
         </UserTipListBlock>
     );

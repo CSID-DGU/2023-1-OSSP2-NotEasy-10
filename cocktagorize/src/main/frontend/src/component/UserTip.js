@@ -29,7 +29,7 @@ const UserTip = (tip) => {
     // axios로 삭제요청 보내면 서버에서 replyList 업데이트해야함
     console.log("삭제된 댓글 아이디:", tip.tip.id);
     const result = DELETE(`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
-        createTokenHeader(authCtx.token)
+      createTokenHeader(authCtx.token)
     );
     result.then((result) => {
       if (result !== null) {
@@ -44,10 +44,10 @@ const UserTip = (tip) => {
     console.log("수정된 내용:", editedComment);
     setIsEditing(false);
     const result = PUT(`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
-        {
-          content: editedComment
-        },
-        createTokenHeader(authCtx.token)
+      {
+        content: editedComment
+      },
+      createTokenHeader(authCtx.token)
     );
     result.then((result) => {
       if (result !== null) {
@@ -67,45 +67,47 @@ const UserTip = (tip) => {
   };
 
   return (
-      <div className="UserTip">
-        <div>
-          <div className="tip">
-            <p className="tip_name">{tip.tip.user.name}</p>
-            {isEditing ? (
-                <textarea
-                    className="tip_content"
-                    value={editedComment}
-                    onChange={handleEditedCommentChange}
-                ></textarea>
-            ) : (
-                <p className="tip_content">{tip.tip.content}</p>
-            )}
-            <p className="tip_createdDate">{tip.tip.createdDate}</p>
-            <hr />
-          </div>
+    <div className="UserTip">
+      <div>
+        <div className="tip">
+          <p className="tip_name">{tip.tip.user.name}</p>
+          {isEditing ? (
+            <textarea
+              className="tip_content"
+              value={editedComment}
+              onChange={handleEditedCommentChange}
+            ></textarea>
+          ) : (
+            <p className="tip_content">{tip.tip.content}</p>
+          )}
+          <p className="tip_createdDate">{tip.tip.createdDate}</p>
+          <hr />
+        </div>
+        {tip.tip.user.name === authCtx.userObj.nickname && (
           <div className="tool">
             {isEditing ? (
-                <>
-                  <button className="tool_save" onClick={handleSave}>
-                    저장
-                  </button>
-                  <button className="tool_cancel" onClick={handleCancelEdit}>
-                    취소
-                  </button>
-                </>
+              <>
+                <button className="tool_save" onClick={handleSave}>
+                  저장
+                </button>
+                <button className="tool_cancel" onClick={handleCancelEdit}>
+                  취소
+                </button>
+              </>
             ) : (
-                <>
-                  <button className="tool_edit" onClick={handleEdit}>
-                    수정
-                  </button>
-                  <button className="tool_delete" onClick={handleDelete}>
-                    삭제
-                  </button>
-                </>
+              <>
+                <button className="tool_edit" onClick={handleEdit}>
+                  수정
+                </button>
+                <button className="tool_delete" onClick={handleDelete}>
+                  삭제
+                </button>
+              </>
             )}
           </div>
-        </div>
+        )}
       </div>
+    </div>
   );
 };
 
