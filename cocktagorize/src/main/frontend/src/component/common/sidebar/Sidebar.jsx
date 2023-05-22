@@ -15,11 +15,10 @@ import AuthContext from "../../../jwt/auth-context";
 
 export default function Sidebar() {
 
-    const navigate = useNavigate();
     const authCtx = useContext(AuthContext);
     const logoutHandler = () => {
         authCtx.logout();
-        navigate(1);
+        document.location.href = "/";
     }
 
     return (
@@ -43,7 +42,7 @@ export default function Sidebar() {
 
                 {
                     authCtx.isLoggedIn && <li>
-                        <VscHeartFilled/> <span className="list favorites">Favorites</span>
+                        <VscHeartFilled/> <span className="list favorites"><Link to="/favorites">Favorites</Link></span>
                     </li>
                 }
 

@@ -41,9 +41,9 @@ public class CocktailService {
     @Transactional
     public Page<CocktailResponseDto> getCocktailByLiked(Pageable pageable,Authentication authentication){
         if(authentication != null && authentication.getPrincipal() != "anonymousUser") {
-            return cocktailRepository.findAllByOrderByLiked(pageable).map(cocktail -> new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
+            return cocktailRepository.findAllByOrderByLikedDesc(pageable).map(cocktail -> new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
         }
-        return cocktailRepository.findAllByOrderByLiked(pageable).map(CocktailResponseDto::new);
+        return cocktailRepository.findAllByOrderByLikedDesc(pageable).map(CocktailResponseDto::new);
     }
 
     @Transactional
