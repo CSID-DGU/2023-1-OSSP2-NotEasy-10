@@ -1,3 +1,71 @@
-.mypage_logout > a {
-    text-decoration: underline;
+.MyPage {
+    background-color: white;
+    width: 600px;
+    text-align: center;
+    margin: auto;
+    height: auto;
+    padding: 2rem 7rem;
+    margin-top: 3rem;
+    border-radius: 0.7rem;
+}
+
+.MyPage > h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.MyPage_wrap {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    margin: auto;
+    margin-bottom: 2rem;
+} 
+
+.MyPage_id {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.MyPage_pw {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.MyPage_em {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.MyPage_nk {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.MyPage_ac {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.MyPage_ac > select {
+    width: 170px;
+}
+
+.MyPage_submit {
+    text-align: center;
+    display: flex;
+    width: 200px;
+    margin: auto;
+    height: 40px;
+    margin-top: 50px;
+}
+
+.MyPage_submit > button {
+    border-color: azure;
+    border-radius: 0.5rem;
+}
+
+.MyPage_edit {
+    flex:1;
 }
