@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import cocktailImage from "../images/cocktailsample.png";
 import blackHeartImage from "../images/blackHeart.png";
 import soundImage from "../images/sound.png";
@@ -6,6 +6,10 @@ import PostTag from "./common/PostTag.js";
 import Timestamp from "./common/Timestamp.js";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import {PUT} from "../jwt/fetch-auth-action";
+import {createTokenHeader} from "../jwt/auth-action";
+import AuthContext from "../jwt/auth-context";
+import {VscHeartFilled} from "react-icons/vsc";
 
 const Card = styled.div`
 	width: ${(props) => props.width || "40vw"};
@@ -95,8 +99,34 @@ const HeartText = styled.p`
 `;
 
 function Post(props) {
+
+	const authCtx = useContext(AuthContext);
+	const [isLike, setIsLike] = useState(props.info.useLikeBoard);
+	const [like, setLike] = useState(props.info.liked);
+
+	useEffect(() => {
+	}, [])
+
+	const likeClicked = async (event) => {
+		// 로그인을 했다면
+		if (authCtx.isLoggedIn) {
+			const result = PUT(`http://localhost:8080/board/${props.info.id}/like`,
+				null,
+				createTokenHeader(authCtx.token));
+			result.then((result) => {
+				if (result !== null) {
+					setLike(result.data.liked);
+					setIsLike(!isLike);
+					console.log(result);
+				}
+			});
+		} else {
+			alert("로그인을 해주세요!");
+		}
+	}
+
 	return (
-		<Link to={`/cocktail/${props.info.id}`}>
+		<Link to={`/community/${props.info.id}`}>
 			<Card
 				horizontalMargin={props.horizontalMargin}
 				verticalMargin={props.verticalMargin}
@@ -111,7 +141,8 @@ function Post(props) {
 						src={blackHeartImage}
 						alt={blackHeartImage}
 					/>
-					<HeartText>{props.info.liked}</HeartText>
+					{isLike ? <HeartText onClick={() => likeClicked(props.info.id)} style={{color:"red"}} /> : <HeartText onClick={() => likeClicked(props.info.id)} />}
+					{like}
 				</TitleContainer>
 				<InfoContainer>
 					<InfoText>{props.info.content}</InfoText>

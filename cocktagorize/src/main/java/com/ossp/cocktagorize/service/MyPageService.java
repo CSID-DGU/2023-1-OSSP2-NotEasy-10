@@ -1,6 +1,7 @@
 package com.ossp.cocktagorize.service;
 
 import com.ossp.cocktagorize.data.dto.UserJoinDto;
+import com.ossp.cocktagorize.data.dto.UserResponseDto;
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -18,22 +19,16 @@ public class MyPageService {
     }
 
     @Transactional
-    public UserJoinDto getUserByUsername(String username) {
+    public UserResponseDto getUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             return null;
         }
-        UserJoinDto userJoinDto = new UserJoinDto();
-        userJoinDto.setUsername(user.getUsername());
-        userJoinDto.setPassword(user.getPassword());
-        userJoinDto.setEmail(user.getEmail());
-        userJoinDto.setNickname(user.getNickname());
-        userJoinDto.setAlcoholCapacity(user.getAlcoholCapacity());
-        return userJoinDto;
+        return new UserResponseDto(user);
     }
     @Transactional
-    public UserJoinDto updateUserProfile(String username, UserJoinDto userJoinDto) {
-        User user = userRepository.findByUsername(username);
+    public UserJoinDto updateUserProfile(UserJoinDto userJoinDto) {
+        User user = userRepository.findByUsername(userJoinDto.getUsername());
 
         if (user == null) {
             throw new NotFoundException("User not found");
@@ -44,6 +39,10 @@ public class MyPageService {
         user.setEmail(userJoinDto.getEmail());
         user.setNickname(userJoinDto.getNickname());
         user.setAlcoholCapacity(userJoinDto.getAlcoholCapacity());
+        user.setCity(userJoinDto.getCity());
+        user.setGu(userJoinDto.getGu());
+        user.setDong(userJoinDto.getDong());
+
         userRepository.save(user);
 
         return userJoinDto;

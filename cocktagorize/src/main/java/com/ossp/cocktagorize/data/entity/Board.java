@@ -21,6 +21,7 @@ public class Board {
     @Column(name = "board_id")
     private int id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BoardType type;
 

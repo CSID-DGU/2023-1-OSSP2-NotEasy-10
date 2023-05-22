@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, {useContext, useReducer} from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import Post from "../../component/Post.js";
@@ -6,6 +6,10 @@ import blackXImage from "../../images/blackXButton.png";
 import CocktailCard from "../../component/cocktailCard.js";
 import * as home from "./CommunityPostListCSS.js";
 import axios from "axios";
+import {GET} from "../../jwt/fetch-auth-action";
+import {createTokenHeader} from "../../jwt/auth-action";
+import AuthContext from "../../jwt/auth-context";
+import {getNowPositionWeatherCocktailData} from "../Home/Home";
 
 const CommunityPostList = () => {
 	const [postList, setPostList] = useState([
@@ -45,6 +49,35 @@ const CommunityPostList = () => {
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
 	const [searchText, setSearchText] = useState();
+	const [userCocktailList, setUserBasedCocktailList] = useState([]);
+	
+
+	const authCtx = useContext(AuthContext);
+	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
+
+	useEffect(() => {
+		if (isLogin) {
+			authCtx.getUser();
+		}
+	}, [isLogin]);
+
+	useEffect(() => {
+		if (isGetUser) {
+			// User 정보를 불러와야지 이 함수를 호출 가능해서 여기다 작성
+			getUserCocktailData();
+		}
+	}, [isGetUser]);
+
+	useEffect(() => {
+		getAllBoards(0);
+		// 사전순으로
+		getAllBoardsByDic(0)
+		getAllBoardsByLiked(0);
+		getAllBoardsByTitle("test", 0);
+		getAllBoardsByContent("될까요?", 0);
+	}, [])
+
 	/*
 	useEffect(() => {
 		sort(currentTagData, sortType);
@@ -63,6 +96,104 @@ const CommunityPostList = () => {
 		sort(currentTagData, sortType);
 	}, []);
 */
+
+	// 게시글 들을 불러오는 함수
+	const getAllBoards = async (page) => {
+		const boardsData = GET(
+			`http://localhost:8080/board?page=${page}`,
+			createTokenHeader(authCtx.token)
+		);
+		boardsData.then((result) => {
+			if (result !== null) {
+				console.log("id순으로 그냥 불러올 경우 : " + result.data.content);
+				setPostList(result.data.content);
+				setMaxPage(result.data.totalPages);
+				setIsLoading(false);
+			}
+		});
+	};
+
+	// 정렬기준 dictionary
+	const getAllBoardsByDic = async (page) => {
+		const boardsData = GET(
+			`http://localhost:8080/board/dictionary?page=${page}`,
+			createTokenHeader(authCtx.token)
+		);
+		boardsData.then((result) => {
+			if (result !== null) {
+				console.log("사전순으로 불러올 경우 : " + result.data.content);
+				setPostList(result.data.content);
+				setMaxPage(result.data.totalPages);
+				setIsLoading(false);
+			}
+		});
+	};
+
+	// 정렬기준 좋아요 많은 순
+	const getAllBoardsByLiked = async (page) => {
+		const boardsData = GET(
+			`http://localhost:8080/board/liked?page=${page}`,
+			createTokenHeader(authCtx.token)
+		);
+		boardsData.then((result) => {
+			if (result !== null) {
+				console.log("좋아요 순으로 불러올 경우 : " + result.data.content);
+				setPostList(result.data.content);
+				setMaxPage(result.data.totalPages);
+				setIsLoading(false);
+			}
+		});
+	};
+
+	//
+	const getAllBoardsByTitle = async (name, page) => {
+		const nameURL = encodeURI(name);
+		const boardsData = GET(
+			`http://localhost:8080/board/title/${nameURL}`,
+			createTokenHeader(authCtx.token)
+		);
+		boardsData.then((result) => {
+			if (result !== null) {
+				console.log("제목으로 불러올 경우 : " + result.data.content);
+				setPostList(result.data.content);
+				setMaxPage(result.data.totalPages);
+				setIsLoading(false);
+			}
+		});
+	};
+
+	const getAllBoardsByContent = async (content, page) => {
+		const contentURL = encodeURI(content);
+		const boardsData = GET(
+			`http://localhost:8080/board/content/${contentURL}`,
+			createTokenHeader(authCtx.token)
+		);
+		boardsData.then((result) => {
+			if (result !== null) {
+				console.log("내용으로 불러올 경우 : " + result.data.content);
+				setPostList(result.data.content);
+				setMaxPage(result.data.totalPages);
+				setIsLoading(false);
+			}
+		});
+	};
+
+	// 사이드에 보여줄 사용자 기반 추천 칵테일
+	const getUserCocktailData = async () => {
+		const userCocktailData = GET(
+			`http://localhost:8080/cocktail/prefer/${authCtx.userObj.username}`,
+			createTokenHeader(authCtx.token)
+		);
+		userCocktailData.then((result) => {
+			if (result !== null) {
+				console.log("사용자 기반 추천 칵테일 : " + result.data.content);
+				setUserBasedCocktailList(result.data);
+				setIsLoading(false);
+				// console.log("유저 선호 칵테일 : " + result.data);
+				// result.data.forEach(cocktail => console.log(cocktail));
+			}
+		});
+	};
 
 	function post(props) {
 		let result = [];

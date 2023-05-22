@@ -12,6 +12,7 @@ const AuthContext = React.createContext({
     login: (username, password) => { },
     logout: () => { },
     getUser: () => { },
+    deleteUser: () => {}
 });
 
 export const AuthContextProvider = (props) => {
@@ -60,6 +61,15 @@ export const AuthContextProvider = (props) => {
         alert("로그아웃 되었습니다!");
     }, []);
 
+    const deleteUser = useCallback(() => {
+        setToken('');
+        setIsGetUserSuccess(false)
+        authAction.logoutActionHandler();
+        if (logoutTimer) {
+            clearTimeout(logoutTimer);
+        }
+    }, []);
+
     const getUserHandler = () => {
         setIsGetUserSuccess(false);
         const data = authAction.getUserActionHandler(token);
@@ -90,6 +100,7 @@ export const AuthContextProvider = (props) => {
         login: loginHandler,
         logout: logoutHandler,
         getUser: getUserHandler,
+        deleteUser: deleteUser
     };
 
     return (

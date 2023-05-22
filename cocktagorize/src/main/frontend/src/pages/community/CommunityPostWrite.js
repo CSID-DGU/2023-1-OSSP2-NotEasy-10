@@ -1,25 +1,59 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import './CommunityPostWrite.css'
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import CocktailCard from "../../component/cocktailCard";
+import {DELETE, POST, PUT} from "../../jwt/fetch-auth-action";
+import {createTokenHeader} from "../../jwt/auth-action";
+import {useParams} from "react-router-dom";
+import AuthContext from "../../jwt/auth-context";
 
 const CommunityPostWrite = () => {
 
-  const [title, setTitle] = useState("");
+  const { communityId } = useParams();
+
+  const [title, setTitle] = useState("제목 테스트");
   const onChangeTitle = (e) => {setTitle(e.target.value);};
-  const [type, setType] = useState("");
+  const [type, setType] = useState("TIP");
   const onChangeType = (e) => {setType(e.target.value);};
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState('내용 테스트');
   const onChangeContent = (e) => {setContent(e.target.value);};
 
+  const authCtx = useContext(AuthContext);
+  let isLogin = authCtx.isLoggedIn;
+  let isGetUser = authCtx.isGetUserSuccess;
+
+  const [board, setBoard] = useState();
+
+  useEffect(() => {
+    // 콘솔에 찍어뒀습니다.
+  }, [])
+
+  useEffect(() => {
+    if (isLogin) {
+      authCtx.getUser();
+    }
+  }, [isLogin]);
+
   const onClickSubmit = () => {
-    //axios로 type, title, content 추가사항 post
+    const boardsData = POST(
+        `http://localhost:8080/board`,
+        {
+          title : title,
+          content: content,
+          boardType: type
+        },
+        createTokenHeader(authCtx.token)
+    );
+    boardsData.then((result) => {
+      alert("작성이 완료되었습니다!");
+      document.location.href = `/community`;
+    });
   };
 
   return (
     <div className="CommunityPostWrite">
       <Sidebar />
-      <form className="write_wrap" action="">
+      <div className="write_wrap" action="">
         <p>커뮤니티 글쓰기</p>
         <select className="write_type" name="type" value={type} onChange={onChangeType}>
           <option name="type" value={"tip"}>Tip</option>
@@ -30,7 +64,7 @@ const CommunityPostWrite = () => {
         <textarea className="write_content" value={content} placeholder="내용을 작성해주세요" onChange={onChangeContent}>
         </textarea>
         <input type="submit" value="Done" className="write_submit" onClick={onClickSubmit}/>
-      </form>
+      </div>
       <CocktailCard />
     </div>
   );

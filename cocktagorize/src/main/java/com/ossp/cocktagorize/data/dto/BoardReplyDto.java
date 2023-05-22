@@ -22,10 +22,12 @@ public class BoardReplyDto {
     static
     class UserDto{
         private int id;
-        private String name;
+        private String username;
+        private String nickname;
         public UserDto(User user){
             id= user.getId();
-            name=user.getNickname();
+            username = user.getUsername();
+            nickname=user.getNickname();
         }
     }
     public BoardReplyDto(BoardReply boardReply){
