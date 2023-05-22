@@ -3,25 +3,16 @@ package com.ossp.cocktagorize.service;
 import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.entity.CocktailTag;
 import com.ossp.cocktagorize.data.entity.Tag;
-import com.ossp.cocktagorize.data.idClass.CocktailTagId;
 import com.ossp.cocktagorize.data.repository.CocktailRepository;
 import com.ossp.cocktagorize.data.repository.CocktailTagRepository;
 import com.ossp.cocktagorize.data.repository.TagRepository;
 import com.ossp.cocktagorize.data.type.TagType;
-import org.hibernate.id.IdentifierGenerationException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 // 나중에 여유되면 stream으로 갈아끼우기
 @Service
@@ -101,16 +92,17 @@ public class CocktailApiSetUpService {
                     .alcoholDegree(BigDecimal.ZERO)
                     .build();
 
-            cocktailRepository.save(cocktail);
-            System.out.println(recipe);
 
             System.out.println("칵테일 번호 : " + cocktailId);
 
             String ingredient = null;
+            String ingredientAmount = null;
             Tag ingredientTag = null;
 
             for (int ingredientNum = 1; ingredientNum < 16; ingredientNum++) {
                 ingredient = (String) jsonCocktail.get("strIngredient" + ingredientNum);
+                ingredientAmount = (String) jsonCocktail.get("strMeasure" + ingredientNum);
+
                 if (ingredient == null) {
                     break;
                 }
@@ -118,6 +110,7 @@ public class CocktailApiSetUpService {
                 CocktailTag cocktailTag = CocktailTag.builder()
                             .cocktail(cocktail)
                             .tag(ingredientTag)
+                            .amount(ingredientAmount)
                         .build();
 
                 cocktailTagRepository.save(cocktailTag);

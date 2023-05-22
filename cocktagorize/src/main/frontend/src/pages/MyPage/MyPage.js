@@ -1,14 +1,89 @@
-import React, { useContext, useEffect } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import '../MyPage/MyPage.css'
+import {DELETE, POST, PUT} from "../../jwt/fetch-auth-action";
+import {createTokenHeader} from "../../jwt/auth-action";
+import AuthContext from "../../jwt/auth-context";
 
 const MyPage = () => {
+  const authCtx = useContext(AuthContext);
+  let isLogin = authCtx.isLoggedIn;
+  let isGetUser = authCtx.isGetUserSuccess;
+
+  const user = null;
+  const [email, setEmail] = useState("");
+  const [isEmail, setIsEmail] = useState(false);
+  const [nickname, setNickname] = useState("");
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState('');
+  const [alcohol, setAlcohol] = useState(1);
+  const [city, setCity] = useState("서울특별시");
+  const [gu, setGu] = useState("종로구");
+  const [dong, setDong] = useState("청운효자동");
+
+  const [currentTagData, setCurrentTagData] = useState([]);
+
+  useEffect(() => {
+    if (isLogin) {
+      authCtx.getUser();
+    }
+  }, [isLogin]);
+
+  useEffect(() => {
+    if (isGetUser) {
+      getUserInfo();
+    }
+  }, [isGetUser]);
+  const getUserInfo = () => {
+    const data = POST(
+        `http://localhost:8080/user`,
+        {
+          username: authCtx.userObj.username
+        },
+        createTokenHeader(authCtx.token)
+    );
+    data.then((result) => {
+      console.log(result.data);
+    });
+  }
 
   const handleInfoEdit = () => {
-    // axios put 
+    const preferTagList = currentTagData.map((tag) => tag.name);
+
+    // axios put
+    // 회원가입 칸과 똑같은 항목들이 다 있는 상태에서, id는 변경이 input readOnly 로 필드 변경 불가능하게 만들면 될거 같애요.
+    const data = PUT(
+        `http://localhost:8080/user`,
+        {
+          username: id,
+          password: password,
+          email: email,
+          nickname: nickname,
+          alcoholCapacity: alcohol,
+          city: city,
+          gu: gu,
+          dong: dong,
+          preferTagList: preferTagList,
+        },
+        createTokenHeader(authCtx.token)
+    );
+    data.then((result) => {
+      authCtx.deleteUser();
+      alert("회원 정보가 수정되었습니다! 다시 로그인해 주세요!");
+      document.location.href = "/login";
+    });
   }
 
   const handleInfoDelete = () => {
     // axios delte
+    const boardsData = DELETE(
+        `http://localhost:8080/user/${authCtx.userObj.username}`,
+        createTokenHeader(authCtx.token)
+    );
+    boardsData.then((result) => {
+      authCtx.deleteUser();
+      alert("회원 탈퇴가 완료되었습니다!");
+      document.location.href = "/";
+    });
   }
 
   return (

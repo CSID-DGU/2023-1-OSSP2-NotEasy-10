@@ -4,10 +4,12 @@ import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.type.RoleType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class UserJoinDto {
     private String username;
@@ -33,25 +35,5 @@ public class UserJoinDto {
                 .gu(this.getGu())
                 .role(role)
                 .build();
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void setAlcoholCapacity(Double alcoholCapacity) {
-        this.alcoholCapacity = alcoholCapacity;
     }
 }

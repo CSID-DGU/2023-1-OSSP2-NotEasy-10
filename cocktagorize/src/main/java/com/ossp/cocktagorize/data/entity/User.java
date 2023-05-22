@@ -45,21 +45,21 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleType role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<Board> boardList = new ArrayList<Board>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<CocktailReply> cocktailReplyList = new ArrayList<CocktailReply>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<UserLikeBoard> likeBoardList = new ArrayList<UserLikeBoard>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<UserLikeCocktail> likeCocktailList = new ArrayList<UserLikeCocktail>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
     private List<PreferTag> preferTagList = new ArrayList<PreferTag>();
 }

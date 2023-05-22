@@ -42,7 +42,7 @@ public class CocktailApiSetUpController {
     @GetMapping("/getAllCocktail")
     public void getAllCocktail() {
         // 칵테일 id 범위 : 11000 ~ 17840, 178306 ~ 178369
-        for (int i = 11000; i < 17841; i++) {
+        for (int i = 178306; i < 178370; i++) {
 
             String result = apiUtils.getJsonDataByURL(BASE_URL + "api/json/v1/1/lookup.php?i=" + String.valueOf(i));
 
