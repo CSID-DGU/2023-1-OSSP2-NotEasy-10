@@ -2,12 +2,10 @@ package com.ossp.cocktagorize.controller.apiController;
 
 import com.ossp.cocktagorize.controller.setUpController.ApiUtils;
 import com.ossp.cocktagorize.data.dto.CocktailResponseDto;
+import com.ossp.cocktagorize.data.entity.Cocktail;
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.entity.VillagePosition;
-import com.ossp.cocktagorize.data.repository.CocktailTagRepository;
-import com.ossp.cocktagorize.data.repository.TagRepository;
-import com.ossp.cocktagorize.data.repository.UserRepository;
-import com.ossp.cocktagorize.data.repository.VillagePositionRepository;
+import com.ossp.cocktagorize.data.repository.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,13 +38,15 @@ public class WeatherApiController {
     private final VillagePositionRepository villagePositionRepository;
     private final CocktailTagRepository cocktailTagRepository;
     private final TagRepository tagRepository;
+    private final UserLikeCocktailRepository userLikeCocktailRepository;
     private final ApiUtils apiUtils;
 
-    public WeatherApiController(UserRepository userRepository, VillagePositionRepository villagePositionRepository, CocktailTagRepository cocktailTagRepository, TagRepository tagRepository, ApiUtils apiUtils) {
+    public WeatherApiController(UserRepository userRepository, VillagePositionRepository villagePositionRepository, CocktailTagRepository cocktailTagRepository, TagRepository tagRepository, UserLikeCocktailRepository userLikeCocktailRepository, ApiUtils apiUtils) {
         this.userRepository = userRepository;
         this.villagePositionRepository = villagePositionRepository;
         this.cocktailTagRepository = cocktailTagRepository;
         this.tagRepository = tagRepository;
+        this.userLikeCocktailRepository = userLikeCocktailRepository;
         this.apiUtils = apiUtils;
     }
 
@@ -96,16 +96,19 @@ public class WeatherApiController {
         long qty = cocktailTagRepository.countByTagId(weatherTagId);
         List<CocktailResponseDto> weatherCocktails = new ArrayList<>();
         Set<Integer> uniqueValues = new HashSet<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 
         int count = 0;
         while (count < 5) {
             int idx = (int) (Math.random() * qty);
             if (!uniqueValues.contains(idx)) {
                 uniqueValues.add(idx);
+                Cocktail cocktail = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId, PageRequest.of(idx, 1))
+                        .getContent().get(0).getCocktail();
 
                 weatherCocktails.add(new CocktailResponseDto(
-                        cocktailTagRepository.findCocktailTagsByTagId(weatherTagId, PageRequest.of(idx, 1))
-                                .getContent().get(0).getCocktail()));
+                        cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
 
                 count++;
             }
@@ -207,15 +210,16 @@ public class WeatherApiController {
             int idx = (int) (Math.random() * qty);
             if (!uniqueValues.contains(idx)) {
                 uniqueValues.add(idx);
+                Cocktail cocktail = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId, PageRequest.of(idx, 1))
+                        .getContent().get(0).getCocktail();
 
                 weatherCocktails.add(new CocktailResponseDto(
-                        cocktailTagRepository.findCocktailTagsByTagId(weatherTagId, PageRequest.of(idx, 1))
-                                .getContent().get(0).getCocktail()));
+                        cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
 
                 count++;
             }
         }
-        // 태그 리스트 담아서 보내기 구현해야 함.
+
         return weatherCocktails;
     }
 }
