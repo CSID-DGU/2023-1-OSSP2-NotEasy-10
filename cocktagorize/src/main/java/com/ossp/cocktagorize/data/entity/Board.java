@@ -38,10 +38,10 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board",cascade = CascadeType.REMOVE)
     private List<BoardReply> boardReplyList = new ArrayList<BoardReply>();
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board",cascade = CascadeType.REMOVE)
     private List<UserLikeBoard> likeUserList = new ArrayList<UserLikeBoard>();
 
     @CreationTimestamp

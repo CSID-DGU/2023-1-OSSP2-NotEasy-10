@@ -47,14 +47,6 @@ public class CocktailController {
         return ResponseEntity.ok(cocktailList);
     }
 
-    @GetMapping("/update")
-    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByUpdate(@PageableDefault Pageable pageable) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(), defaultPageSize);
-        Page<CocktailResponseDto> cocktailList = cocktailService.getCocktailByUpdate(modifiedPageable,authentication);
-        return ResponseEntity.ok(cocktailList);
-    }
-
     @GetMapping("/cocktail/search/{name}")
     public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByName(@PathVariable String name, @PageableDefault Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

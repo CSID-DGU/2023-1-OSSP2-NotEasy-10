@@ -12,12 +12,21 @@
     padding: 1rem 2rem;
 }
 
+.post_top {
+    display: flex;
+    align-items: baseline;
+}
+
 .post_title {
     font-size: 30px;
+    width: auto;
+    padding-left: 0.3rem;
+    overflow-x: hidden;
 }
 
 .post_info {
     display: flex;
+    padding: 0 0.3rem;
 }
 
 .post_name {

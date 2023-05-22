@@ -1,19 +1,22 @@
 package com.ossp.cocktagorize.controller;
-import com.ossp.cocktagorize.data.dto.FavoritePageResponseDto;
-import com.ossp.cocktagorize.data.dto.UsernameRequestDto;
-import com.ossp.cocktagorize.data.entity.*;
 
+import com.ossp.cocktagorize.data.dto.FavoritePageResponseDto;
+import com.ossp.cocktagorize.data.entity.*;
 import com.ossp.cocktagorize.data.repository.UserLikeBoardRepository;
 import com.ossp.cocktagorize.data.repository.UserLikeCocktailRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 public class FavoritesPageController {
 
@@ -31,8 +34,9 @@ public class FavoritesPageController {
     }
 
     @GetMapping("/liked-cocktails")
-    public ResponseEntity<FavoritePageResponseDto> getLikedCocktailsByUsername(@RequestBody UsernameRequestDto requestDto) {
-        String username = requestDto.getUsername();
+    public ResponseEntity<FavoritePageResponseDto> getLikedCocktailsByUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         User user = userRepository.findByUsername(username);
 
         int userId = user.getId();

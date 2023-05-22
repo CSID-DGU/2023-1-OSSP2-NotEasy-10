@@ -3,7 +3,7 @@ import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
 import Tag from "../../component/common/tag.js";
-import { VscHeartFilled, VscUnmute, VscLinkExternal } from "react-icons/vsc";
+import { VscHeartFilled, VscHeart, VscUnmute, VscLinkExternal } from "react-icons/vsc";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../../jwt/auth-context";
@@ -91,7 +91,7 @@ const CocktailDetail = () => {
 							/>
 							<div className="cocktail_icon">
 								{isLike ? <VscHeartFilled onClick={() => likeClicked(cocktail.id)} style={{color:"red"}} /> : <VscHeartFilled onClick={() => likeClicked(cocktail.id)} />}
-								<p key={cocktail.id}>{like}</p>{" "}
+								<span key={cocktail.id}>{like}</span> <p><hr/></p>
 								<VscUnmute />
 							</div>
 						</div>
@@ -109,8 +109,8 @@ const CocktailDetail = () => {
 								<p className="cocktail_similar_name2">{cocktail.similarCocktail.name}{" "}</p>
 								<div className="similar_liked">
 									<p key={cocktail.similarCocktail.id}></p>{" "}
-									<VscUnmute />
-									<span key={cocktail.similarCocktail.id}></span></div>
+									<VscHeart />
+									<span key={cocktail.similarCocktail.id}>{cocktail.similarCocktail.liked}</span></div>
 								<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
 									<VscLinkExternal />
 								</a>

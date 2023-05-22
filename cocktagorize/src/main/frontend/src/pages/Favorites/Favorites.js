@@ -1,10 +1,13 @@
-import React, { useReducer } from "react";
+import React, {useContext, useReducer} from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import * as home from "./FavoritesCSS.js";
 import Recipe from "../../component/Recipe.js";
 import Post from "../../component/Post.js";
 import axios from "axios";
+import AuthContext from "../../jwt/auth-context";
+import {GET} from "../../jwt/fetch-auth-action";
+import {createTokenHeader} from "../../jwt/auth-action";
 
 const Favorites = () => {
 	const [postList, setPostList] = useState([
@@ -44,6 +47,8 @@ const Favorites = () => {
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
 	const [searchText, setSearchText] = useState();
+
+
 	/*
 	useEffect(() => {
 		sort(currentTagData, sortType);
@@ -62,6 +67,36 @@ const Favorites = () => {
 		sort(currentTagData, sortType);
 	}, []);
 */
+
+	const authCtx = useContext(AuthContext);
+	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
+
+	useEffect(() => {
+		if (isLogin) {
+			authCtx.getUser();
+		}
+	}, [isLogin]);
+
+	useEffect(() => {
+		if (isGetUser) {
+			getUserLikedBoardAndCocktails();
+		}
+	}, [isGetUser]);
+
+	const getUserLikedBoardAndCocktails = async () => {
+		const data = GET(
+			`http://localhost:8080/liked-cocktails`,
+			createTokenHeader(authCtx.token)
+		);
+		data.then((result) => {
+			if (result !== null) {
+				const allCocktailData = result.data;
+				console.log(allCocktailData);
+			}
+		});
+	}
+
 
 	function post(props) {
 		let result = [];

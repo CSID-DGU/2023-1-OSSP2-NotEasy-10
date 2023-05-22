@@ -15,12 +15,15 @@
 .edit_type {
     margin-bottom: 0.5rem;
     height: 25px;
+    border-color: lightgray;
 }
 
 .edit_title {
-    font-size: 30px;
+    font-size: 22px;
     width: 100%;
     margin-bottom: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    border-color: lightgray;
 }
 
 .edit_content {
