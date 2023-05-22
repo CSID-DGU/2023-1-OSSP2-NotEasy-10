@@ -4,6 +4,7 @@ import com.ossp.cocktagorize.data.dto.*;
 import com.ossp.cocktagorize.data.entity.Board;
 import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.entity.UserLikeBoard;
+import com.ossp.cocktagorize.data.repository.BoardReplyRepository;
 import com.ossp.cocktagorize.data.repository.BoardRepository;
 import com.ossp.cocktagorize.data.repository.UserLikeBoardRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
@@ -29,6 +30,8 @@ public class BoardService {
     private UserRepository userRepository;
     @Autowired
     private UserLikeBoardRepository userLikeBoardRepository;
+    @Autowired
+    private BoardReplyRepository boardReplyRepository;
     @Transactional
     public BoardDto createBoard(BoardRequestDto boardRequestDto, Authentication authentication){
         String content=boardRequestDto.getContent();
