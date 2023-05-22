@@ -47,14 +47,6 @@ public class CocktailService {
     }
 
     @Transactional
-    public Page<CocktailResponseDto> getCocktailByUpdate(Pageable pageable,Authentication authentication){
-        if(authentication != null && authentication.getPrincipal() != "anonymousUser") {
-            return cocktailRepository.findAllByCocktailReplyCreationTime(pageable).map(cocktail -> new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
-        }
-        return cocktailRepository.findAllByCocktailReplyCreationTime(pageable).map(CocktailResponseDto::new);
-    }
-
-    @Transactional
     public Page<CocktailResponseDto> getCocktailByName(String name, Pageable pageable, Authentication authentication){
         if(authentication != null && authentication.getPrincipal() != "anonymousUser") {
             return cocktailRepository.findAllByNameContaining(name, pageable).map(cocktail -> new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
