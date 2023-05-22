@@ -60,11 +60,11 @@ const SignUp = () => {
 		}
 	};
 
-	const [alcohol, setAlcohol] = useState("");
-	const [preferTag, setPreferTag] = useState(["Vodka", "Gin"]);
-	const [city, setCity] = useState("");
-	const [gu, setGu] = useState("");
-	const [dong, setDong] = useState("");
+	//각 option 태그 첫번째 값은 초기값으로 넣어줘야함 지금까지 onChange로 인식이 안돼서 null로 전달된 듯
+	const [alcohol, setAlcohol] = useState(1);
+	const [city, setCity] = useState("서울특별시");
+	const [gu, setGu] = useState("종로구");
+	const [dong, setDong] = useState("청운효자동");
 
 	const onChangeAlcohol = (e) => {
 		setAlcohol(e.target.value);
@@ -190,14 +190,15 @@ const SignUp = () => {
 			alert("닉네임 중복 체크에 실패했습니다.");
 		}
 	};
-
+	
 	return (
 		<form className="SignUp" action="">
 			{isModal === true ? (
 				<Modal modalOff={modalOff} parentTag={currentTagData} />
 			) : null}
+			<h1>Welcome to COCKTAGORIZE!</h1>
 			<p>아이디 </p>
-			<input type="text" name="id" value={id} onChange={onChangeId} />
+			<input type="text" name="id" value={id} placeholder="아이디를 입력해주세요" onChange={onChangeId} />
 			<button type="button" onClick={onClickCheckId}>
 				중복확인
 			</button>
@@ -207,6 +208,7 @@ const SignUp = () => {
 				name="password"
 				value={password}
 				onChange={onChangePassword}
+				placeholder="비밀번호를 입력해주세요"
 			/>
 			<p>비밀번호 확인 </p>
 			<input
@@ -222,6 +224,7 @@ const SignUp = () => {
 				name="nickname"
 				value={nickname}
 				onChange={(e) => setNickname(e.target.value)}
+				placeholder="닉네임을 입력해주세요"
 			/>
 			<button type="button" onClick={onClickCheckNickname}>
 				중복확인
@@ -237,12 +240,12 @@ const SignUp = () => {
 			<p>주량 </p>
 			<select name="alcoholCapacity" value={alcohol} onChange={onChangeAlcohol}>
 				<option disabled>소주_잔</option>
-				<option value={"1"}>소주1잔</option>
-				<option value={"2"}>소주2잔</option>
-				<option value={"3"}>소주3잔</option>
-				<option value={"4"}>소주4잔</option>
+				<option value={1}>소주1잔</option>
+				<option value={2}>소주2잔</option>
+				<option value={3}>소주3잔</option>
+				<option value={4}>소주4잔</option>
 			</select>
-			<p>선호하는 태그 </p>
+			<p className="tag">선호하는 태그를 자유롭게 선택해주세요</p>
 
 			<home.TagSearchDiv width="90%">
 				<home.ModalButton
