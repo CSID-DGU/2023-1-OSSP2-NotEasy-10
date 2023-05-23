@@ -48,7 +48,10 @@ export const AuthContextProvider = (props) => {
                 );
                 setIsSuccess(true);
             }
-        });
+        }).catch((error) => {
+            console.log("여기야");
+            alert("로그인이 잘못되었습니다!");
+        })
     };
 
     const logoutHandler = useCallback(() => {
