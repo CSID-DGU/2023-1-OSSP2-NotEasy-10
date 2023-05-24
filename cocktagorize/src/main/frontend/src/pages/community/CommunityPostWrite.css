@@ -41,11 +41,13 @@
     width: 100%;
 }
 
+.write_submit_wrap {
+    text-align: end;
+}
+
 .write_submit {
     width: 80px;
     height: 40px;
     border-radius: 0.5rem;
     border-color: azure;
-    margin-top: 0.8rem;
-    margin-left: 40.5vw;
 }
