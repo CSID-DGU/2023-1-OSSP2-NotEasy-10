@@ -11,8 +11,8 @@ import {createTokenHeader} from "../jwt/auth-action";
 import AuthContext from "../jwt/auth-context";
 import {useParams} from "react-router-dom";
 
-const UserTip = (tip) => {
-  const { cocktail_id } = useParams();
+const UserComment = (tip) => {
+  const { communityId } = useParams();
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(tip.tip.content);
@@ -28,13 +28,13 @@ const UserTip = (tip) => {
   const handleDelete = () => {
     // axios로 삭제요청 보내면 서버에서 replyList 업데이트해야함
     console.log("삭제된 댓글 아이디:", tip.tip.id);
-    const result = DELETE(`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+    const result = DELETE(`http://localhost:8080/board/${communityId}/reply/${tip.tip.id}`,
       createTokenHeader(authCtx.token)
     );
     result.then((result) => {
       if (result !== null) {
         alert("댓글이 삭제되었습니다!");
-        window.location.replace(`/cocktail/${cocktail_id}`);
+        window.location.replace(`/community/${communityId}`);
       }
     });
   };
@@ -43,7 +43,7 @@ const UserTip = (tip) => {
     // axios로 수정된 사항('content: editedComment')을 보내면 서버에서 replyList에서 해당 변경내용을 업데이트해야함
     console.log("수정된 내용:", editedComment);
     setIsEditing(false);
-    const result = PUT(`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+    const result = PUT(`http://localhost:8080/board/${communityId}/reply/${tip.tip.id}`,
       {
         content: editedComment
       },
@@ -52,7 +52,7 @@ const UserTip = (tip) => {
     result.then((result) => {
       if (result !== null) {
         alert("댓글이 수정되었습니다!");
-        window.location.replace(`/cocktail/${cocktail_id}`);
+        window.location.replace(`/community/${communityId}`);
       }
     });
   };
@@ -113,4 +113,4 @@ const UserTip = (tip) => {
   );
 };
 
-export default UserTip;
+export default UserComment;

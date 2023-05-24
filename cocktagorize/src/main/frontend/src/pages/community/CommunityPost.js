@@ -1,14 +1,14 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from '../../component/common/sidebar/Sidebar';
 import CocktailCard from "../../component/cocktailCard";
 import './CommunityPost.css'
-import UserTipList from "../../component/UserTipList";
+import UserCommentList from "../../component/UserCommentList";
 import PostTag from "../../component/common/PostTag";
-import {Link, useParams} from "react-router-dom";
-import { VscHeartFilled} from "react-icons/vsc";
+import { Link, useParams } from "react-router-dom";
+import { VscHeartFilled } from "react-icons/vsc";
 import AuthContext from "../../jwt/auth-context";
-import {DELETE, GET, PUT} from "../../jwt/fetch-auth-action";
-import {createTokenHeader} from "../../jwt/auth-action";
+import { DELETE, GET, PUT } from "../../jwt/fetch-auth-action";
+import { createTokenHeader } from "../../jwt/auth-action";
 
 const CommunityPost = () => {
 
@@ -20,6 +20,7 @@ const CommunityPost = () => {
   const [like, setLike] = useState(0);
 
   const [board, setBoard] = useState();
+  const [ boardReplyList, setBoardReplyList ] = useState([]);
 
   useEffect(() => {
     getBoard();
@@ -32,18 +33,23 @@ const CommunityPost = () => {
   }, [isLogin]);
   const getBoard = async (page) => {
     const boardsData = GET(
-        `http://localhost:8080/board/${communityId}`,
-        createTokenHeader(authCtx.token)
+      `http://localhost:8080/board/${communityId}`,
+      createTokenHeader(authCtx.token)
     );
     boardsData.then((result) => {
       if (result !== null) {
         console.log("board 내용 : " + JSON.stringify(result.data, null, 2));
         setBoard(result.data);
+        setBoardReplyList(result.data.boardReplyList);
         setLike(result.data.liked);
         setIsLike(result.data.userLikeBoard);
       }
     });
   };
+
+  if (!board) {
+    return null;
+  }
 
   const likeClicked = (id) => {
     // 로그인을 했다면
@@ -64,8 +70,8 @@ const CommunityPost = () => {
   // delete button은 로그인 username이랑 작성자 username이랑 비교해서 아예 안보이게 하면 될거 같애요.
   const handleDelete = () => {
     const boardsData = DELETE(
-        `http://localhost:8080/board/${communityId}`,
-        createTokenHeader(authCtx.token)
+      `http://localhost:8080/board/${communityId}`,
+      createTokenHeader(authCtx.token)
     );
     boardsData.then((result) => {
       alert("삭제가 완료되었습니다!");
@@ -79,25 +85,27 @@ const CommunityPost = () => {
       <div className="wrap">
         <div className="post_wrap">
           <div className="post_top">
-            <PostTag type="board.type"/> <span className="post_title">board.title</span>
+            <PostTag type={board.type} /> <span className="post_title">{board.title}</span>
           </div>
           <div className="post_info">
-            <p className="post_name">board.user.name</p> <p className="post_like">
-            {isLike ? <VscHeartFilled onClick={() => likeClicked(board.id)} style={{color:"red"}} /> : <VscHeartFilled onClick={() => likeClicked(board.id)} />}
-            {like}
+            <p className="post_name">{board.user.nickname}</p> <p className="post_like">
+              {isLike ? <VscHeartFilled onClick={() => likeClicked(board.id)} style={{ color: "red" }} /> : <VscHeartFilled onClick={() => likeClicked(board.id)} />}
+              {like}
             </p>
-            <p className="post_time">board.created</p>
+            <p className="post_time">{board.createdDate}</p>
           </div>
           <hr />
           <div className="post_content">
-            board.content
+            {board.content}
           </div>
-          <div className="onlyUser">
-            {/* <Link to={`/community/${board.id}/modify`}>*/}<button className="post_edit">수정</button>{/* </Link>*/}
-            <button className="post_delete" onClick={handleDelete}>삭제</button>
-          </div>
+          {board.user.nickname === authCtx.userObj.nickname && (
+            <div className="onlyUser">
+              <Link to={`/community/${communityId}/modify`}><button className="post_edit">수정</button></Link>
+              <button className="post_delete" onClick={handleDelete}>삭제</button>
+            </div>
+          )}
         </div>
-        {/* <UserTipList tips={boardReplyList}/> */}
+        <UserCommentList tips={boardReplyList}/>
       </div>
       <CocktailCard />
     </div>
