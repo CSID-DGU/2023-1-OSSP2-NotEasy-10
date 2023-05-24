@@ -5,6 +5,12 @@ import soundImage from "../images/sound.png";
 import Tag from "./common/tag.js";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import {
+	VscHeartFilled,
+	VscHeart,
+	VscUnmute,
+	VscLinkExternal,
+} from "react-icons/vsc";
 
 const Card = styled.div`
 	width: ${(props) => props.width || "25vw"};
@@ -73,7 +79,6 @@ const NameText = styled.p`
 		font-size: 20px;
 	}
 	text-size-adjust: auto;
-	font-weight: bold;
 	white-space: nowrap;
 	overflow-x: hidden;
 	margin: 0px 0px 0px 0px;
@@ -130,6 +135,7 @@ const BlackHeartImage = styled.img`
 
 const HeartText = styled.div`
 	margin: 0px 4px;
+	font-family: var(--font-Jua);
 	-webkit-user-select: none;
 `;
 
@@ -152,10 +158,11 @@ function Recipe(props) {
 							<NameText>{props.info.name}</NameText>
 						</TitleContainer>
 						<HeartContainer>
-							<BlackHeartImage
-								src={blackHeartImage}
-								alt={blackHeartImage}
-							/>
+							{props.info.userLikeCocktail ? (
+								<VscHeartFilled style={{ color: "red" }} />
+							) : (
+								<VscHeartFilled />
+							)}
 							<HeartText>{props.info.liked}</HeartText>
 						</HeartContainer>
 					</TopContainer>

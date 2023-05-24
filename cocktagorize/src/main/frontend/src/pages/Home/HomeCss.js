@@ -133,9 +133,10 @@ export const Search = styled.input`
 	width: 18vw;
 	height: 50px;
 	border-radius: 15px;
-	padding: 0px 10px;
+	padding: 0px 12px;
 	border-color: black;
 	font-size: 24px;
+	font-family: var(--font-Jua);
 `;
 
 export const Sort = styled.select`
@@ -146,10 +147,12 @@ export const Sort = styled.select`
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SortBase = styled.option`
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SearchOption = styled.select`
@@ -161,10 +164,12 @@ export const SearchOption = styled.select`
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SearchOptionBase = styled.option`
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const WeatherSearchOption = styled.select`
@@ -176,10 +181,12 @@ export const WeatherSearchOption = styled.select`
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 12px;
+	font-family: var(--font-Jua);
 `;
 
 export const WeatherSearchOptionBase = styled.option`
 	font-size: 12px;
+	font-family: var(--font-Jua);
 `;
 
 export const LoginContent = styled.div`

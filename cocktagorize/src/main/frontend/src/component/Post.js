@@ -51,8 +51,8 @@ const TitleText = styled.p`
 	@media (min-width: 1600px) {
 		font-size: 20px;
 	}
+	font-family: var(--font-Jua);
 	text-size-adjust: auto;
-	font-weight: bold;
 	white-space: nowrap;
 	overflow-x: hidden;
 	margin: 0px 0px 0px 10px;

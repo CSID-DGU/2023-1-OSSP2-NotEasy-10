@@ -1,3 +1,17 @@
+p {
+	font-family: var(--font-Jua);
+	font-weight: normal;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	user-select: none;
+}
+
+span {
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	user-select: none;
+}
+
 .CocktailDetail {
 	display: flex;
 	justify-content: space-evenly;
@@ -125,6 +139,9 @@
 	font-size: 25px;
 	font-family: var(--font-Reem-Kufi-Fun);
 	margin-left: 0.5rem;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	user-select: none;
 }
 
 .info {
@@ -142,6 +159,7 @@
 	margin: 1rem 0 0.3rem 0;
 	background-color: lightgray;
 	padding: 0.2rem;
+	padding-left: 0.5rem;
 	margin-right: 0.4rem;
 	border-radius: 0.5rem;
 }
@@ -156,10 +174,12 @@
 	margin: 1rem 0 0.3rem 0;
 	background-color: lightgray;
 	padding: 0.2rem;
+	padding-left: 0.5rem;
 	margin-right: 0.4rem;
 	border-radius: 0.5rem;
 }
 
 .order {
 	margin-top: 1rem;
+	margin-left: 0.5rem;
 }

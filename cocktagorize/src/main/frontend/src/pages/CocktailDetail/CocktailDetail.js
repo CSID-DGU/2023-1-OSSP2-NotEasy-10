@@ -17,12 +17,28 @@ import { createTokenHeader } from "../../jwt/auth-action";
 import styled, { css } from "styled-components";
 
 const Ingredient = styled.span`
-	font-size: 1rem;
+	font-size: 0.8rem;
 	text-align: center;
 	font-weight: bold;
 	background-color: #9999ff;
-	margin: 8px 15px;
+	margin: 5px 15px;
 	padding: 4px 0px;
+	color: white;
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+
+	${(props) => {
+		switch (props.category) {
+			case "INGREDIENT":
+				return css`
+					background-color: #6e41e2;
+				`;
+			case "ALCOHOL":
+				return css`
+					background-color: brown;
+				`;
+		}
+	}};
 `;
 
 const CocktailDetail = () => {
@@ -89,7 +105,7 @@ const CocktailDetail = () => {
 	};
 
 	const tagList = cocktail.cocktailTagList.map((tag) => (
-		<Tag key={tag.id} info={tag} />
+		<Tag key={tag.name} info={tag} />
 	));
 	const ingre = cocktail.cocktailTagList.filter(
 		(tag) => tag.category === "INGREDIENT" || tag.category === "ALCOHOL"
@@ -120,7 +136,7 @@ const CocktailDetail = () => {
 										onClick={() => likeClicked(cocktail.id)}
 									/>
 								)}
-								<span key={cocktail.id}>{like}</span>{" "}
+								<span>{like}</span>{" "}
 								<p>
 									<hr />
 								</p>
@@ -134,17 +150,13 @@ const CocktailDetail = () => {
 								src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
 								alt="유사 칵테일 이미지"
 							></img>
-							<div
-								className="cocktail_similar_name"
-								key={cocktail.similarCocktail.id}
-							>
+							<div className="cocktail_similar_name">
 								<p className="cocktail_similar_name2">
 									{cocktail.similarCocktail.name}{" "}
 								</p>
 								<div className="similar_liked">
-									<p key={cocktail.similarCocktail.id}></p>{" "}
-									<VscHeart />
-									<span key={cocktail.similarCocktail.id}>
+									<p></p> <VscHeart />
+									<span>
 										{cocktail.similarCocktail.liked}
 									</span>
 								</div>
@@ -158,30 +170,31 @@ const CocktailDetail = () => {
 					</div>
 					<div className="inner_right">
 						<div className="cocktail_recipe">
-							<div className="name" key={cocktail.id}>
-								{cocktail.name}
-							</div>
+							<div className="name">{cocktail.name}</div>
 							<hr />
 							<div className="info">
 								<div className="info_left">
 									<p>재료: </p>
 									{ingre.map((tag) => (
-										<Ingredient key={tag.id}>
+										<Ingredient
+											key={tag.name}
+											category={tag.category}
+										>
 											{tag.name}
 										</Ingredient>
 									))}
 									<p>도수: </p>
-									<span className="alchol" key={cocktail.id}>
+									<span className="alchol">
 										{cocktail.alcholeDegree}도
 									</span>
 									<p>추천잔: </p>
-									<span className="glass" key={cocktail.id}>
+									<span className="glass">
 										{cocktail.glassType}
 									</span>
 								</div>
 								<div className="info_right">
 									<p>레시피: </p>
-									<span className="order" key={cocktail.id}>
+									<span className="order">
 										{cocktail.recipe}
 									</span>
 								</div>
