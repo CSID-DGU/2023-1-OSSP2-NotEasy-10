@@ -40,17 +40,17 @@ a {
 
 @font-face {
 	font-family: "Reem Kufi Fun";
-	src: url(./fonts/ReemKufiFun-Bold.ttf);
+	src: url("./fonts/ReemKufiFun-Bold.ttf");
 }
 
 @font-face {
 	font-family: "Jua";
-	src: url(./fonts/Jua-Regular.ttf);
+	src: url("./fonts/Jua-Regular.ttf");
 }
 
 @font-face {
 	font-family: "Noto Sans KR";
-	src: url(./fonts/NotoSansKR-Regular.otf);
+	src: url("./fonts/NotoSansKR-Regular.otf");
 }
 
 :root {
