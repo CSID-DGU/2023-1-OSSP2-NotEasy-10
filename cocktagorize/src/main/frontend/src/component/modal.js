@@ -62,6 +62,7 @@ const Search = styled.input`
 	border-color: black;
 	border-radius: 15px;
 	font-size: 24px;
+	font-family: var(--font-Jua);
 `;
 
 const SearchResultDiv = styled.div`
@@ -104,7 +105,6 @@ const CurrentTagText = styled.p`
 	text-align: center;
 	-webkit-user-select: none;
 	user-select: none;
-	font-weight: bold;
 	white-space: nowrap;
 	margin: 0px 0px 0px 30px;
 	width: auto;
@@ -312,7 +312,7 @@ const Modal = (props) => {
 			tags: [],
 		},
 		{
-			categoryName: "알코올",
+			categoryName: "술",
 			categoryCode: "ALCOHOL",
 			height: 120,
 			tags: [],

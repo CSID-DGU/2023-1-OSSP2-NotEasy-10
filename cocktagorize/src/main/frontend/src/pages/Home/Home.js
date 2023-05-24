@@ -7,6 +7,7 @@ import useInterval from "../../component/common/UseInterval.js";
 import CocktailCard from "../../component/cocktailCard.js";
 import plusImage from "../../images/plusButton.png";
 import blackXImage from "../../images/blackXButton.png";
+import weatherLoadingImage from "../../images/loading.png";
 import * as home from "./HomeCss.js";
 import * as auth from "../../jwt/auth-context.js";
 import axios from "axios";
@@ -25,12 +26,12 @@ const Home = () => {
 	// Database에서 불러온 cocktailList
 	const [cocktailList, setCocktailList] = useState([]);
 	const [weatherCocktailList, setWeatherCocktailList] = useState([]);
-	const [nowWeatherCocktailList, setNowWeatherCocktailList] = useState([]);
 	const [userCocktailList, setUserBasedCocktailList] = useState([]);
 
 	const [page, setPage] = useState(0);
 	const [maxPage, setMaxPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isWeatherLoading, setIsWeatherLoading] = useState(true);
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
 	const [searchText, setSearchText] = useState();
@@ -50,8 +51,9 @@ const Home = () => {
 		if (isGetUser) {
 			getUserCocktailData();
 			getWeatherCocktailData();
+		} else {
+			getNowPositionWeatherCocktailData();
 		}
-		getNowPositionWeatherCocktailData();
 	}, [isGetUser]);
 
 	useEffect(() => {
@@ -102,14 +104,15 @@ const Home = () => {
 						nowIsRainy = 1;
 					}
 
-					// console.log(weatherData.weather[0].main);
-					// console.log(weatherData.weather[0].description);
-					// console.log("현재 온도 : " + nowTemp);
-					// console.log("현재 강우 여부 : " + nowIsRainy);
+					console.log(weatherData.weather[0].main);
+					console.log(weatherData.weather[0].description);
+					console.log("현재 온도 : " + nowTemp);
+					console.log("현재 강우 여부 : " + nowIsRainy);
 
-					getNowWeatherCocktailData(nowTemp, nowIsRainy);
+					getWeatherCocktailData(nowTemp, nowIsRainy);
 				}
 			});
+			setIsWeatherLoading(false);
 		});
 	};
 
@@ -123,7 +126,7 @@ const Home = () => {
 		weatherCocktailData.then((result) => {
 			if (result !== null) {
 				const nowWeatherCocktailData = result.data;
-				setNowWeatherCocktailList(result.data);
+				setWeatherCocktailList(result.data);
 				// setNowWeatherCocktailList(nowWeatherCocktailData.content);
 				setIsLoading(false);
 				console.log(
@@ -147,6 +150,7 @@ const Home = () => {
 				console.log("회원가입 저장 날씨 기반 칵테일 : " + result.data);
 				result.data.forEach((cocktail) => console.log(cocktail));
 			}
+			setIsWeatherLoading(false);
 		});
 	};
 
@@ -158,7 +162,6 @@ const Home = () => {
 		userCocktailData.then((result) => {
 			if (result !== null) {
 				setUserBasedCocktailList(result.data);
-				setIsLoading(false);
 				// console.log("유저 선호 칵테일 : " + result.data);
 				// result.data.forEach(cocktail => console.log(cocktail));
 			}
@@ -361,13 +364,28 @@ const Home = () => {
 		return result;
 	}
 
+	function weatherLoading() {
+		let result = [];
+		for (let i = 0; i < 1; i++) {
+			result.push(
+				<home.WeatherLoading>
+					<home.WeatherLoadingImage
+						src={weatherLoadingImage}
+						alt={weatherLoadingImage}
+					/>
+				</home.WeatherLoading>
+			);
+		}
+		return result;
+	}
+
 	function userCocktailCard(props) {
 		if (userCocktailList == undefined) {
 			return;
 		}
 		let result = [];
 		for (let i = 0; i < props.amount; i++) {
-			if (userCocktailList.length > i)
+			if (userCocktailList.length > i) {
 				result.push(
 					<CocktailCard
 						horizontalMargin={props.hMargin + "px"}
@@ -376,6 +394,16 @@ const Home = () => {
 						key={userCocktailList[i].id}
 					/>
 				);
+			} else {
+				result.push(
+					<home.WeatherLoading>
+						<home.WeatherLoadingImage
+							src={weatherLoadingImage}
+							alt={weatherLoadingImage}
+						/>
+					</home.WeatherLoading>
+				);
+			}
 		}
 		return result;
 	}
@@ -412,6 +440,17 @@ const Home = () => {
 
 	const modalOn = () => {
 		setIsModal(true);
+	};
+
+	const onWeatherSortChanged = (e) => {
+		if (isWeatherLoading) return;
+		setIsWeatherLoading(true);
+		console.log("바뀜");
+		if (e.target.value === "사용자 위치 기반") {
+			getWeatherCocktailData();
+		} else {
+			getNowPositionWeatherCocktailData();
+		}
 	};
 
 	const onSortChanged = (e) => {
@@ -583,7 +622,7 @@ const Home = () => {
 							{currentTagData.map((info, index) => (
 								<Tag
 									info={info}
-									key={info}
+									key={index}
 									onDelete={deleteTag}
 								/>
 							))}
@@ -591,12 +630,11 @@ const Home = () => {
 					</home.TagSearchDiv>
 					<home.Sort onChange={(e) => onSortChanged(e)}>
 						<home.SortBase>좋아요가 많은 순서</home.SortBase>
-						<home.SortBase>최근 업데이트 순서</home.SortBase>
 						<home.SortBase>사전 순서</home.SortBase>
 					</home.Sort>
 				</home.Explore>
 				<home.NonExplore>
-					{isLogin ? (
+					{isLogin && page === 0 && sortType <= 3 ? (
 						<home.LoginContent>
 							<home.WeatherNUserCocktail>
 								<home.Weather>
@@ -604,10 +642,24 @@ const Home = () => {
 										<home.WeatherInfo>
 											비가 많이 와요!
 										</home.WeatherInfo>
+										<home.WeatherSearchOption
+											onChange={(e) =>
+												onWeatherSortChanged(e)
+											}
+										>
+											<home.WeatherSearchOptionBase>
+												사용자 위치 기반
+											</home.WeatherSearchOptionBase>
+											<home.WeatherSearchOptionBase>
+												현재 위치 기반
+											</home.WeatherSearchOptionBase>
+										</home.WeatherSearchOption>
 									</home.WeatherInfoBox>
 									<home.WeatherCarousel>
 										<home.WeatherCocktail>
-											{weatherScrollCocktailCard()}
+											{weatherCocktailList.length > 0
+												? weatherScrollCocktailCard()
+												: weatherLoading()}
 										</home.WeatherCocktail>
 										<home.WeatherScroll>
 											<home.WeatherScrollArrow

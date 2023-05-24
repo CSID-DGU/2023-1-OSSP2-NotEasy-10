@@ -54,7 +54,7 @@ public class WeatherApiController {
         JSONObject items;
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jObject = (JSONObject)parser.parse(result);
+            JSONObject jObject = (JSONObject) parser.parse(result);
             JSONObject response = (JSONObject) jObject.get("response");
             JSONObject body = (JSONObject) response.get("body");
             items = (JSONObject) body.get("items");
@@ -107,8 +107,12 @@ public class WeatherApiController {
                 Cocktail cocktail = cocktailTagRepository.findCocktailTagsByTagId(weatherTagId, PageRequest.of(idx, 1))
                         .getContent().get(0).getCocktail();
 
-                weatherCocktails.add(new CocktailResponseDto(
-                        cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
+                if (authentication == null || authentication.getName() == null || authentication.getName().equals("anonymousUser")) {
+                    weatherCocktails.add(new CocktailResponseDto(cocktail));
+                } else {
+                    weatherCocktails.add(new CocktailResponseDto(
+                            cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
+                }
 
                 count++;
             }

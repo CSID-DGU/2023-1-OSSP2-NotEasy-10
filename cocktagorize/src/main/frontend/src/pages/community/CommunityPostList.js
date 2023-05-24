@@ -1,4 +1,4 @@
-import React, {useContext, useReducer} from "react";
+import React, { useContext, useReducer } from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import Post from "../../component/Post.js";
@@ -6,10 +6,10 @@ import blackXImage from "../../images/blackXButton.png";
 import CocktailCard from "../../component/cocktailCard.js";
 import * as home from "./CommunityPostListCSS.js";
 import axios from "axios";
-import {GET} from "../../jwt/fetch-auth-action";
-import {createTokenHeader} from "../../jwt/auth-action";
+import { GET } from "../../jwt/fetch-auth-action";
+import { createTokenHeader } from "../../jwt/auth-action";
 import AuthContext from "../../jwt/auth-context";
-import {getNowPositionWeatherCocktailData} from "../Home/Home";
+import { getNowPositionWeatherCocktailData } from "../Home/Home";
 
 const CommunityPostList = () => {
 	const [postList, setPostList] = useState([
@@ -47,10 +47,9 @@ const CommunityPostList = () => {
 	const [maxPage, setMaxPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(true);
 	const port = 8080;
-	const [sortType, setSortType] = useState(0);
+	const [sortType, setSortType] = useState(1);
 	const [searchText, setSearchText] = useState();
 	const [userCocktailList, setUserBasedCocktailList] = useState([]);
-	
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -70,13 +69,33 @@ const CommunityPostList = () => {
 	}, [isGetUser]);
 
 	useEffect(() => {
+		switch (sortType) {
+			case 1:
+				getAllBoards(page);
+				break;
+			case 2:
+				getAllBoardsByDic(page);
+				break;
+			case 3:
+				getAllBoardsByLiked(page);
+				break;
+			case 4:
+				getAllBoardsByTitle(searchText, page);
+				break;
+			case 5:
+				getAllBoardsByContent(searchText, page);
+				break;
+		}
+	}, [page, sortType, searchText]);
+
+	useEffect(() => {
 		getAllBoards(0);
 		// 사전순으로
-		getAllBoardsByDic(0)
-		getAllBoardsByLiked(0);
-		getAllBoardsByTitle("test", 0);
-		getAllBoardsByContent("될까요?", 0);
-	}, [])
+		// getAllBoardsByDic(0);
+		// getAllBoardsByLiked(0);
+		// getAllBoardsByTitle("test", 0);
+		// getAllBoardsByContent("될까요?", 0);
+	}, []);
 
 	/*
 	useEffect(() => {
@@ -105,7 +124,9 @@ const CommunityPostList = () => {
 		);
 		boardsData.then((result) => {
 			if (result !== null) {
-				console.log("id순으로 그냥 불러올 경우 : " + result.data.content);
+				console.log(
+					"id순으로 그냥 불러올 경우 : " + result.data.content
+				);
 				setPostList(result.data.content);
 				setMaxPage(result.data.totalPages);
 				setIsLoading(false);
@@ -137,7 +158,9 @@ const CommunityPostList = () => {
 		);
 		boardsData.then((result) => {
 			if (result !== null) {
-				console.log("좋아요 순으로 불러올 경우 : " + result.data.content);
+				console.log(
+					"좋아요 순으로 불러올 경우 : " + result.data.content
+				);
 				setPostList(result.data.content);
 				setMaxPage(result.data.totalPages);
 				setIsLoading(false);
@@ -147,6 +170,10 @@ const CommunityPostList = () => {
 
 	//
 	const getAllBoardsByTitle = async (name, page) => {
+		if (!name) {
+			getAllBoards(page);
+			return;
+		}
 		const nameURL = encodeURI(name);
 		const boardsData = GET(
 			`http://localhost:8080/board/title/${nameURL}`,
@@ -163,6 +190,10 @@ const CommunityPostList = () => {
 	};
 
 	const getAllBoardsByContent = async (content, page) => {
+		if (!content) {
+			getAllBoards(page);
+			return;
+		}
 		const contentURL = encodeURI(content);
 		const boardsData = GET(
 			`http://localhost:8080/board/content/${contentURL}`,
@@ -198,40 +229,40 @@ const CommunityPostList = () => {
 	function post(props) {
 		let result = [];
 		for (let i = 0; i < props.amount; i++) {
-			//if (postList.length > i)
-			result.push(
-				<Post
-					horizontalMargin={props.hMargin + "px"}
-					verticalMargin={props.vMargin + "px"}
-					info={postList[i]}
-				/>
-			);
+			if (postList.length > i)
+				result.push(
+					<Post
+						horizontalMargin={props.hMargin + "px"}
+						verticalMargin={props.vMargin + "px"}
+						info={postList[i]}
+					/>
+				);
 		}
 		return result;
 	}
 	const onSortChanged = (e) => {
-		/*
 		let sortType = 0;
 		switch (e.target.value) {
-			case "좋아요가 많은 순서":
+			case "모든 글":
 				sortType = 1;
 				break;
-			case "최근 업데이트 순서":
+			case "사전 순서":
 				sortType = 2;
 				break;
-			case "사전 순서":
+			case "좋아요가 많은 순서":
 				sortType = 3;
 				break;
-			case "AND":
-				sortType = 5;
+			case "제목 검색":
+				sortType = 4;
 				break;
-			case "OR":
-				sortType = 6;
+			case "내용 검색":
+				sortType = 5;
 				break;
 			default:
 				sortType = 0;
 		}
-		sort(currentTagData, sortType);*/
+		if (sortType <= 3 && searchText !== "") sortType = 4;
+		setSortType(sortType);
 	};
 	/*
 	function sort(tags, type) {
@@ -327,6 +358,13 @@ const CommunityPostList = () => {
 			<Sidebar />
 			<home.NonSidebar>
 				<home.Explore>
+					<home.Sort onChange={(e) => onSortChanged(e)}>
+						<home.SortBase>모든 글</home.SortBase>
+						<home.SortBase>사전 순서</home.SortBase>
+						<home.SortBase>좋아요가 많은 순서</home.SortBase>
+						<home.SortBase>제목 검색</home.SortBase>
+						<home.SortBase>내용 검색</home.SortBase>
+					</home.Sort>
 					<home.Search
 						type="text"
 						placeholder="Search"
@@ -336,17 +374,10 @@ const CommunityPostList = () => {
 					<home.blackXButton
 						src={blackXImage}
 						onClick={() => {
-							setSortType(0);
+							setSortType(1);
 							setSearchText("");
 						}}
 					/>
-					<home.Sort onChange={(e) => onSortChanged(e)}>
-						<home.SortBase selected="selected">
-							좋아요가 많은 순서
-						</home.SortBase>
-						<home.SortBase>최근 업데이트 순서</home.SortBase>
-						<home.SortBase>사전 순서</home.SortBase>
-					</home.Sort>
 				</home.Explore>
 				<home.NonExplore>
 					<home.PostList>
