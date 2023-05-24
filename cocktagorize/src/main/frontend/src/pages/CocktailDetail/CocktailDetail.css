@@ -183,3 +183,7 @@ span {
 	margin-top: 1rem;
 	margin-left: 0.5rem;
 }
+
+.liked_amount {
+	font-family: var(--font-Jua);
+}

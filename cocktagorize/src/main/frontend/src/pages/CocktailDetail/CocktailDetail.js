@@ -17,9 +17,9 @@ import { createTokenHeader } from "../../jwt/auth-action";
 import styled, { css } from "styled-components";
 
 const Ingredient = styled.span`
-	font-size: 0.8rem;
+	font-size: 1rem;
 	text-align: center;
-	font-weight: bold;
+	font-family: var(--font-Jua);
 	background-color: #9999ff;
 	margin: 5px 15px;
 	padding: 4px 0px;
@@ -136,7 +136,7 @@ const CocktailDetail = () => {
 										onClick={() => likeClicked(cocktail.id)}
 									/>
 								)}
-								<span>{like}</span>{" "}
+								<span className="liked_amount">{like}</span>{" "}
 								<p>
 									<hr />
 								</p>
@@ -156,7 +156,7 @@ const CocktailDetail = () => {
 								</p>
 								<div className="similar_liked">
 									<p></p> <VscHeart />
-									<span>
+									<span className="liked_amount">
 										{cocktail.similarCocktail.liked}
 									</span>
 								</div>
