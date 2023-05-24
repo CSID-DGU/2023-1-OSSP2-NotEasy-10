@@ -1,164 +1,165 @@
 .CocktailDetail {
-  display: flex;
-  justify-content: space-evenly;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .content {
-  width: 70vw;
-  margin: 1.6rem 0 1.5rem 0;
-  padding: 0 1.25rem 1rem 0;
-  background-color: transparent;
-  display: flex;
-  flex-direction: column;
+	width: 70vw;
+	margin: 1.6rem 0 1.5rem 0;
+	padding: 0 1.25rem 1rem 0;
+	background-color: transparent;
+	display: flex;
+	flex-direction: column;
 }
 
 .tags {
-  display: flex;
-  overflow-x: auto;
+	display: flex;
+	overflow-x: auto;
 }
 
 .inner {
-  display: flex;
-  height: auto;
-  flex: 1;
-  margin-top: 0.2rem;
+	display: flex;
+	height: auto;
+	flex: 1;
+	margin-top: 0.2rem;
 }
 
 .inner_left {
-  display: flex;
-  flex-direction: column;
-  width: 20vw;
-  height: auto;
+	display: flex;
+	flex-direction: column;
+	width: 20vw;
+	height: auto;
 }
 
 .cocktail_card {
-  background-color: transparent;
-  margin: 0.5rem 0.5rem 0.5rem 0;
-  display: flex;
-  flex-direction: column;
-  padding: 0.5rem 1rem 0 0.5rem;
-  height: 45vh;
+	background-color: transparent;
+	margin: 0.5rem 0.5rem 0.5rem 0;
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem 1rem 0 0.5rem;
+	height: 45vh;
 }
 
 .cocktail_image {
-  height: 37vh;
-  /* object-fit: contain; */
+	height: 37vh;
+	/* object-fit: contain; */
 }
 
 .cocktail_icon {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  background-color: white;
-  width: auto;
-  border-radius: 0.25rem;
-  padding: 0 50px;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	background-color: white;
+	width: auto;
+	border-radius: 0.25rem;
+	padding: 0 50px;
 }
 
 .cocktail_icon > p {
-  flex: 1;
-  margin: 0;
-  text-align: center;
-  padding: 0 20px;
+	flex: 1;
+	margin: 0;
+	text-align: center;
+	padding: 0 20px;
 }
 
 .inner_left > p {
-  margin: 2rem 0 0 0;
-  font-weight: bold;
+	margin: 2rem 0 0 0;
+	font-weight: bold;
 }
 
 .cocktail_similar {
-  height: 23vh;
-  margin: 0.5rem 0.5rem 0.5rem 0;
-  border-radius: 0.25rem;
-  display: flex;
-  /* flex-direction: column; */
-  /* align-items: center; */
-  background-color: white;
+	height: 23vh;
+	margin: 0.5rem 0.5rem 0.5rem 0;
+	border-radius: 0.25rem;
+	display: flex;
+	/* flex-direction: column; */
+	/* align-items: center; */
+	background-color: white;
 }
 
 .cocktail_similar_image {
-  height: auto;
-  width: 180px;
-  /* object-fit: contain; */
+	height: auto;
+	width: 180px;
+	/* object-fit: contain; */
 }
 
 .cocktail_similar_name {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
 }
 
 .cocktail_similar_name2 {
-  text-align: center;
-  flex: 1;
-  margin-bottom: 0;
+	text-align: center;
+	flex: 1;
+	margin-bottom: 0;
 }
 
 .similar_liked {
-  text-align: center;
-  margin-bottom: 1rem;
+	text-align: center;
+	margin-bottom: 1rem;
 }
 
- .cocktail_similar_name > a{
-  height: 40px;
-  text-align: end;
-  padding: 20px 2px 0 0;
+.cocktail_similar_name > a {
+	height: 40px;
+	text-align: end;
+	padding: 20px 2px 0 0;
 }
 
 .inner_right {
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  flex: 1;
+	display: flex;
+	flex-direction: column;
+	height: auto;
+	flex: 1;
 }
 
 .cocktail_recipe {
-  background-color: white;
-  flex: 1;
-  padding: 1rem;
-  margin: 0.5rem 0.5rem 0.5rem 1rem;
-  border-radius: 0.25rem;
+	background-color: white;
+	flex: 1;
+	padding: 1rem;
+	margin: 0.5rem 0.5rem 0.5rem 1rem;
+	border-radius: 0.25rem;
 }
 
 .name {
-  font-size: 25px;
-  margin-left: 0.5rem;
+	font-size: 25px;
+	font-family: var(--font-Reem-Kufi-Fun);
+	margin-left: 0.5rem;
 }
 
 .info {
-  display: flex;
+	display: flex;
 }
 
 .info_left {
-  display: flex;
-  flex-direction: column;
-  width: 30vh;
-  margin: 0 0.5rem;
+	display: flex;
+	flex-direction: column;
+	width: 30vh;
+	margin: 0 0.5rem;
 }
 
 .info_left > p {
-  margin: 1rem 0 0.3rem 0;
-  background-color: lightgray;
-  padding: 0.2rem;
-  margin-right: 0.4rem;
-  border-radius: 0.5rem;
+	margin: 1rem 0 0.3rem 0;
+	background-color: lightgray;
+	padding: 0.2rem;
+	margin-right: 0.4rem;
+	border-radius: 0.5rem;
 }
 
-.info_right{
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.info_right {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
 }
 
 .info_right > p {
-  margin: 1rem 0 0.3rem 0;
-  background-color: lightgray;
-  padding: 0.2rem;
-  margin-right: 0.4rem;
-  border-radius: 0.5rem;
+	margin: 1rem 0 0.3rem 0;
+	background-color: lightgray;
+	padding: 0.2rem;
+	margin-right: 0.4rem;
+	border-radius: 0.5rem;
 }
 
 .order {
-  margin-top: 1rem;
+	margin-top: 1rem;
 }

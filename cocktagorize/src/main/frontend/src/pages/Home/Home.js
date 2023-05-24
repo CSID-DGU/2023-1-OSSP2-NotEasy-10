@@ -634,7 +634,7 @@ const Home = () => {
 					</home.Sort>
 				</home.Explore>
 				<home.NonExplore>
-					{isLogin ? (
+					{isLogin && page === 0 && sortType <= 3 ? (
 						<home.LoginContent>
 							<home.WeatherNUserCocktail>
 								<home.Weather>

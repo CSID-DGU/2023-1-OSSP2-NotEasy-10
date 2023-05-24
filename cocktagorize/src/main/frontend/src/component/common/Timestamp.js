@@ -5,7 +5,7 @@ const Entire = styled.div`
 	width: auto;
 	display: flex;
 	align-items: center;
-	margin: 0px 5px;
+	margin: 0px 10px 0px 5px;
 	padding: 4px;
 	border-radius: 0px;
 
