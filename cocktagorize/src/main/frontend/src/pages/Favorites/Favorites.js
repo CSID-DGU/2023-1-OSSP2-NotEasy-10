@@ -1,45 +1,19 @@
-import React, {useContext, useReducer} from "react";
+import React, { useContext, useReducer } from "react";
 import { useState, useEffect, useRef } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar.jsx";
 import * as home from "./FavoritesCSS.js";
 import Recipe from "../../component/Recipe.js";
 import Post from "../../component/Post.js";
-import axios from "axios";
+import axios, { all } from "axios";
 import AuthContext from "../../jwt/auth-context";
-import {GET} from "../../jwt/fetch-auth-action";
-import {createTokenHeader} from "../../jwt/auth-action";
+import { GET } from "../../jwt/fetch-auth-action";
+import { createTokenHeader } from "../../jwt/auth-action";
+import loadingImage from "../../images/loading.png";
 
 const Favorites = () => {
-	const [postList, setPostList] = useState([
-		{
-			id: 0,
-			type: "none",
-			title: "불러오기 실패",
-			content: "불러오기 실패",
-			liked: 0,
+	const [postList, setPostList] = useState([]);
 
-			user: {
-				id: 0,
-				name: "불러오기 실패",
-				isLiked: false,
-			},
-
-			boardReplyList: [
-				{
-					id: 0,
-					content: "불러오기 실패",
-					liked: 0,
-					created: "2021-06-01T00:00:00.000+00:00",
-					user: {
-						id: 0,
-						name: "불러오기 실패",
-					},
-				},
-			],
-
-			created: "2021-06-01T00:00:00.000+00:00",
-		},
-	]);
+	const [cocktailList, setCocktailList] = useState([]);
 
 	const [page, setPage] = useState(0);
 	const [maxPage, setMaxPage] = useState(1);
@@ -47,7 +21,6 @@ const Favorites = () => {
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
 	const [searchText, setSearchText] = useState();
-
 
 	/*
 	useEffect(() => {
@@ -93,17 +66,21 @@ const Favorites = () => {
 			if (result !== null) {
 				const allCocktailData = result.data;
 				console.log(allCocktailData);
+				setPostList(allCocktailData.likeBoardList);
+				setCocktailList(allCocktailData.likeCocktailList);
 			}
 		});
-	}
-
+	};
 
 	function post(props) {
+		if (!postList) return;
 		let result = [];
-		for (let i = 0; i < props.amount; i++) {
+		for (let i = 0; i < postList.length; i++) {
 			//if (postList.length > i)
 			result.push(
 				<Post
+					width={props.width + "vw"}
+					height={props.height + "px"}
 					horizontalMargin={props.hMargin + "px"}
 					verticalMargin={props.vMargin + "px"}
 					info={postList[i]}
@@ -112,6 +89,36 @@ const Favorites = () => {
 		}
 		return result;
 	}
+
+	function recipe(props) {
+		if (!cocktailList) return;
+		let result = [];
+		for (let i = 0; i < cocktailList.length; i++) {
+			//if (cocktailList.length > i)
+			result.push(
+				<Recipe
+					height={props.height + "px"}
+					horizontalMargin={props.hMargin + "px"}
+					verticalMargin={props.vMargin + "px"}
+					info={cocktailList[i]}
+				/>
+			);
+		}
+		return result;
+	}
+
+	function loading() {
+		let result = [];
+		for (let i = 0; i < 1; i++) {
+			result.push(
+				<home.Loading>
+					<home.LoadingImage src={loadingImage} alt={loadingImage} />
+				</home.Loading>
+			);
+		}
+		return result;
+	}
+
 	const onSortChanged = (e) => {
 		/*
 		let sortType = 0;
@@ -189,45 +196,27 @@ const Favorites = () => {
 					<home.Recipes>
 						<home.RecipesTitle>Recipe</home.RecipesTitle>
 						<home.RecipesContent>
-							<Recipe
-								height={"144px"}
-								horizontalMargin={"10px"}
-								verticalMargin={"10px"}
-							/>
-							<Recipe
-								height={"144px"}
-								horizontalMargin={"10px"}
-								verticalMargin={"10px"}
-							/>
-							<Recipe
-								height={"144px"}
-								horizontalMargin={"10px"}
-								verticalMargin={"10px"}
-							/>
+							{cocktailList.length > 0
+								? recipe({
+										height: "144",
+										hMargin: "10",
+										vMargin: "10",
+								  })
+								: loading()}
 						</home.RecipesContent>
 					</home.Recipes>
 					<home.Vr />
 					<home.Posts>
 						<home.PostsTitle>Post</home.PostsTitle>
 						<home.PostsContent>
-							<Post
-								width={"25vw"}
-								height={"144px"}
-								horizontalMargin={"10px"}
-								verticalMargin={"10px"}
-							/>
-							<Post
-								width={"25vw"}
-								height={"144px"}
-								horizontalMargin={"10px"}
-								verticalMargin={"10px"}
-							/>
-							<Post
-								width={"25vw"}
-								height={"144px"}
-								horizontalMargin={"10px"}
-								verticalMargin={"10px"}
-							/>
+							{postList.length > 0
+								? post({
+										width: "25",
+										height: "144",
+										hMargin: "10",
+										vMargin: "10",
+								  })
+								: loading()}
 						</home.PostsContent>
 					</home.Posts>
 				</home.Content>

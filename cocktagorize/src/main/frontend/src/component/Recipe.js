@@ -37,16 +37,15 @@ const Container = styled.div`
 	margin: 8px 8px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	align-items: center;
 	width: 70%;
-	height: 100%;
+	height: 80%;
 `;
 
 const TopContainer = styled.div`
 	margin: 0px 0px;
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
 	align-items: center;
 	width: 100%;
 	height: 30%;
@@ -54,7 +53,7 @@ const TopContainer = styled.div`
 
 const TitleContainer = styled.div`
 	width: 75%;
-	margin: 5px 0px;
+	margin: 5px 10px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -94,7 +93,7 @@ const TagContainer = styled.div`
 	overflow-x: hidden;
 	overflow-y: auto;
 	width: 100%;
-	height: calc(70%);
+	height: calc(80%);
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -157,14 +156,6 @@ function Recipe(props) {
 						<TitleContainer>
 							<NameText>{props.info.name}</NameText>
 						</TitleContainer>
-						<HeartContainer>
-							{props.info.userLikeCocktail ? (
-								<VscHeartFilled style={{ color: "red" }} />
-							) : (
-								<VscHeartFilled />
-							)}
-							<HeartText>{props.info.liked}</HeartText>
-						</HeartContainer>
 					</TopContainer>
 					<TagContainer>
 						{props.info.cocktailTagList &&
