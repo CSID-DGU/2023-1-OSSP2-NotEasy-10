@@ -11,7 +11,7 @@ const CommunityPostWrite = () => {
 
   const [title, setTitle] = useState('');
   const onChangeTitle = (e) => { setTitle(e.target.value); };
-  const [type, setType] = useState("tip");
+  const [type, setType] = useState("TIP");
   const onChangeType = (e) => { setType(e.target.value); };
   const [content, setContent] = useState('');
   const onChangeContent = (e) => { setContent(e.target.value); };
