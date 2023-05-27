@@ -49,15 +49,15 @@ export const Content = styled.div`
 	margin-top: 25px;
 	width: 100%;
 	height: 80%;
-	align-items: center;
 `;
 
 export const Recipes = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 50%;
-	height: 100%;
+	height: 88%;
 	align-items: center;
+	margin: 0px 5px;
 `;
 
 export const RecipesTitle = styled.p`
@@ -122,8 +122,9 @@ export const Posts = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 50%;
-	height: 100%;
+	height: 88%;
 	align-items: center;
+	margin: 0px 5px;
 `;
 
 export const PostsTitle = styled.p`
@@ -211,4 +212,37 @@ export const Vr = styled.div`
 	width: 1px;
 	height: 100%;
 	background-color: black;
+`;
+
+export const Loading = styled.div`
+	width: 25vw;
+	height: 50vh;
+	margin: 10px;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const LoadingImage = styled.img`
+	width: 75px;
+	height: 75px;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	animation: rotate_image 1s ease-out infinite;
+	transform-origin: 50% 50%;
+
+	@keyframes rotate_image {
+		0% {
+			transform: rotate(0deg);
+		}
+		50% {
+			transform: rotate(180deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 `;

@@ -93,14 +93,27 @@ const BlackHeartImage = styled.img`
 	-webkit-user-select: none;
 `;
 
+const HeartContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0px 10px;
+	margin-top: auto;
+	margin-bottom: 10px;
+	-webkit-user-select: none;
+`;
+
 const HeartText = styled.p`
 	margin: 0px 8px;
 	-webkit-user-select: none;
+	font-size: 14px;
+	width: 20px;
+	height: 20px;
 `;
 
 function Post(props) {
 	const authCtx = useContext(AuthContext);
-	const [isLike, setIsLike] = useState(props.info.user.isLiked);
+	const [isLike, setIsLike] = useState(false);
 	const [like, setLike] = useState(props.info.liked);
 
 	useEffect(() => {}, []);
@@ -136,17 +149,19 @@ function Post(props) {
 				<TitleContainer>
 					<TitleText>{props.info.title}</TitleText>
 					<PostTag type={props.info.type} />
-					<Timestamp created={props.info.created} />
+					<Timestamp created={props.info.createdDate} />
+				</TitleContainer>
+				<InfoContainer>
+					<InfoText>{props.info.content}</InfoText>
+				</InfoContainer>
+				<HeartContainer>
 					{isLike ? (
 						<VscHeartFilled style={{ color: "red" }} />
 					) : (
 						<VscHeartFilled />
 					)}
 					<HeartText>{like}</HeartText>
-				</TitleContainer>
-				<InfoContainer>
-					<InfoText>{props.info.content}</InfoText>
-				</InfoContainer>
+				</HeartContainer>
 			</Card>
 		</Link>
 	);
@@ -179,7 +194,7 @@ Post.defaultProps = {
 			},
 		],
 
-		created: "2021-06-01T00:00:00.000+00:00",
+		createdDate: "2021-06-01T00:00:00.000+00:00",
 	},
 };
 

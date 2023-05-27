@@ -40,13 +40,6 @@ export default function Sidebar() {
                     <VscCommentDiscussion/>
                     <span className="list community" onClick={communityClicked}><Link to="/community">Community</Link></span>
                 </li>
-
-                {
-                    authCtx.isLoggedIn && <li>
-                        <VscNotebook/> <span className="list post">My Post</span>
-                    </li>
-                }
-
                 {
                     authCtx.isLoggedIn && <li>
                         <VscHeartFilled/> <span className="list favorites"><Link to="/favorites">Favorites</Link></span>
