@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class CocktailApiSetUpController {
@@ -18,6 +21,8 @@ public class CocktailApiSetUpController {
     public final static String BASE_URL = "https://www.thecocktaildb.com/";
     private final CocktailApiSetUpService cocktailApiSetUpService;
     private final ApiUtils apiUtils;
+    // api 에서 분류 해놓은 태그 종류들
+    List<String> typeList = new ArrayList<>();
 
     public CocktailApiSetUpController(CocktailApiSetUpService cocktailApiSetUpService, ApiUtils apiUtils) {
         this.cocktailApiSetUpService = cocktailApiSetUpService;
@@ -35,8 +40,12 @@ public class CocktailApiSetUpController {
             JSONArray ingredientArray = apiUtils.parsingArray(result, "ingredients");
 
             if (ingredientArray == null) continue;
-            else cocktailApiSetUpService.saveIngredient(ingredientArray);
+            else typeList.add(cocktailApiSetUpService.saveIngredient(ingredientArray));
         }
+
+        // api 에서 분류 해놓은 태그 종류들
+        typeList = typeList.stream().distinct().collect(Collectors.toList());
+        System.out.println("태그 분류 완료");
     }
 
     @GetMapping("/getAllCocktail")
