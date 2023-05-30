@@ -109,7 +109,7 @@ const Home = () => {
 					console.log("현재 온도 : " + nowTemp);
 					console.log("현재 강우 여부 : " + nowIsRainy);
 
-					getWeatherCocktailData(nowTemp, nowIsRainy);
+					getNowWeatherCocktailData(nowTemp, nowIsRainy);
 				}
 			});
 			setIsWeatherLoading(false);

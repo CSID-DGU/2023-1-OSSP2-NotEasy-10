@@ -40,22 +40,56 @@
 .MyPage_nk {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
 }
+
+.nk_button {
+    margin-bottom: 1rem;
+    font-size: 12px;
+    margin-left: auto;
+}
+
 .MyPage_ac {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
 
+.MyPage_id > input {
+    border-radius: 0.25rem;
+    padding: 0 0.4rem;
+    border-color: lightgray;
+}
+
+.MyPage_em > input {
+    border-radius: 0.25rem;
+    padding: 0 0.4rem;
+    border-color: lightgray;
+}
+
+.MyPage_nk > input {
+    border-radius: 0.25rem;
+    padding: 0 0.4rem;
+    border-color: lightgray;
+}
+
+.nk_button {
+    border-color: azure;
+    border-radius: 0.25rem;
+}
+
 .MyPage_ac > select {
-    width: 170px;
+    width: 178px;
+}
+
+.MyPage_alert {
+    margin: 0;
+    font-size: 13px;
 }
 
 .MyPage_submit {
     text-align: center;
     display: flex;
-    width: 200px;
+    width: 170px;
     margin: auto;
     height: 40px;
     margin-top: 50px;
@@ -68,4 +102,12 @@
 
 .MyPage_edit {
     flex:1;
+}
+
+.MyPage_delete {
+    border-color: azure;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    color: red;
+    font-size: 12px;
 }

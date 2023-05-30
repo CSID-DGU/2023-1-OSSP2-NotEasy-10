@@ -1,14 +1,14 @@
-import React, {useContext, useEffect} from "react";
-import {useState} from "react";
+import React, { useContext, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import "../SignUp/SignUp.css";
 import Modal from "../../component/modal.js";
 import Tag from "../../component/common/tag.js";
 import plusImage from "../../images/plusButton.png";
 import * as home from "../Home/HomeCss.js";
-import {Navigate, useNavigate} from "react-router-dom";
-import {GET} from "../../jwt/fetch-auth-action";
-import {createTokenHeader} from "../../jwt/auth-action";
+import { Navigate, useNavigate } from "react-router-dom";
+import { GET } from "../../jwt/fetch-auth-action";
+import { createTokenHeader } from "../../jwt/auth-action";
 import AuthContext from "../../jwt/auth-context";
 
 const SignUp = () => {
@@ -36,7 +36,7 @@ const SignUp = () => {
 
     useEffect(() => {
         getCity();
-		getDongByCity("서울특별시");
+        getDongByCity("서울특별시");
         getGuByDong("종로구");
     }, [])
 
@@ -59,7 +59,7 @@ const SignUp = () => {
         );
         data.then((result) => {
             if (result !== null) {
-				setDongList(result.data);
+                setDongList(result.data);
             }
         });
     };
@@ -71,7 +71,7 @@ const SignUp = () => {
         );
         data.then((result) => {
             if (result !== null) {
-				setGuList(result.data);
+                setGuList(result.data);
             }
         });
     };
@@ -113,8 +113,8 @@ const SignUp = () => {
     //각 option 태그 첫번째 값은 초기값으로 넣어줘야함 지금까지 onChange로 인식이 안돼서 null로 전달된 듯
     const [alcohol, setAlcohol] = useState(1);
     const [city, setCity] = useState("서울특별시");
-    const [gu, setGu] = useState("종로구");
-    const [dong, setDong] = useState("청운효자동");
+    const [dong, setDong] = useState("종로구");
+    const [gu, setGu] = useState("청운효자동");
 
     const onChangeAlcohol = (e) => {
         setAlcohol(e.target.value);
@@ -122,12 +122,12 @@ const SignUp = () => {
 
     const onChangeCity = (e) => {
         setCity(e.target.value);
-		getDongByCity(e.target.value);
+        getDongByCity(e.target.value);
     };
 
     const onChangeDong = (e) => {
         setDong(e.target.value);
-		getGuByDong(e.target.value);
+        getGuByDong(e.target.value);
     };
 
     const onChangeGu = (e) => {
@@ -157,16 +157,30 @@ const SignUp = () => {
         if (isDuplicateIdExist) {
             alert("아이디 중복체크를 해주세요!");
             return;
-        } else if (isDuplicateIdExist) {
-            alert("아이디 중복체크를 해주세요!");
-            return;
         }
 
         if (isDuplicateNicknameExist) {
             alert("닉네임 중복체크를 해주세요!");
             return;
-        } else if (isDuplicateNicknameExist) {
-            alert("닉네임 중복체크를 해주세요!");
+        }
+
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(id)) {
+            alert("아이디는 영어와 숫자 조합으로 6자리 이상 입력해주세요.");
+            return;
+        }
+
+        if (nickname.length < 1 || nickname.length > 10) {
+            alert("닉네임은 1자리 이상 10자리 이하로 입력해주세요.");
+            return;
+          }
+
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+            alert("비밀번호는 영어와 숫자 조합으로 8자리 이상 입력해주세요.");
+            return;
+        }
+
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            alert("유효한 이메일 주소를 입력해주세요.");
             return;
         }
 
@@ -181,8 +195,8 @@ const SignUp = () => {
                     nickname: nickname,
                     alcoholCapacity: alcohol,
                     city: city,
-                    gu: gu,
                     dong: dong,
+                    gu: gu,
                     preferTagList: preferTagList,
                 })
                 .then((response) => {
@@ -211,7 +225,9 @@ const SignUp = () => {
                     if (res.data) {
                         alert("존재하는 아이디 입니다!");
                     } else {
-                        alert("사용 가능한 아이디 입니다!");
+                        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(id)) {
+                            alert("아이디는 영어와 숫자 조합으로 6자리 이상 입력해주세요.");
+                        } else { alert("사용 가능한 아이디 입니다!"); }
                     }
                 });
         } catch (error) {
@@ -235,7 +251,9 @@ const SignUp = () => {
                     if (res.data) {
                         alert("존재하는 닉네임 입니다!");
                     } else {
-                        alert("사용 가능한 닉네임 입니다!");
+                        if (nickname.length < 1 || nickname.length > 10) {
+                            alert("닉네임은 1자리 이상 10자리 이하로 입력해주세요.");
+                        } else { alert("사용 가능한 닉네임 입니다!"); }
                     }
                 });
         } catch (error) {
@@ -243,14 +261,18 @@ const SignUp = () => {
         }
     };
 
+    console.log(city)
+    console.log(dong)
+    console.log(gu)
+
     return (
         <form className="SignUp" action="">
             {isModal === true ? (
-                <Modal modalOff={modalOff} parentTag={currentTagData}/>
+                <Modal modalOff={modalOff} parentTag={currentTagData} />
             ) : null}
             <h1>Welcome to COCKTAGORIZE!</h1>
             <p>아이디 </p>
-            <input type="text" name="id" value={id} placeholder="아이디를 입력해주세요" onChange={onChangeId}/>
+            <input type="text" name="id" value={id} placeholder="영어+숫자 6자리 이상" onChange={onChangeId} />
             <button type="button" onClick={onClickCheckId}>
                 중복확인
             </button>
@@ -260,7 +282,7 @@ const SignUp = () => {
                 name="password"
                 value={password}
                 onChange={onChangePassword}
-                placeholder="비밀번호를 입력해주세요"
+                placeholder="영어+숫자 8자리 이상"
             />
             <p>비밀번호 확인 </p>
             <input
@@ -276,7 +298,7 @@ const SignUp = () => {
                 name="nickname"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
-                placeholder="닉네임을 입력해주세요"
+                placeholder="10자리 이하의 닉네임"
             />
             <button type="button" onClick={onClickCheckNickname}>
                 중복확인
@@ -305,11 +327,11 @@ const SignUp = () => {
                         modalOn();
                     }}
                 >
-                    <home.Image src={plusImage} alt={plusImage}/>
+                    <home.Image src={plusImage} alt={plusImage} />
                 </home.ModalButton>
                 <home.TagSearch>
                     {currentTagData.map((info, index) => (
-                        <Tag info={info} key={index} onDelete={deleteTag}/>
+                        <Tag info={info} key={index} onDelete={deleteTag} />
                     ))}
                 </home.TagSearch>
             </home.TagSearchDiv>
@@ -326,19 +348,19 @@ const SignUp = () => {
                     ))}
                 </select>
                 <select name="location_gu" value={dong} onChange={onChangeDong}>
-					<option disabled>구</option>
-					{dongList.map((dong) => (
-						<option value={dong}> {dong}</option>
-					))}
+                    <option disabled>구</option>
+                    {dongList.map((dong) => (
+                        <option value={dong}> {dong}</option>
+                    ))}
                 </select>
                 <select
                     name="dong"
                     value={gu}
                     onChange={onChangeGu}>
-					<option disabled>동</option>
-					{guList.map((gu) => (
-						<option value={gu}> {gu}</option>
-					))}
+                    <option disabled>동</option>
+                    {guList.map((gu) => (
+                        <option value={gu}> {gu}</option>
+                    ))}
                 </select>
             </div>
             <input

@@ -35,7 +35,6 @@ public class MyPageService {
         }
 
         user.setUsername(userJoinDto.getUsername());
-        user.setPassword(userJoinDto.getPassword());
         user.setEmail(userJoinDto.getEmail());
         user.setNickname(userJoinDto.getNickname());
         user.setAlcoholCapacity(userJoinDto.getAlcoholCapacity());
