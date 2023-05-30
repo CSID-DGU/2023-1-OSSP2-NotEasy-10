@@ -62,6 +62,22 @@ const Entire = styled.div`
 				return css`
 					background-color: #6e41e2;
 				`;
+			case "JUICE":
+				return css`
+					background-color: #ff0066;
+				`;
+			case "BITTER":
+				return css`
+					background-color: #660033;
+				`;
+			case "MILK":
+				return css`
+					background-color: #ccffff;
+				`;
+			case "SYRUP":
+				return css`
+					background-color: #ffcc00;
+				`;
 			case "ALCOHOL":
 				return css`
 					background-color: brown;
