@@ -74,28 +74,31 @@ export const Explore = styled.div`
 `;
 
 export const Search = styled.input`
-	width: 18vw;
+	width: 24vw;
 	height: 50px;
 	border-radius: 15px;
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 24px;
+	font-family: var(--font-Jua);
 	margin: 10px;
 `;
 
 export const Sort = styled.select`
-	width: 18vw;
+	width: 12vw;
 	height: 50px;
 	border-width: 2px;
 	border-radius: 15px;
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 18px;
+	font-family: var(--font-Jua);
 	margin: 10px;
 `;
 
 export const SortBase = styled.option`
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SearchOption = styled.select`
@@ -107,14 +110,17 @@ export const SearchOption = styled.select`
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SearchOptionBase = styled.option`
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const Text = styled.p`
 	font-size: 18px;
+	font-family: var(--font-Jua);
 	text-align: center;
 	-webkit-user-select: none;
 	user-select: none;

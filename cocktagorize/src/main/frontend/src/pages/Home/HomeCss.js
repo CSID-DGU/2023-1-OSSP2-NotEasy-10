@@ -133,9 +133,10 @@ export const Search = styled.input`
 	width: 18vw;
 	height: 50px;
 	border-radius: 15px;
-	padding: 0px 10px;
+	padding: 0px 12px;
 	border-color: black;
 	font-size: 24px;
+	font-family: var(--font-Jua);
 `;
 
 export const Sort = styled.select`
@@ -146,10 +147,12 @@ export const Sort = styled.select`
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SortBase = styled.option`
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SearchOption = styled.select`
@@ -161,10 +164,29 @@ export const SearchOption = styled.select`
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 18px;
+	font-family: var(--font-Jua);
 `;
 
 export const SearchOptionBase = styled.option`
 	font-size: 18px;
+	font-family: var(--font-Jua);
+`;
+
+export const WeatherSearchOption = styled.select`
+	width: 150px;
+	height: 30px;
+	border-width: 2px;
+	border-radius: 15px;
+	margin: 0px 5px;
+	padding: 0px 10px;
+	border-color: black;
+	font-size: 12px;
+	font-family: var(--font-Jua);
+`;
+
+export const WeatherSearchOptionBase = styled.option`
+	font-size: 12px;
+	font-family: var(--font-Jua);
 `;
 
 export const LoginContent = styled.div`
@@ -202,6 +224,9 @@ export const WeatherInfoBox = styled.div`
 	border: solid;
 	border-radius: 5px;
 	border-color: black;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 `;
 
 export const WeatherInfo = styled.p`
@@ -461,4 +486,34 @@ export const blackXButton = styled.img`
 	float: left;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
+`;
+
+export const WeatherLoading = styled.div`
+	width: 15.625vw;
+	height: calc(75vh - 270px);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const WeatherLoadingImage = styled.img`
+	width: 75px;
+	height: 75px;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	animation: rotate_image 1s ease-out infinite;
+	transform-origin: 50% 50%;
+
+	@keyframes rotate_image {
+		0% {
+			transform: rotate(0deg);
+		}
+		50% {
+			transform: rotate(180deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 `;

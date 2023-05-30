@@ -66,11 +66,13 @@ const UserTip = (tip) => {
     setEditedComment(event.target.value);
   };
 
+  console.log(tip.tip);
+
   return (
     <div className="UserTip">
       <div>
         <div className="tip">
-          <p className="tip_name">{tip.tip.user.name}</p>
+          <p className="tip_name">{tip.tip.user.nickname}</p>
           {isEditing ? (
             <textarea
               className="tip_content"
@@ -83,7 +85,7 @@ const UserTip = (tip) => {
           <p className="tip_createdDate">{tip.tip.createdDate}</p>
           <hr />
         </div>
-        {tip.tip.user.name === authCtx.userObj.nickname && (
+        {tip.tip.user.nickname === authCtx.userObj.nickname && (
           <div className="tool">
             {isEditing ? (
               <>

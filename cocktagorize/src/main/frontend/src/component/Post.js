@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import cocktailImage from "../images/cocktailsample.png";
 import blackHeartImage from "../images/blackHeart.png";
 import soundImage from "../images/sound.png";
@@ -6,6 +6,10 @@ import PostTag from "./common/PostTag.js";
 import Timestamp from "./common/Timestamp.js";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import { PUT } from "../jwt/fetch-auth-action";
+import { createTokenHeader } from "../jwt/auth-action";
+import AuthContext from "../jwt/auth-context";
+import { VscHeartFilled } from "react-icons/vsc";
 
 const Card = styled.div`
 	width: ${(props) => props.width || "40vw"};
@@ -47,8 +51,8 @@ const TitleText = styled.p`
 	@media (min-width: 1600px) {
 		font-size: 20px;
 	}
+	font-family: var(--font-Jua);
 	text-size-adjust: auto;
-	font-weight: bold;
 	white-space: nowrap;
 	overflow-x: hidden;
 	margin: 0px 0px 0px 10px;
@@ -89,14 +93,53 @@ const BlackHeartImage = styled.img`
 	-webkit-user-select: none;
 `;
 
-const HeartText = styled.p`
-	margin: 0px 8px;
+const HeartContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 0px 10px;
+	margin-top: auto;
+	margin-bottom: 10px;
 	-webkit-user-select: none;
 `;
 
+const HeartText = styled.p`
+	margin: 0px 8px;
+	-webkit-user-select: none;
+	font-size: 14px;
+	width: 20px;
+	height: 20px;
+`;
+
 function Post(props) {
+	const authCtx = useContext(AuthContext);
+	const [isLike, setIsLike] = useState(false);
+	const [like, setLike] = useState(props.info.liked);
+
+	useEffect(() => {}, []);
+
+	const likeClicked = async (event) => {
+		// 로그인을 했다면
+		if (authCtx.isLoggedIn) {
+			const result = PUT(
+				`http://localhost:8080/board/${props.info.id}/like`,
+				null,
+				createTokenHeader(authCtx.token)
+			);
+			result.then((result) => {
+				if (result !== null) {
+					setLike(result.data.liked);
+					setIsLike(!isLike);
+					console.log(result);
+				}
+			});
+		} else {
+			alert("로그인을 해주세요!");
+		}
+	};
+
 	return (
-		<Link to={`/cocktail/${props.info.id}`}>
+		<Link to={`/community/${props.info.id}`}>
 			<Card
 				horizontalMargin={props.horizontalMargin}
 				verticalMargin={props.verticalMargin}
@@ -105,17 +148,20 @@ function Post(props) {
 			>
 				<TitleContainer>
 					<TitleText>{props.info.title}</TitleText>
-					<PostTag type="RECIPE" />
-					<Timestamp created="2021-01-01 00:00:00" />
-					<BlackHeartImage
-						src={blackHeartImage}
-						alt={blackHeartImage}
-					/>
-					<HeartText>{props.info.liked}</HeartText>
+					<PostTag type={props.info.type} />
+					<Timestamp created={props.info.createdDate} />
 				</TitleContainer>
 				<InfoContainer>
 					<InfoText>{props.info.content}</InfoText>
 				</InfoContainer>
+				<HeartContainer>
+					{isLike ? (
+						<VscHeartFilled style={{ color: "red" }} />
+					) : (
+						<VscHeartFilled />
+					)}
+					<HeartText>{like}</HeartText>
+				</HeartContainer>
 			</Card>
 		</Link>
 	);
@@ -126,8 +172,7 @@ Post.defaultProps = {
 		id: 0,
 		type: "none",
 		title: "불러오기 실패",
-		content:
-			"불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패불러오기 실패",
+		content: "불러오기 실패",
 		liked: 0,
 
 		user: {
@@ -149,7 +194,7 @@ Post.defaultProps = {
 			},
 		],
 
-		created: "2021-06-01T00:00:00.000+00:00",
+		createdDate: "2021-06-01T00:00:00.000+00:00",
 	},
 };
 

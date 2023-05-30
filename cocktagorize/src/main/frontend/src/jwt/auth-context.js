@@ -12,6 +12,7 @@ const AuthContext = React.createContext({
     login: (username, password) => { },
     logout: () => { },
     getUser: () => { },
+    deleteUser: () => {}
 });
 
 export const AuthContextProvider = (props) => {
@@ -47,7 +48,10 @@ export const AuthContextProvider = (props) => {
                 );
                 setIsSuccess(true);
             }
-        });
+        }).catch((error) => {
+            console.log("여기야");
+            alert("로그인이 잘못되었습니다!");
+        })
     };
 
     const logoutHandler = useCallback(() => {
@@ -58,6 +62,15 @@ export const AuthContextProvider = (props) => {
             clearTimeout(logoutTimer);
         }
         alert("로그아웃 되었습니다!");
+    }, []);
+
+    const deleteUser = useCallback(() => {
+        setToken('');
+        setIsGetUserSuccess(false)
+        authAction.logoutActionHandler();
+        if (logoutTimer) {
+            clearTimeout(logoutTimer);
+        }
     }, []);
 
     const getUserHandler = () => {
@@ -90,6 +103,7 @@ export const AuthContextProvider = (props) => {
         login: loginHandler,
         logout: logoutHandler,
         getUser: getUserHandler,
+        deleteUser: deleteUser
     };
 
     return (

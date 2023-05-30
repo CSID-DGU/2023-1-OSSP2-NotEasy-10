@@ -40,9 +40,25 @@ a {
 
 @font-face {
 	font-family: "Reem Kufi Fun";
-	src: url(./fonts/ReemKufiFun-Bold.ttf);
+	src: url("./fonts/ReemKufiFun-Bold.ttf");
+}
+
+@font-face {
+	font-family: "Jua";
+	src: url("./fonts/Jua-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Noto Sans KR";
+	src: url("./fonts/NotoSansKR-Regular.otf");
 }
 
 :root {
 	--font-Reem-Kufi-Fun: "Reem Kufi Fun", sans-serif;
+	--font-Jua: "Jua", sans-serif;
+	--font-Noto-Sans-KR: "Noto Sans KR", sans-serif;
+}
+
+span {
+	font-family: var(--font-Noto-Sans-KR);
 }

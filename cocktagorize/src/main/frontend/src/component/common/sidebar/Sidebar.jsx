@@ -21,6 +21,13 @@ export default function Sidebar() {
         document.location.href = "/";
     }
 
+    function communityClicked() {
+        if (!authCtx.isLoggedIn) {
+            alert("로그인을 해주세요!");
+            document.location.href = "/";
+        }
+    }
+
     return (
         <div className="sidebar">
             <div className="menu">MENU</div>
@@ -31,15 +38,8 @@ export default function Sidebar() {
                 </li>
                 <li>
                     <VscCommentDiscussion/>
-                    <span className="list community"><Link to="/community">Community</Link></span>
+                    <span className="list community" onClick={communityClicked}><Link to="/community">Community</Link></span>
                 </li>
-
-                {
-                    authCtx.isLoggedIn && <li>
-                        <VscNotebook/> <span className="list post">My Post</span>
-                    </li>
-                }
-
                 {
                     authCtx.isLoggedIn && <li>
                         <VscHeartFilled/> <span className="list favorites"><Link to="/favorites">Favorites</Link></span>

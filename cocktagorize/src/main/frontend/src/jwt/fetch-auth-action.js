@@ -25,7 +25,11 @@ const fetchAuth = async (fetchData) => {
             const serverError = err;
             if (serverError && serverError.response) {
                 console.log(serverError.response.data);
-                alert("서버 오류입니다!");
+                if (serverError.response.data.status === 401) {
+                    alert("잘못된 아이디 혹은 패스워드 입니다!");
+                } else {
+                    alert("서버 오류입니다!");
+                }
                 return null;
             }
         }
