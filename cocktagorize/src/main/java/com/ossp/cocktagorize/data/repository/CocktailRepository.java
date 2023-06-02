@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CocktailRepository extends JpaRepository<Cocktail, Integer> {
@@ -22,5 +23,5 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Integer> {
     Page<Cocktail> findByTagsByOr(@Param("tagNames") List<String> tagNames, Pageable pageable);
 
     //@Query("SELECT c FROM Cocktail c WHERE c.alcoholDegree>= :minDegree AND c.alcoholDegree<= :maxDegree")
-    Page<Cocktail> findByAlcoholDegreeBetweenOrderByAlcoholDegreeAsc(int minDegree,int maxDegree,Pageable pageable);
+    Page<Cocktail> findByAlcoholDegreeBetweenOrderByAlcoholDegreeAsc(BigDecimal minDegree, BigDecimal maxDegree, Pageable pageable);
 }

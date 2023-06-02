@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @CrossOrigin
@@ -83,9 +84,8 @@ public class CocktailController {
         return ResponseEntity.ok(cocktailList);
     }
     @GetMapping("/cocktail/degree/{min}/{max}")
-    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByDegree(@PathVariable int min,@PathVariable int max,@PageableDefault Pageable pageable){
+    public ResponseEntity<Page<CocktailResponseDto>> getCocktailListByDegree(@PathVariable BigDecimal min, @PathVariable BigDecimal max, @PageableDefault Pageable pageable){
         Pageable modifiedPageable = PageRequest.of(pageable.getPageNumber(), defaultPageSize);
-        Page<CocktailResponseDto> cocktailList;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok(cocktailService.getCocktailByDegree(min,max,authentication,modifiedPageable));
     }
