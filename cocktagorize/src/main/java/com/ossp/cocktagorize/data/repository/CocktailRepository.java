@@ -20,4 +20,7 @@ public interface CocktailRepository extends JpaRepository<Cocktail, Integer> {
     Page<Cocktail> findByTagsByAnd(@Param("tagNames") List<String> tagNames, @Param("tagCount") long tagCount, Pageable pageable);
     @Query("SELECT DISTINCT c FROM Cocktail c JOIN c.cocktailTagList ct WHERE ct.tag.name IN :tagNames")
     Page<Cocktail> findByTagsByOr(@Param("tagNames") List<String> tagNames, Pageable pageable);
+
+    //@Query("SELECT c FROM Cocktail c WHERE c.alcoholDegree>= :minDegree AND c.alcoholDegree<= :maxDegree")
+    Page<Cocktail> findByAlcoholDegreeBetweenOrderByAlcoholDegreeAsc(int minDegree,int maxDegree,Pageable pageable);
 }
