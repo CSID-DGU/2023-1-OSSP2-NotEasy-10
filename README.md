@@ -8,8 +8,8 @@
 <table>
   <tbody>
     <tr>
-      <td align="center"  width="16.66%"><a href="https://github.com/euneun17"><img src="https://avatars.githubusercontent.com/u/101847421?s=64&v=4" width="100px;" alt="이정은"/><br /><sub><b>이정은</b></sub></a><br />팀장, FrontEnd</td>
-      <td align="center"  width="16.66%"><a href="https://github.com/ner-di-dream"><img src="https://avatars.githubusercontent.com/u/71496474?s=64&v=4" width="100px;" alt="윤성우"/><br /><sub><b>윤성우</b></sub></a><br />FrontEnd</td>
+      <td align="center"  width="16.66%"><a href="https://github.com/ner-di-dream"><img src="https://avatars.githubusercontent.com/u/71496474?s=64&v=4" width="100px;" alt="윤성우"/><br /><sub><b>윤성우</b></sub></a><br />팀장,FrontEnd</td>
+      <td align="center"  width="16.66%"><a href="https://github.com/euneun17"><img src="https://avatars.githubusercontent.com/u/101847421?s=64&v=4" width="100px;" alt="이정은"/><br /><sub><b>이정은</b></sub></a><br />FrontEnd</td>
       <td align="center"  width="16.66%"><a href="https://github.com/Jeong3733"><img src="https://avatars.githubusercontent.com/u/71390582?s=64&v=4" width="100px;" alt="정재욱"/><br /><sub><b>정재욱</b></sub></a><br />FrontEnd, BackEnd</td>
       <td align="center"  width="16.66%"><a href="https://github.com/dudongtak"><img src="https://avatars.githubusercontent.com/u/82008463?s=64&v=4" width="100px;" alt="이용탁"/><br /><sub><b>이용탁</b></sub></a><br />BackEnd</td>
       <td align="center"  width="16.66%"><a href="https://github.com/juhno1023"><img src="https://avatars.githubusercontent.com/u/114224596?s=64&v=4" width="100px;" alt="주현욱"/><br /><sub><b>주현욱</b></sub></a><br />BackEnd</td>
