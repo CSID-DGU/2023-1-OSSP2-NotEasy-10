@@ -35,7 +35,8 @@ const Home = () => {
 	const port = 8080;
 	const [sortType, setSortType] = useState(0);
 	const [searchText, setSearchText] = useState();
-	const [searchMode, setSearchMode] = useState("AND");
+	const [searchLogic, setSearchLogic] = useState("AND");
+	const [searchMode, setSearchMode] = useState("태그 검색");
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -71,6 +72,30 @@ const Home = () => {
 	const getAllCocktailById = async (page) => {
 		const allCocktailData = GET(
 			`http://localhost:${port}/?page=${page}`,
+			createTokenHeader(authCtx.token)
+		);
+		allCocktailData.then((result) => {
+			if (result !== null) {
+				const allCocktailData = result.data;
+				setCocktailList(allCocktailData.content);
+				setMaxPage(allCocktailData.totalPages);
+				setIsLoading(false);
+			}
+		});
+	};
+
+	const getAllCocktailByDegree = async (page, alcoholDegree) => {
+		let minDegree = alcoholDegree;
+		let maxDegree = parseInt(alcoholDegree) + parseInt(5);
+
+		if (minDegree === 40) {
+			maxDegree = 100;
+		}
+
+		console.log(minDegree);
+
+		const allCocktailData = GET(
+			`http://localhost:${port}/cocktail/degree/${minDegree}/${maxDegree}?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		allCocktailData.then((result) => {
@@ -456,13 +481,13 @@ const Home = () => {
 	const onSortChanged = (e) => {
 		let sortType = 0;
 		switch (e.target.value) {
-			case "좋아요가 많은 순서":
+			case "좋아요 순으로 정렬":
 				sortType = 1;
 				break;
 			case "최근 업데이트 순서":
 				sortType = 2;
 				break;
-			case "사전 순서":
+			case "사전 순으로 정렬":
 				sortType = 3;
 				break;
 			case "AND":
@@ -470,6 +495,9 @@ const Home = () => {
 				break;
 			case "OR":
 				sortType = 6;
+				break;
+			case "도수 범위로 검색":
+				sortType = 8;
 				break;
 			default:
 				sortType = 0;
@@ -517,12 +545,15 @@ const Home = () => {
 				if (tags.length === 0) {
 					getAllCocktailById(page);
 				} else {
-					if (searchMode === "AND") {
+					if (searchLogic === "AND") {
 						getCocktailByTagAnd(page, tempTags);
 					} else {
 						getCocktailByTagOr(page, tempTags);
 					}
 				}
+				break;
+			case 8:
+				getAllCocktailByDegree(page, 0);
 				break;
 		}
 		setSortType(realSortType);
@@ -580,14 +611,11 @@ const Home = () => {
 		return result;
 	}
 
-	return (
-		<home.Entire>
-			{isModal === true ? (
-				<Modal modalOff={modalOff} parentTag={currentTagData} />
-			) : null}
-			<Sidebar />
-			<home.NonSidebar>
-				<home.Explore>
+	function searchUI() {
+		let result = [];
+		if (searchMode === "단어 검색") {
+			result.push(
+				<>
 					<home.Search
 						type="text"
 						placeholder="Search"
@@ -601,37 +629,101 @@ const Home = () => {
 							setSearchText("");
 						}}
 					/>
-					<home.TagSearchDiv>
-						<home.SearchOption
-							onChange={(e) => {
-								onSortChanged(e);
-								setSearchMode(e.target.value);
-							}}
-						>
-							<home.SearchOptionBase>AND</home.SearchOptionBase>
-							<home.SearchOptionBase>OR</home.SearchOptionBase>
-						</home.SearchOption>
-						<home.ModalButton
-							onClick={() => {
-								modalOn();
-							}}
-						>
-							<home.Image src={plusImage} alt={plusImage} />
-						</home.ModalButton>
-						<home.TagSearch>
-							{currentTagData.map((info, index) => (
-								<Tag
-									info={info}
-									key={index}
-									onDelete={deleteTag}
-								/>
-							))}
-						</home.TagSearch>
-					</home.TagSearchDiv>
-					<home.Sort onChange={(e) => onSortChanged(e)}>
-						<home.SortBase>좋아요가 많은 순서</home.SortBase>
-						<home.SortBase>사전 순서</home.SortBase>
+				</>
+			);
+		} else if (searchMode === "태그 검색") {
+			result.push(
+				<home.TagSearchDiv>
+					<home.SearchOption
+						onChange={(e) => {
+							onSortChanged(e);
+							setSearchLogic(e.target.value);
+						}}
+					>
+						<home.SearchOptionBase>AND</home.SearchOptionBase>
+						<home.SearchOptionBase>OR</home.SearchOptionBase>
+					</home.SearchOption>
+					<home.ModalButton
+						onClick={() => {
+							modalOn();
+						}}
+					>
+						<home.Image src={plusImage} alt={plusImage} />
+					</home.ModalButton>
+					<home.TagSearch>
+						{currentTagData.map((info, index) => (
+							<Tag info={info} key={index} onDelete={deleteTag} />
+						))}
+					</home.TagSearch>
+				</home.TagSearchDiv>
+			);
+		} else if (searchMode === "좋아요 순으로 정렬") {
+			result.push();
+		} else if (searchMode === "사전 순으로 정렬") {
+			result.push();
+		} else if (searchMode === "도수 범위로 검색") {
+			result.push(
+				<>
+					<home.Sort
+						onChange={(e) => {
+							// sort(currentTagData, 8);
+							setSortType(8);
+							getAllCocktailByDegree(page, e.target.value);
+						}}
+					>
+						<home.SortBase value="0">
+							0도 이상, 5도 이하
+						</home.SortBase>
+						<home.SortBase value="5">
+							5도 이상, 10도 이하
+						</home.SortBase>
+						<home.SortBase value="10">
+							10도 이상, 15도 이하
+						</home.SortBase>
+						<home.SortBase value="15">
+							15도 이상, 20도 이하
+						</home.SortBase>
+						<home.SortBase value="20">
+							20도 이상, 25도 이하
+						</home.SortBase>
+						<home.SortBase value="25">
+							25도 이상, 30도 이하
+						</home.SortBase>
+						<home.SortBase value="30">
+							30도 이상, 35도 이하
+						</home.SortBase>
+						<home.SortBase value="35">
+							35도 이상, 40도 이하
+						</home.SortBase>
+						<home.SortBase value="40">40도 이상</home.SortBase>
 					</home.Sort>
+				</>
+			);
+		}
+		return result;
+	}
+
+	return (
+		<home.Entire>
+			{isModal === true ? (
+				<Modal modalOff={modalOff} parentTag={currentTagData} />
+			) : null}
+			<Sidebar />
+			<home.NonSidebar>
+				<home.Explore>
+					<home.Sort
+						onChange={(e) => {
+							onSortChanged(e);
+							setSearchMode(e.target.value);
+						}}
+					>
+						<home.SortBase>단어 검색</home.SortBase>
+						<home.SortBase>태그 검색</home.SortBase>
+						<home.SortBase>좋아요 순으로 정렬</home.SortBase>
+						<home.SortBase>사전 순으로 정렬</home.SortBase>
+						<home.SortBase>도수 범위로 검색</home.SortBase>
+					</home.Sort>
+					<home.SearchUI>{searchUI()}</home.SearchUI>
 				</home.Explore>
 				<home.NonExplore>
 					{isLogin && page === 0 && sortType <= 3 ? (

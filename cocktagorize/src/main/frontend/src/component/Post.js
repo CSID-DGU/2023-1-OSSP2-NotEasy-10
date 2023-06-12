@@ -154,14 +154,14 @@ function Post(props) {
 				<InfoContainer>
 					<InfoText>{props.info.content}</InfoText>
 				</InfoContainer>
-				<HeartContainer>
+				{/*<HeartContainer>
 					{isLike ? (
 						<VscHeartFilled style={{ color: "red" }} />
 					) : (
 						<VscHeartFilled />
 					)}
 					<HeartText>{like}</HeartText>
-				</HeartContainer>
+				</HeartContainer>*/}
 			</Card>
 		</Link>
 	);

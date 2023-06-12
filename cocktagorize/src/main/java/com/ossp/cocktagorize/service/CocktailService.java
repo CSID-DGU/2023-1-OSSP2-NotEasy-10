@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -70,4 +71,10 @@ public class CocktailService {
         return cocktailRepository.findByTagsByOr(tags, pageable).map(CocktailResponseDto::new);
     }
 
+    public Page<CocktailResponseDto> getCocktailByDegree(BigDecimal min, BigDecimal max, Authentication authentication, Pageable pageable){
+        if(authentication != null && authentication.getPrincipal() != "anonymousUser"){
+            return cocktailRepository.findByAlcoholDegreeBetweenOrderByAlcoholDegreeAsc(min,max,pageable).map(cocktail -> new CocktailResponseDto(cocktail,userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(),userRepository.findByUsername(authentication.getName()).getId())));
+        }
+        return cocktailRepository.findByAlcoholDegreeBetweenOrderByAlcoholDegreeAsc(min,max,pageable).map(CocktailResponseDto::new);
+    }
 }

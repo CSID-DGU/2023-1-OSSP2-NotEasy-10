@@ -1,113 +1,156 @@
+span {
+	font-family: var(--font-Jua);
+}
+
+input {
+	margin-right: 10px;
+	border-radius: 15px;
+	border-color: black;
+	border-width: 2px;
+	font-size: 18px;
+	font-family: var(--font-Jua);
+}
+
+option {
+	font-size: 18px;
+	font-family: var(--font-Jua);
+}
+
+select {
+	border-width: 2px;
+	border-radius: 15px;
+	border-color: black;
+	padding: 0px 10px;
+	font-size: 18px;
+	font-family: var(--font-Jua);
+	margin: 0px 10px;
+}
+
+button {
+	border-radius: 15px;
+	border-color: black;
+	border-width: 2px;
+	font-size: 18px;
+	font-family: var(--font-Jua);
+}
+
+#preferTagText {
+	font-size: 18px;
+	font-family: var(--font-Jua);
+	margin-bottom: 10px;
+}
+
 .MyPage {
-    background-color: white;
-    width: 600px;
-    text-align: center;
-    margin: auto;
-    height: auto;
-    padding: 2rem 7rem;
-    margin-top: 3rem;
-    border-radius: 0.7rem;
+	background-color: white;
+	width: 800px;
+	text-align: center;
+	margin: auto;
+	height: auto;
+	padding: 2rem 7rem;
+	margin-top: 3rem;
+	border-radius: 0.7rem;
 }
 
 .MyPage > h2 {
-    text-align: center;
-    margin-bottom: 3rem;
+	text-align: center;
+	margin-bottom: 3rem;
 }
 
 .MyPage_wrap {
-    display: flex;
-    flex-direction: column;
-    width: 260px;
-    margin: auto;
-    margin-bottom: 2rem;
-} 
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	margin: auto;
+	margin-bottom: 2rem;
+}
 
 .MyPage_id {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
 }
 .MyPage_pw {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
 }
 .MyPage_em {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
 }
 .MyPage_nk {
-    display: flex;
-    justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 
 .nk_button {
-    margin-bottom: 1rem;
-    font-size: 12px;
-    margin-left: auto;
+	margin-bottom: 1rem;
+	font-size: 12px;
+	margin-left: auto;
 }
 
 .MyPage_ac {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+	width: auto;
 }
 
 .MyPage_id > input {
-    border-radius: 0.25rem;
-    padding: 0 0.4rem;
-    border-color: lightgray;
+	border-radius: 0.25rem;
+	padding: 0 0.4rem;
+	border-color: lightgray;
 }
 
 .MyPage_em > input {
-    border-radius: 0.25rem;
-    padding: 0 0.4rem;
-    border-color: lightgray;
+	border-radius: 0.25rem;
+	padding: 0 0.4rem;
+	border-color: lightgray;
 }
 
 .MyPage_nk > input {
-    border-radius: 0.25rem;
-    padding: 0 0.4rem;
-    border-color: lightgray;
+	border-radius: 0.25rem;
+	padding: 0 0.4rem;
+	border-color: lightgray;
 }
 
 .nk_button {
-    border-color: azure;
-    border-radius: 0.25rem;
+	border-color: azure;
+	border-radius: 0.25rem;
 }
 
 .MyPage_ac > select {
-    width: 178px;
+	width: 240px;
 }
 
 .MyPage_alert {
-    margin: 0;
-    font-size: 13px;
+	margin: 0;
+	font-size: 13px;
 }
 
 .MyPage_submit {
-    text-align: center;
-    display: flex;
-    width: 170px;
-    margin: auto;
-    height: 40px;
-    margin-top: 50px;
+	text-align: center;
+	display: flex;
+	width: 170px;
+	margin: auto;
+	height: 40px;
+	margin-top: 50px;
 }
 
 .MyPage_submit > button {
-    border-color: azure;
-    border-radius: 0.5rem;
+	border-color: azure;
+	border-radius: 0.5rem;
 }
 
 .MyPage_edit {
-    flex:1;
+	flex: 1;
 }
 
 .MyPage_delete {
-    border-color: azure;
-    border-radius: 0.25rem;
-    margin-top: 1rem;
-    color: red;
-    font-size: 12px;
+	border-color: azure;
+	border-radius: 0.25rem;
+	margin-top: 1rem;
+	color: red;
+	font-size: 12px;
 }

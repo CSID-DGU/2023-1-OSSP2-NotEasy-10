@@ -96,19 +96,13 @@ public class CocktailDetailservice {
                 cocktailTagRepository.findCocktailTagsByTagId(tagId).forEach(cocktailTag -> {
                     Cocktail ckt = cocktailTag.getCocktail();
                     if (cocktail.getId() != ckt.getId()) {
+                        // 처음 발견 되었으면 새로이 추가
+                        if (!scoreList.containsKey(ckt.getId())) {
+                            scoreList.put(ckt.getId(), getScore(cocktailTag));
 
-                        // 같은 태그가 COLOR 라면 무조건 후보에 추가
-                        if (cocktailTag.getTag().getCategory() == TagType.COLOR) {
-                            finalCocktailIdList.add(ckt.getId());
+                            //  이미 있던 태그라면 점수 추가
                         } else {
-                            // 처음 발견 되었으면 새로이 추가
-                            if (!scoreList.containsKey(ckt.getId())) {
-                                scoreList.put(ckt.getId(), getScore(cocktailTag));
-
-                                //  이미 있던 태그라면 점수 추가
-                            } else {
-                                scoreList.put(ckt.getId(), scoreList.get(ckt.getId()) + getScore(cocktailTag));
-                            }
+                            scoreList.put(ckt.getId(), scoreList.get(ckt.getId()) + getScore(cocktailTag));
                         }
                     }
                 });
@@ -116,8 +110,6 @@ public class CocktailDetailservice {
         }
 
         System.out.println("자신의 태그 점수 : " + totalScore + ", 기준치 : " + totalScore*PORTION);
-        System.out.println("색 같은거 리스트 : " + finalCocktailIdList);
-
 
         int maxScore = -1;
         int maxScoreId = -1;
@@ -169,6 +161,9 @@ public class CocktailDetailservice {
             return 6;
         }
         if (tag.getTag().getCategory() == TagType.MILK) {
+            return 6;
+        }
+        if (tag.getTag().getCategory() == TagType.COLOR) {
             return 6;
         }
         if (tag.getTag().getCategory() == TagType.SYRUP) {

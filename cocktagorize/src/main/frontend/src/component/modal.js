@@ -312,6 +312,30 @@ const Modal = (props) => {
 			tags: [],
 		},
 		{
+			categoryName: "주스",
+			categoryCode: "JUICE",
+			height: 120,
+			tags: [],
+		},
+		{
+			categoryName: "BITTERS",
+			categoryCode: "BITTER",
+			height: 120,
+			tags: [],
+		},
+		{
+			categoryName: "우유",
+			categoryCode: "MILK",
+			height: 120,
+			tags: [],
+		},
+		{
+			categoryName: "시럽",
+			categoryCode: "SYRUP",
+			height: 120,
+			tags: [],
+		},
+		{
 			categoryName: "술",
 			categoryCode: "ALCOHOL",
 			height: 120,
