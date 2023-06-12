@@ -134,7 +134,7 @@ const CocktailDetail = () => {
 						audio.play();
 					});
 				} else {
-					console.error('TTS API 호출에 실패했습니다.');
+					console.error('TTS API 호출에 실패했습니다.'); //호출 실패
 				}
 			})
 			.catch((error) => {
