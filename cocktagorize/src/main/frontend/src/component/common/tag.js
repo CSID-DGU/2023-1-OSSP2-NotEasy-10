@@ -72,11 +72,11 @@ const Entire = styled.div`
 				`;
 			case "MILK":
 				return css`
-					background-color: #ccffff;
+					background-color: #0080ff;
 				`;
 			case "SYRUP":
 				return css`
-					background-color: #ffcc00;
+					background-color: #cccc00;
 				`;
 			case "ALCOHOL":
 				return css`

@@ -68,6 +68,7 @@ const Favorites = () => {
 				console.log(allCocktailData);
 				setPostList(allCocktailData.likeBoardList);
 				setCocktailList(allCocktailData.likeCocktailList);
+				setIsLoading(false);
 			}
 		});
 	};
@@ -87,6 +88,14 @@ const Favorites = () => {
 				/>
 			);
 		}
+
+		if (postList.length === 0) {
+			result.push(
+				<span style={{ marginTop: "30px" }}>
+					다른 사람의 글에 좋아요를 눌러보세요!
+				</span>
+			);
+		}
 		return result;
 	}
 
@@ -102,6 +111,14 @@ const Favorites = () => {
 					verticalMargin={props.vMargin + "px"}
 					info={cocktailList[i]}
 				/>
+			);
+		}
+
+		if (cocktailList.length === 0) {
+			result.push(
+				<span style={{ marginTop: "30px" }}>
+					칵테일에 좋아요를 눌러보세요!
+				</span>
 			);
 		}
 		return result;
@@ -196,7 +213,7 @@ const Favorites = () => {
 					<home.Recipes>
 						<home.RecipesTitle>Recipe</home.RecipesTitle>
 						<home.RecipesContent>
-							{cocktailList.length > 0
+							{isLoading === false
 								? recipe({
 										height: "144",
 										hMargin: "10",
@@ -209,7 +226,7 @@ const Favorites = () => {
 					<home.Posts>
 						<home.PostsTitle>Post</home.PostsTitle>
 						<home.PostsContent>
-							{postList.length > 0
+							{isLoading === false
 								? post({
 										width: "25",
 										height: "144",

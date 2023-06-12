@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
 const Search = styled.div`
-	width: 750px;
+	width: 100%;
 	width: ${(props) => props.info.width};
 	height: 50px;
 	background-color: white;

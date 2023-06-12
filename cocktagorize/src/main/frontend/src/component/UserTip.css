@@ -35,35 +35,36 @@
 } */
 
 .tip {
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
+	padding: 0 1rem;
+	display: flex;
+	flex-direction: column;
 }
 
 .tip_name {
-    margin: 0.5rem 0;
-    font-weight: bold;
+	margin: 0.5rem 0;
+	font-weight: bold;
 }
 
 .tip_content {
-    margin: 0;
-    font-size: medium;
+	margin: 0;
+	font-size: medium;
+	word-break: break-all;
 }
 
 .tip_createdDate {
-    text-align: end;
-    margin-bottom: 0.2rem;
-    margin-top: 0.5rem;
-    color: darkgray;
+	text-align: end;
+	margin-bottom: 0.2rem;
+	margin-top: 0.5rem;
+	color: darkgray;
 }
 
 .tool {
-    display: flex;
-    padding: 0 1rem;
-    justify-content: end;
+	display: flex;
+	padding: 0 1rem;
+	justify-content: end;
 }
 
 .tool > button {
-    border-color: azure;
-    border-radius: 0.5rem;
+	border-color: azure;
+	border-radius: 0.5rem;
 }

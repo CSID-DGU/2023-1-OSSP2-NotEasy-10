@@ -69,7 +69,7 @@ export const ModalButton = styled.div`
 `;
 
 export const TagSearchDiv = styled.div`
-	width: 36vw;
+	width: 50vw;
 	${(props) => {
 		if (props.width) {
 			return css`
@@ -83,7 +83,7 @@ export const TagSearchDiv = styled.div`
 	border-color: black;
 	border-width: 2px;
 	border-radius: 15px;
-	padding: 5px;
+	padding: 10px;
 	margin: 0px 20px 0px 20px;
 	display: flex;
 	flex-direction: row;
@@ -126,13 +126,14 @@ export const Explore = styled.div`
 	align-items: center;
 	width: auto;
 	height: 100px;
-	margin: 20px 50px 10px 0px;
+	margin: 20px 50px 10px 50px;
 `;
 
 export const Search = styled.input`
-	width: 18vw;
+	width: calc(100% - 25px);
 	height: 50px;
 	border-radius: 15px;
+	margin-left: 20px;
 	padding: 0px 12px;
 	border-color: black;
 	font-size: 24px;
@@ -140,14 +141,20 @@ export const Search = styled.input`
 `;
 
 export const Sort = styled.select`
-	width: 18vw;
+	width: 20vw;
 	height: 50px;
 	border-width: 2px;
 	border-radius: 15px;
+	margin-left: 20px;
 	padding: 0px 10px;
 	border-color: black;
 	font-size: 18px;
 	font-family: var(--font-Jua);
+`;
+
+export const SearchUI = styled.div`
+	width: 70vw;
+	height: 50px;
 `;
 
 export const SortBase = styled.option`
@@ -483,7 +490,6 @@ export const blackXButton = styled.img`
 	height: 15px;
 	margin-left: -30px;
 	margin-right: 10px;
-	float: left;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
 `;
