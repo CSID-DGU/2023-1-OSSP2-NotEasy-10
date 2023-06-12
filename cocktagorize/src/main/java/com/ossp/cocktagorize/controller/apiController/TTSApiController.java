@@ -12,18 +12,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/cocktail")
+@RequestMapping("/cocktail/{id}")
 public class TTSApiController {
 
     private final HttpServletResponse response;
@@ -36,7 +34,8 @@ public class TTSApiController {
     public ResponseEntity<StreamingResponseBody> synthesizeTextToSpeech(@RequestBody TTSRequestDto requestDto, HttpServletResponse response) {
         try {
             // API 키 JSON 파일 내용
-            String apiKeyJson = "{\n" +
+            String apiKeyJson =
+                    "{\n" +
                     "  \"type\": \"service_account\",\n" +
                     "  \"project_id\": \"feisty-mason-387506\",\n" +
                     "  \"private_key_id\": \"e9f93d5a02317fdfc4ee26d543ea1d661476d9ff\",\n" +
@@ -106,24 +105,45 @@ public class TTSApiController {
 // <audio id="audioPlayer" controls></audio>
 // <button id="playButton">Play</button>
 //
-// <script>
-//  document.getElementById('playButton').addEventListener('click', function() {
-//    var audioPlayer = document.getElementById('audioPlayer');
-//    var audioUrl = '/api/tts'; // TTS 컨트롤러의 URL
-//    fetch(audioUrl)
-//      .then(function(response) {
-//        return response.blob();
-//      })
-//      .then(function(blob) {
-//        var audioUrl = URL.createObjectURL(blob);
-//        audioPlayer.src = audioUrl;
-//        audioPlayer.play();
-//      });
-//  });
-//</script>
-//위의 예시 코드는 클라이언트에서 TTS 컨트롤러의 URL(/api/tts)을 호출하여 오디오 스트림을 받아오고,
-//그 후에 <audio> 요소의 src에 설정하여 오디오를 재생합니다. 클라이언트의 버튼 클릭 이벤트 핸들러에서 fetch() 함수를 사용하여 오디오 스트림을 받아온 다음, blob() 메서드를 통해 Blob 객체로 변환하고, 이를 <audio> 요소의 src에 설정하여 재생합니다.
-//이렇게 구현하면 클라이언트가 버튼을 클릭하여 컨트롤러를 호출하면, 웹사이트에서 소리가 재생됩니다.
+//<button id="ttsButton">TTS 실행</button>
+//
+//<script>
+// 버튼 클릭 이벤트 핸들러
+//    document.getElementById('ttsButton').addEventListener('click', function() {
+//            // 요청에 필요한 데이터
+//            var requestData = {
+//            // TTS 요청에 필요한 데이터를 입력
+//            content: '칵테일 레시피'
+//            };
+//
+//            // API 엔드포인트 URL
+//            var apiUrl = '/cocktail/tts';
+//
+//            // API 요청
+//            fetch(apiUrl, {
+//            method: 'POST',
+//            body: JSON.stringify(requestData),
+//            headers: {
+//            'Content-Type': 'application/json'
+//            },
+//            })
+//            .then(function(response) {
+//            if (response.ok) {
+//            // 오디오 스트리밍 응답 처리
+//            response.blob().then(function(blob) {
+//            var audioUrl = URL.createObjectURL(blob);
+//            var audio = new Audio(audioUrl);
+//            audio.play();
+//            });
+//            } else {
+//            console.error('TTS API 호출에 실패했습니다.');
+//            }
+//            })
+//            .catch(function(error) {
+//            console.error('TTS API 호출 중 오류가 발생했습니다.', error);
+//            });
+//            });
+//      </script>
 
 
 // JSON 파일을 사용하지 않고 아래처럼 api key로 실행

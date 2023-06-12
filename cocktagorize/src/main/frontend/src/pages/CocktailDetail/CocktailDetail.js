@@ -76,6 +76,7 @@ const CocktailDetail = () => {
 					setReplyList(result.data.cocktailReplyList);
 					setLike(result.data.liked);
 					setIsLike(result.data.userLikeCocktail);
+
 				}
 			});
 		};
@@ -102,6 +103,43 @@ const CocktailDetail = () => {
 		} else {
 			alert("로그인을 해주세요!");
 		}
+	};
+	const fetchTTSAPI = () => {
+
+		const recipe = cocktail.recipe;
+		// 현재 아이디의 칵테일 레시피 가져오기
+
+		// 요청에 필요한 데이터 전달 = 칵테일 레시피
+		const requestData = {
+			content: recipe,
+		};
+
+		// API 엔드포인트 URL
+		const apiUrl = 'http://localhost:8080/cocktail/${id}/tts';
+
+		// API 요청
+		fetch(apiUrl, {
+			method: 'POST',
+			body: JSON.stringify(requestData),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((response) => {
+				if (response.ok) {
+					// 오디오 스트리밍 응답 처리
+					response.blob().then((blob) => {
+						const audioUrl = URL.createObjectURL(blob);
+						const audio = new Audio(audioUrl);
+						audio.play();
+					});
+				} else {
+					console.error('TTS API 호출에 실패했습니다.'); //호출 실패
+				}
+			})
+			.catch((error) => {
+				console.error('TTS API 호출 중 오류가 발생했습니다.', error);
+			});
 	};
 
 	const tagList = cocktail.cocktailTagList.map((tag) => (
@@ -140,7 +178,7 @@ const CocktailDetail = () => {
 								<p>
 									<hr />
 								</p>
-								<VscUnmute />
+								<VscUnmute onClick={() => fetchTTSAPI()} />
 							</div>
 						</div>
 						<p> 유사한 칵테일 </p>
