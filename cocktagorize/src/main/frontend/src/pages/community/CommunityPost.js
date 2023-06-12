@@ -127,7 +127,7 @@ const CommunityPost = () => {
 				</div>
 				<UserCommentList tips={boardReplyList} />
 			</div>
-			<CocktailCard verticalMargin="100px" />
+			{/*<CocktailCard verticalMargin="100px" />*/}
 		</div>
 	);
 };
