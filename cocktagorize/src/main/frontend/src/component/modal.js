@@ -12,6 +12,7 @@ const BlackScreen = styled.div`
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	z-index: 999;
 `;
 
 const Window = styled.div`
@@ -26,6 +27,7 @@ const Window = styled.div`
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	z-index: 1000;
 `;
 
 const WindowDiv = styled.div`

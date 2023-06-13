@@ -306,15 +306,20 @@ const MyPage = () => {
 
 	const handleInfoDelete = () => {
 		// axios delte
-		const boardsData = DELETE(
-			`http://localhost:8080/user/${authCtx.userObj.username}`,
-			createTokenHeader(authCtx.token)
-		);
-		boardsData.then((result) => {
-			authCtx.deleteUser();
-			alert("회원 탈퇴가 완료되었습니다!");
-			document.location.href = "/";
-		});
+
+		if (window.confirm("정말 탈퇴하시겠습니까??") == true) {
+			const boardsData = DELETE(
+				`http://localhost:8080/user/${authCtx.userObj.username}`,
+				createTokenHeader(authCtx.token)
+			);
+			boardsData.then((result) => {
+				authCtx.deleteUser();
+				alert("회원 탈퇴가 완료되었습니다!");
+				document.location.href = "/";
+			});
+		} else {
+			return false;
+		}
 	};
 
 	const modalOff = (tags) => {

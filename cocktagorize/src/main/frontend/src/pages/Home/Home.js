@@ -429,25 +429,49 @@ const Home = () => {
 			return;
 		}
 		let result = [];
-		for (let i = 0; i < props.amount; i++) {
-			if (userCocktailList.length > i) {
-				result.push(
-					<CocktailCard
-						horizontalMargin={props.hMargin + "px"}
-						verticalMargin={props.vMargin + "px"}
-						info={userCocktailList[i]}
-						key={userCocktailList[i].id}
-					/>
-				);
-			} else {
-				result.push(
-					<home.WeatherLoading>
-						<home.WeatherLoadingImage
-							src={weatherLoadingImage}
-							alt={weatherLoadingImage}
+
+		if (userCocktailList.length === 1) {
+			result.push(
+				<div
+					style={{
+						width: "50vw",
+						height: "calc(75vh - 250px)",
+						display: "flex",
+						justifyContent: "center",
+						alignContent: "center",
+					}}
+				>
+					<span
+						style={{
+							fontSize: "30px",
+							marginTop: "calc(37.5vh - 175px)",
+						}}
+					>
+						선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+					</span>
+				</div>
+			);
+		} else {
+			for (let i = 0; i < props.amount; i++) {
+				if (userCocktailList.length > i) {
+					result.push(
+						<CocktailCard
+							horizontalMargin={props.hMargin + "px"}
+							verticalMargin={props.vMargin + "px"}
+							info={userCocktailList[i]}
+							key={userCocktailList[i].id}
 						/>
-					</home.WeatherLoading>
-				);
+					);
+				} else {
+					result.push(
+						<home.WeatherLoading>
+							<home.WeatherLoadingImage
+								src={weatherLoadingImage}
+								alt={weatherLoadingImage}
+							/>
+						</home.WeatherLoading>
+					);
+				}
 			}
 		}
 		return result;
@@ -763,6 +787,7 @@ const Home = () => {
 								<home.Weather>
 									<home.WeatherInfoBox>
 										<home.WeatherInfo>
+											{"날씨 기반 칵테일 추천 : "}
 											{weatherTemp.toFixed(1)}°C,{" "}
 											{weatherisRainy === 1
 												? "비"
@@ -774,10 +799,10 @@ const Home = () => {
 											}
 										>
 											<home.WeatherSearchOptionBase>
-												사용자 위치 기반
+												사용자 위치
 											</home.WeatherSearchOptionBase>
 											<home.WeatherSearchOptionBase>
-												현재 위치 기반
+												현재 위치
 											</home.WeatherSearchOptionBase>
 										</home.WeatherSearchOption>
 									</home.WeatherInfoBox>

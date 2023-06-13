@@ -12,7 +12,7 @@ export const NonSidebar = styled.div`
 	margin-left: 25px;
 	margin-right: 25px;
 	width: 75vw;
-	height: 80vh;
+	height: 85vh;
 `;
 
 export const NonExplore = styled.div`
@@ -25,7 +25,7 @@ export const NonExplore = styled.div`
 	border-color: black;
 	border-width: 0px;
 	width: calc(100% - 0px);
-	height: calc(100% + 20px);
+	height: 900px;
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -365,7 +365,7 @@ export const UserRecommand = styled.div`
 	width: 50%;
 	flex-grow: 1;
 	height: auto;
-	margin: 0px 20px 0px 20px;
+	margin: 0px 20px 0px 0px;
 `;
 
 export const UserRecommandInfoBox = styled.div`
@@ -501,6 +501,7 @@ export const WeatherLoading = styled.div`
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+	z-index: 10;
 `;
 
 export const WeatherLoadingImage = styled.img`
