@@ -228,29 +228,32 @@ const CocktailDetail = () => {
 							</div>
 						</div>
 						<p> 유사한 칵테일 </p>
-						<div className="cocktail_similar">
-							<img
-								className="cocktail_similar_image"
-								src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
-								alt="유사 칵테일 이미지"
-							></img>
-							<div className="cocktail_similar_name">
-								<p className="cocktail_similar_name2">
-									{cocktail.similarCocktail.name}{" "}
-								</p>
-								<div className="similar_liked">
-									<p></p> <VscHeart />
-									<span className="liked_amount">
-										{cocktail.similarCocktail.liked}
-									</span>
-								</div>
-								<a
+						<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
+							<div className="cocktail_similar">
+								<img
+									className="cocktail_similar_image"
+									src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
+									alt="유사 칵테일 이미지"
 									href={`/cocktail/${cocktail.similarCocktail.id}`}
-								>
-									<VscLinkExternal />
-								</a>
+								></img>
+								<div className="cocktail_similar_name">
+									<p className="cocktail_similar_name2">
+										{cocktail.similarCocktail.name}{" "}
+									</p>
+									<div className="similar_liked">
+										<p></p> <VscHeart />
+										<span className="liked_amount">
+											{cocktail.similarCocktail.liked}
+										</span>
+									</div>
+									<a
+										href={`/cocktail/${cocktail.similarCocktail.id}`}
+									>
+										<VscLinkExternal />
+									</a>
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>
 					<div className="inner_right">
 						<div className="cocktail_recipe">
