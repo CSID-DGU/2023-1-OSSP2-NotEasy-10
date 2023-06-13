@@ -37,6 +37,22 @@ const Ingredient = styled.span`
 				return css`
 					background-color: brown;
 				`;
+			case "JUICE":
+				return css`
+					background-color: #ff0066;
+				`;
+			case "BITTER":
+				return css`
+					background-color: #660033;
+				`;
+			case "MILK":
+				return css`
+					background-color: #0080ff;
+				`;
+			case "SYRUP":
+				return css`
+					background-color: #cccc00;
+				`;
 		}
 	}};
 `;
@@ -76,7 +92,6 @@ const CocktailDetail = () => {
 					setReplyList(result.data.cocktailReplyList);
 					setLike(result.data.liked);
 					setIsLike(result.data.userLikeCocktail);
-
 				}
 			});
 		};
@@ -105,7 +120,6 @@ const CocktailDetail = () => {
 		}
 	};
 	const fetchTTSAPI = () => {
-
 		const recipe = cocktail.recipe;
 		// 현재 아이디의 칵테일 레시피 가져오기
 
@@ -115,14 +129,14 @@ const CocktailDetail = () => {
 		};
 
 		// API 엔드포인트 URL
-		const apiUrl = 'http://localhost:8080/cocktail/${id}/tts';
+		const apiUrl = "http://localhost:8080/cocktail/${id}/tts";
 
 		// API 요청
 		fetch(apiUrl, {
-			method: 'POST',
+			method: "POST",
 			body: JSON.stringify(requestData),
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 		})
 			.then((response) => {
@@ -134,11 +148,11 @@ const CocktailDetail = () => {
 						audio.play();
 					});
 				} else {
-					console.error('TTS API 호출에 실패했습니다.'); //호출 실패
+					console.error("TTS API 호출에 실패했습니다."); //호출 실패
 				}
 			})
 			.catch((error) => {
-				console.error('TTS API 호출 중 오류가 발생했습니다.', error);
+				console.error("TTS API 호출 중 오류가 발생했습니다.", error);
 			});
 	};
 
@@ -146,7 +160,13 @@ const CocktailDetail = () => {
 		<Tag key={tag.name} info={tag} />
 	));
 	const ingre = cocktail.cocktailTagList.filter(
-		(tag) => tag.category === "INGREDIENT" || tag.category === "ALCOHOL"
+		(tag) =>
+			tag.category === "INGREDIENT" ||
+			tag.category === "ALCOHOL" ||
+			tag.category === "JUICE" ||
+			tag.category === "BITTER" ||
+			tag.category === "MILK" ||
+			tag.category === "SYRUP"
 	);
 	const ingredient = ingre.map((tag) => <p key={tag.id}>{tag.name}</p>);
 

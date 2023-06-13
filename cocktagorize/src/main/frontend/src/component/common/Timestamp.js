@@ -54,10 +54,14 @@ const NameText = styled.div`
 	}
 `;
 
+function timeConvert(time) {
+	return new Date(time).toLocaleString(); // Date 형식으로 변환
+}
+
 function Timestamp(props) {
 	return (
 		<Entire>
-			<NameText>{props.created} </NameText>
+			<NameText>{timeConvert(props.created)} </NameText>
 		</Entire>
 	);
 }

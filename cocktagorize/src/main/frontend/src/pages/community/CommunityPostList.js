@@ -12,6 +12,26 @@ import AuthContext from "../../jwt/auth-context";
 import { getNowPositionWeatherCocktailData } from "../Home/Home";
 
 const CommunityPostList = () => {
+	const [cocktailList, setCocktailList] = useState([]);
+
+	useEffect(() => {
+		getCocktailData();
+	}, []);
+
+	const getCocktailData = async () => {
+		const userCocktailData = GET(
+			`http://localhost:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			createTokenHeader(authCtx.token)
+		);
+		userCocktailData.then((result) => {
+			if (result !== null) {
+				setCocktailList(result.data);
+				// console.log("유저 선호 칵테일 : " + result.data);
+				// result.data.forEach(cocktail => console.log(cocktail));
+			}
+		});
+	};
+
 	const [postList, setPostList] = useState([
 		{
 			id: 0,
@@ -395,7 +415,7 @@ const CommunityPostList = () => {
 				<CocktailCard
 					horizontalMargin={"10px"}
 					verticalMargin={"10px"}
-					//info={cocktailList[i]}
+					info={cocktailList[0]}
 				/>
 			</home.Cocktailbar>
 		</home.Entire>

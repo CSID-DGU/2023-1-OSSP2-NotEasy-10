@@ -83,6 +83,10 @@ const CommunityPost = () => {
 		});
 	};
 
+	function timeConvert(time) {
+		return new Date(time).toLocaleString(); // Date 형식으로 변환
+	}
+
 	return (
 		<div className="CommunityPost">
 			<Sidebar />
@@ -107,7 +111,9 @@ const CommunityPost = () => {
 							)}
 							{like}
 						</p>
-						<p className="post_time">{board.createdDate}</p>
+						<p className="post_time">
+							{timeConvert(board.createdDate)}
+						</p>
 					</div>
 					<hr />
 					<div className="post_content">{board.content}</div>

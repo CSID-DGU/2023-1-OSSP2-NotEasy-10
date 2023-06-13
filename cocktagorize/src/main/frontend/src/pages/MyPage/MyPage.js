@@ -278,6 +278,9 @@ const MyPage = () => {
 			return;
 		}
 
+		const tagList = currentTagData.map((tag) => tag.name);
+		console.log(tagList);
+
 		const data = PUT(
 			`http://localhost:8080/user`,
 			{
@@ -289,7 +292,7 @@ const MyPage = () => {
 				city: city,
 				gu: gu,
 				dong: dong,
-				preferTagList: currentTagData,
+				preferTagList: tagList,
 			},
 			createTokenHeader(authCtx.token)
 		);

@@ -38,6 +38,9 @@ const Home = () => {
 	const [searchLogic, setSearchLogic] = useState("AND");
 	const [searchMode, setSearchMode] = useState("태그 검색");
 
+	const [weatherTemp, setWeatherTemp] = useState(0);
+	const [weatherisRainy, setWeatherisRainy] = useState(0);
+
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
 	let isGetUser = authCtx.isGetUserSuccess;
@@ -135,6 +138,13 @@ const Home = () => {
 					console.log("현재 강우 여부 : " + nowIsRainy);
 
 					getNowWeatherCocktailData(nowTemp, nowIsRainy);
+
+					setWeatherTemp((prevState) => {
+						return nowTemp;
+					});
+					setWeatherisRainy((prevState) => {
+						return nowIsRainy;
+					});
 				}
 			});
 			setIsWeatherLoading(false);
@@ -446,6 +456,13 @@ const Home = () => {
 					/>
 				);
 		}
+		if (cocktailList.length === 0) {
+			result.push(
+				<span style={{ marginTop: "100px", fontSize: "30px" }}>
+					조건에 맞는 칵테일이 없습니다!
+				</span>
+			);
+		}
 		return result;
 	}
 
@@ -718,7 +735,7 @@ const Home = () => {
 						}}
 					>
 						<home.SortBase>단어 검색</home.SortBase>
-						<home.SortBase>태그 검색</home.SortBase>
+						<home.SortBase selected>태그 검색</home.SortBase>
 						<home.SortBase>좋아요 순으로 정렬</home.SortBase>
 						<home.SortBase>사전 순으로 정렬</home.SortBase>
 						<home.SortBase>도수 범위로 검색</home.SortBase>
@@ -726,13 +743,18 @@ const Home = () => {
 					<home.SearchUI>{searchUI()}</home.SearchUI>
 				</home.Explore>
 				<home.NonExplore>
-					{isLogin && page === 0 && sortType <= 3 ? (
+					{isLogin &&
+					page === 0 &&
+					(sortType <= 3 || sortType == 8) ? (
 						<home.LoginContent>
 							<home.WeatherNUserCocktail>
 								<home.Weather>
 									<home.WeatherInfoBox>
 										<home.WeatherInfo>
-											비가 많이 와요!
+											{weatherTemp.toFixed(1)}°C,{" "}
+											{weatherisRainy === 1
+												? "비"
+												: "맑음"}
 										</home.WeatherInfo>
 										<home.WeatherSearchOption
 											onChange={(e) =>
@@ -777,8 +799,9 @@ const Home = () => {
 								<home.UserRecommand>
 									<home.UserRecommandInfoBox>
 										<home.UserRecommandInfo>
-											인생은 마치 칵테일처럼, 적절한 양의
-											조합과 꾸미기가 중요하다. -ChatGPT
+											사용자 기반 칵테일 추천
+											{/*인생은 마치 칵테일처럼, 적절한 양의
+											조합과 꾸미기가 중요하다. -ChatGPT*/}
 										</home.UserRecommandInfo>
 									</home.UserRecommandInfoBox>
 									<home.UserRecommandCocktail>

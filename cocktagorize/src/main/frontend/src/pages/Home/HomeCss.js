@@ -488,7 +488,7 @@ export const Loading = styled.div`
 export const blackXButton = styled.img`
 	width: 15px;
 	height: 15px;
-	margin-left: -30px;
+	margin-left: -40px;
 	margin-right: 10px;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
