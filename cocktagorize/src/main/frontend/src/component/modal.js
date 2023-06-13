@@ -22,7 +22,7 @@ const Window = styled.div`
 	border: solid;
 	border-color: black;
 	border-width: 5px;
-	position: absolute;
+	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);

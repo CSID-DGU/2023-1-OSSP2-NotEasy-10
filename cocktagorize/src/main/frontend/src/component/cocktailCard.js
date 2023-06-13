@@ -180,6 +180,7 @@ const BlackHeartImage = styled.img`
 `;
 
 const HeartText = styled.div`
+	font-family: var(--font-Jua);
 	margin: 0px 4px;
 	-webkit-user-select: none;
 `;

@@ -258,6 +258,13 @@ const CommunityPostList = () => {
 					/>
 				);
 		}
+		if (postList.length === 0) {
+			result.push(
+				<span style={{ marginTop: "100px", fontSize: "30px" }}>
+					조건에 맞는 글이 없습니다!
+				</span>
+			);
+		}
 		return result;
 	}
 	const onSortChanged = (e) => {

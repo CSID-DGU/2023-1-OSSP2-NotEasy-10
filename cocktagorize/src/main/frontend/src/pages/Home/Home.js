@@ -72,6 +72,16 @@ const Home = () => {
 		sort(currentTagData, sortType);
 	}, []);
 
+	useEffect(() => {
+		setPage(0);
+	}, [sortType, searchLogic, currentTagData, searchText]);
+
+	useEffect(() => {
+		const scroll = document.getElementById("NonExplore");
+		scroll.scrollTop = 0;
+		window.scrollTo(0, 0);
+	}, [cocktailList]);
+
 	const getAllCocktailById = async (page) => {
 		const allCocktailData = GET(
 			`http://localhost:${port}/?page=${page}`,
@@ -618,7 +628,9 @@ const Home = () => {
 					btnIndex={maxPage - 1}
 					key={maxPage}
 					onClick={() => {
-						setPage(maxPage - 1);
+						{
+							setPage(maxPage - 1);
+						}
 					}}
 				>
 					<home.Text>{maxPage}</home.Text>
@@ -742,7 +754,7 @@ const Home = () => {
 					</home.Sort>
 					<home.SearchUI>{searchUI()}</home.SearchUI>
 				</home.Explore>
-				<home.NonExplore>
+				<home.NonExplore id="NonExplore">
 					{isLogin &&
 					page === 0 &&
 					(sortType <= 3 || sortType == 8) ? (
