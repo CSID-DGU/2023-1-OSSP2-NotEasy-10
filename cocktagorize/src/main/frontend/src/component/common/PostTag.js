@@ -51,21 +51,22 @@ const NameText = styled.div`
 	white-space: nowrap;
 	-webkit-user-drag: none;
 	-webkit-user-select: none;
+	font-family: var(--font-Jua);
 
 	@media (max-width: 600px) {
-		font-size: 4px;
-	}
-	@media (min-width: 600px) and (max-width: 900px) {
-		font-size: 6px;
-	}
-	@media (min-width: 900px) and (max-width: 1200px) {
 		font-size: 8px;
 	}
-	@media (min-width: 1200px) and (max-width: 1600px) {
+	@media (min-width: 600px) and (max-width: 900px) {
 		font-size: 10px;
 	}
-	@media (min-width: 1600px) {
+	@media (min-width: 900px) and (max-width: 1200px) {
 		font-size: 12px;
+	}
+	@media (min-width: 1200px) and (max-width: 1600px) {
+		font-size: 14px;
+	}
+	@media (min-width: 1600px) {
+		font-size: 16px;
 	}
 `;
 

@@ -3,6 +3,7 @@ import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
 import Tag from "../../component/common/tag.js";
+import { POST } from "../../jwt/fetch-auth-action";
 import {
 	VscHeartFilled,
 	VscHeart,
@@ -87,8 +88,8 @@ const CocktailDetail = () => {
 			);
 			result.then((result) => {
 				if (result !== null) {
+					console.log(result.data);
 					setCocktail(result.data);
-					console.log(result);
 					setReplyList(result.data.cocktailReplyList);
 					setLike(result.data.liked);
 					setIsLike(result.data.userLikeCocktail);
@@ -129,16 +130,31 @@ const CocktailDetail = () => {
 		};
 
 		// API 엔드포인트 URL
-		const apiUrl = "http://localhost:8080/cocktail/${id}/tts";
+		const apiUrl = `http://localhost:8080/cocktail/${cocktail.id}/tts`;
 
 		// API 요청
-		fetch(apiUrl, {
+
+		const result = fetch(apiUrl, {
 			method: "POST",
 			body: JSON.stringify(requestData),
 			headers: {
 				"Content-Type": "application/json",
 			},
-		})
+		});
+		/*
+		const result = POST(
+			`http://localhost:8080/cocktail/${cocktail.id}/tts`,
+			{
+				method: "POST",
+				body: JSON.stringify(requestData),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+			createTokenHeader(authCtx.token)
+		);
+		*/
+		result
 			.then((response) => {
 				if (response.ok) {
 					// 오디오 스트리밍 응답 처리
@@ -157,18 +173,22 @@ const CocktailDetail = () => {
 	};
 
 	const tagList = cocktail.cocktailTagList.map((tag) => (
-		<Tag key={tag.name} info={tag} />
+		<Tag key={tag.tagDto.name} info={tag.tagDto} />
 	));
 	const ingre = cocktail.cocktailTagList.filter(
 		(tag) =>
-			tag.category === "INGREDIENT" ||
-			tag.category === "ALCOHOL" ||
-			tag.category === "JUICE" ||
-			tag.category === "BITTER" ||
-			tag.category === "MILK" ||
-			tag.category === "SYRUP"
+			tag.tagDto.category === "INGREDIENT" ||
+			tag.tagDto.category === "ALCOHOL" ||
+			tag.tagDto.category === "JUICE" ||
+			tag.tagDto.category === "BITTER" ||
+			tag.tagDto.category === "MILK" ||
+			tag.tagDto.category === "SYRUP"
 	);
-	const ingredient = ingre.map((tag) => <p key={tag.id}>{tag.name}</p>);
+	const ingredient = ingre.map((tag) => (
+		<p key={tag.tagDto.id}>
+			{tag.tagDto.name} {}
+		</p>
+	));
 
 	return (
 		<div className="CocktailDetail">
@@ -198,7 +218,13 @@ const CocktailDetail = () => {
 								<p>
 									<hr />
 								</p>
-								<VscUnmute onClick={() => fetchTTSAPI()} />
+								<VscUnmute
+									style={{
+										width: "30px",
+										height: "30px",
+									}}
+									onClick={() => fetchTTSAPI()}
+								/>
 							</div>
 						</div>
 						<p> 유사한 칵테일 </p>
@@ -235,10 +261,13 @@ const CocktailDetail = () => {
 									<p>재료: </p>
 									{ingre.map((tag) => (
 										<Ingredient
-											key={tag.name}
-											category={tag.category}
+											key={tag.tagDto.name}
+											category={tag.tagDto.category}
 										>
-											{tag.name}
+											{tag.tagDto.name}
+											{tag.amount !== null
+												? ", " + tag.amount
+												: null}
 										</Ingredient>
 									))}
 									<p>도수: </p>

@@ -57,6 +57,7 @@ public class UserService {
 
     @Transactional
     public void registerPreferTag(UserJoinDto userJoinDto) {
+        preferTagRepository.deleteAll();
         PreferTag preferTag = null;
         for (String tagName : userJoinDto.getPreferTagList()) {
             preferTag = new PreferTag(userRepository.findByUsername(userJoinDto.getUsername()), tagRepository.findTagByName(tagName));
