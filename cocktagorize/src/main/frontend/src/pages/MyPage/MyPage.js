@@ -413,6 +413,7 @@ const MyPage = () => {
 						name="location_gu"
 						value={dong}
 						onChange={onChangeDong}
+						disabled={!isCity}
 					>
 						<option style={{ color: "gray" }} disabled>
 							{user.dong}
@@ -424,7 +425,12 @@ const MyPage = () => {
 							</option>
 						))}
 					</select>
-					<select name="dong" value={gu} onChange={onChangeGu}>
+					<select
+						name="dong"
+						value={gu}
+						onChange={onChangeGu}
+						disabled={!isDong}
+					>
 						<option style={{ color: "gray" }} disabled>
 							{user.gu}
 						</option>

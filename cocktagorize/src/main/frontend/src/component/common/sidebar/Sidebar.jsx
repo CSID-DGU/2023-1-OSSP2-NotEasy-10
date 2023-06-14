@@ -92,19 +92,15 @@ export default function Sidebar() {
 				)}
 			</ul>
 			<hr></hr>
-			<div className="dropdown">
-				<VscAccount />{" "}
-				{authCtx.isLoggedIn ? (
+			{authCtx.isLoggedIn ? (
+				<div className="dropdown">
+					<VscAccount />{" "}
 					<div className="user">
 						{" "}
 						<span>{authCtx.userObj.nickname}</span>{" "}
 					</div>
-				) : (
-					<div className="user">
-						<span>Username</span>{" "}
-					</div>
-				)}
-			</div>
+				</div>
+			) : null}
 		</div>
 	);
 }
