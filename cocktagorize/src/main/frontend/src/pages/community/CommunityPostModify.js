@@ -60,6 +60,15 @@ const CommunityPostModify = () => {
 	};
 
 	const onClickSubmit = () => {
+		if (boardTitle === "") {
+			alert("제목을 입력해주세요!");
+			return;
+		}
+		if (boardContent === "") {
+			alert("내용을 입력해주세요!");
+			return;
+		}
+
 		const boardsData = PUT(
 			`http://localhost:8080/board/${communityId}`,
 			{
@@ -107,7 +116,7 @@ const CommunityPostModify = () => {
 				></textarea>
 				<input
 					type="submit"
-					value="Done"
+					value="완료"
 					className="edit_submit"
 					onClick={onClickSubmit}
 				/>

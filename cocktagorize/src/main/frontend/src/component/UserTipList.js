@@ -51,6 +51,10 @@ const UserTipList = ({ tips }) => {
 		//axios로 'content: newTip'을 post하는 코드
 		//그럼 서버에서 replyList에 추가된 댓글 객체를 업데이트해야함
 		console.log(`추가된 댓글: ${newTip}`);
+		if (newTip === "") {
+			alert("댓글을 입력해주세요!");
+			return;
+		}
 		setNewTip("");
 		const result = POST(
 			`http://localhost:8080/cocktail/${cocktail_id}/reply`,

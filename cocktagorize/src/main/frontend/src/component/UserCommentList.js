@@ -47,6 +47,11 @@ const UserCommentList = ({ tips }) => {
 	const handleSubmitTip = () => {
 		//axios로 'content: newTip'을 post하는 코드
 		//그럼 서버에서 replyList에 추가된 댓글 객체를 업데이트해야함
+		if (newTip === "") {
+			alert("댓글을 입력해주세요!");
+			return;
+		}
+
 		console.log(`추가된 댓글: ${newTip}`);
 		setNewTip("");
 		const result = POST(
