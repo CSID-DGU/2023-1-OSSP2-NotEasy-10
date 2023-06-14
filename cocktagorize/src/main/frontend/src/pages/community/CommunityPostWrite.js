@@ -32,7 +32,7 @@ const CommunityPostWrite = () => {
 
   const onClickSubmit = () => {
     const boardsData = POST(
-      `http://localhost:8080/board`,
+      `https://3.35.180.1:8080/board`,
       {
         title: title,
         content: content,

@@ -43,7 +43,7 @@ export const retrieveStoredToken = () => {
 };
 
 export const loginActionHandler = (username, password) => {
-    const URL = 'http://localhost:8080/user/login';
+    const URL = 'https://3.35.180.1:8080/user/login';
     const loginObject = { username, password };
     const response = POST(URL, loginObject, {});
     return response;
@@ -55,7 +55,7 @@ export const logoutActionHandler = () => {
 };
 
 export const getUserActionHandler = (token) => {
-    const URL = 'http://localhost:8080/user/info';
+    const URL = 'https://3.35.180.1:8080/user/info';
     const response = GET(URL, createTokenHeader(token));
     return response;
 };
