@@ -113,9 +113,9 @@ const SignUp = () => {
 
 	//각 option 태그 첫번째 값은 초기값으로 넣어줘야함 지금까지 onChange로 인식이 안돼서 null로 전달된 듯
 	const [alcohol, setAlcohol] = useState(1);
-	const [city, setCity] = useState("서울특별시");
-	const [dong, setDong] = useState("종로구");
-	const [gu, setGu] = useState("청운효자동");
+	const [city, setCity] = useState("시");
+	const [dong, setDong] = useState("구");
+	const [gu, setGu] = useState("동");
 
 	const onChangeAlcohol = (e) => {
 		setAlcohol(e.target.value);
@@ -363,13 +363,23 @@ const SignUp = () => {
 						<option value={city}> {city}</option>
 					))}
 				</select>
-				<select name="location_gu" value={dong} onChange={onChangeDong}>
+				<select
+					name="location_gu"
+					value={dong}
+					onChange={onChangeDong}
+					disabled={city === "시"}
+				>
 					<option disabled>구</option>
 					{dongList.map((dong) => (
 						<option value={dong}> {dong}</option>
 					))}
 				</select>
-				<select name="dong" value={gu} onChange={onChangeGu}>
+				<select
+					name="dong"
+					value={gu}
+					onChange={onChangeGu}
+					disabled={dong === "구"}
+				>
 					<option disabled>동</option>
 					{guList.map((gu) => (
 						<option value={gu}> {gu}</option>
