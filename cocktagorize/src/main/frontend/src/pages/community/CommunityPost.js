@@ -43,7 +43,7 @@ const CommunityPost = () => {
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
-			`http://3.35.180.1:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://3.35.180.1:8080/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
@@ -57,7 +57,7 @@ const CommunityPost = () => {
 
 	const getBoard = async (page) => {
 		const boardsData = GET(
-			`https://3.35.180.1:8080/board/${communityId}`,
+			`http://3.35.180.1:8080/board/${communityId}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -81,7 +81,7 @@ const CommunityPost = () => {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`https://3.35.180.1:8080/board/${id}/like`,
+				`http://3.35.180.1:8080/board/${id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);
@@ -133,6 +133,7 @@ const CommunityPost = () => {
 					</div>
 					<hr />
 					<div className="post_content">{board.content}</div>
+
 					<div className="onlyUser">
 						<button
 							className="post_like"
