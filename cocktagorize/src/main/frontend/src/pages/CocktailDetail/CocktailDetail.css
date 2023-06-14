@@ -12,6 +12,11 @@ span {
 	user-select: none;
 }
 
+img {
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+}
+
 .CocktailDetail {
 	display: flex;
 	justify-content: space-evenly;
@@ -56,6 +61,7 @@ span {
 
 .cocktail_image {
 	height: 37vh;
+	user-select: none;
 	/* object-fit: contain; */
 }
 

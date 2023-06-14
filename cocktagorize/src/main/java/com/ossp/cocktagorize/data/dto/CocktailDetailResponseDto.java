@@ -22,7 +22,7 @@ public class CocktailDetailResponseDto {
     private BigDecimal alcholeDegree;
     private int liked;
     private List<CocktailReplyDto> cocktailReplyList;
-    private List<TagDto> cocktailTagList;
+    private List<CocktailTagDto> cocktailTagList;
     private SimilarDto similarCocktail;
     private boolean userLikeCocktail;
     public CocktailDetailResponseDto(Cocktail cocktail, Cocktail similar, Optional<UserLikeCocktail> userLike){
@@ -39,7 +39,7 @@ public class CocktailDetailResponseDto {
         }
         cocktailTagList=new ArrayList<>();
         for(CocktailTag cocktailTag:cocktail.getCocktailTagList()){
-            cocktailTagList.add(new TagDto(cocktailTag.getTag()));
+            cocktailTagList.add(new CocktailTagDto(cocktailTag));
         }
         similarCocktail=new SimilarDto(similar);
 
@@ -60,7 +60,7 @@ public class CocktailDetailResponseDto {
         }
         cocktailTagList=new ArrayList<>();
         for(CocktailTag cocktailTag:cocktail.getCocktailTagList()){
-            cocktailTagList.add(new TagDto(cocktailTag.getTag()));
+            cocktailTagList.add(new CocktailTagDto(cocktailTag));
         }
         similarCocktail=new SimilarDto(similar);
         userLikeCocktail=false;

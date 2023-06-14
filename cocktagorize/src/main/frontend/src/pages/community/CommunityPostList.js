@@ -9,39 +9,13 @@ import axios from "axios";
 import { GET } from "../../jwt/fetch-auth-action";
 import { createTokenHeader } from "../../jwt/auth-action";
 import AuthContext from "../../jwt/auth-context";
+import loadingImage from "../../images/loading.png";
 import { getNowPositionWeatherCocktailData } from "../Home/Home";
 
 const CommunityPostList = () => {
-	const [postList, setPostList] = useState([
-		{
-			id: 0,
-			type: "none",
-			title: "불러오기 실패",
-			content: "불러오기 실패",
-			liked: 0,
+	const [cocktailList, setCocktailList] = useState([]);
 
-			user: {
-				id: 0,
-				name: "불러오기 실패",
-				isLiked: false,
-			},
-
-			boardReplyList: [
-				{
-					id: 0,
-					content: "불러오기 실패",
-					liked: 0,
-					created: "2021-06-01T00:00:00.000+00:00",
-					user: {
-						id: 0,
-						name: "불러오기 실패",
-					},
-				},
-			],
-
-			created: "2021-06-01T00:00:00.000+00:00",
-		},
-	]);
+	const [postList, setPostList] = useState([]);
 
 	const [page, setPage] = useState(0);
 	const [maxPage, setMaxPage] = useState(1);
@@ -49,7 +23,6 @@ const CommunityPostList = () => {
 	const port = 8080;
 	const [sortType, setSortType] = useState(1);
 	const [searchText, setSearchText] = useState();
-	const [userCocktailList, setUserBasedCocktailList] = useState([]);
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -64,9 +37,23 @@ const CommunityPostList = () => {
 	useEffect(() => {
 		if (isGetUser) {
 			// User 정보를 불러와야지 이 함수를 호출 가능해서 여기다 작성
-			getUserCocktailData();
+			getCocktailData();
 		}
 	}, [isGetUser]);
+
+	const getCocktailData = async () => {
+		const userCocktailData = GET(
+			`http://localhost:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			createTokenHeader(authCtx.token)
+		);
+		userCocktailData.then((result) => {
+			if (result !== null) {
+				setCocktailList(result.data);
+				// console.log("유저 선호 칵테일 : " + result.data);
+				// result.data.forEach(cocktail => console.log(cocktail));
+			}
+		});
+	};
 
 	useEffect(() => {
 		switch (sortType) {
@@ -119,7 +106,7 @@ const CommunityPostList = () => {
 	// 게시글 들을 불러오는 함수
 	const getAllBoards = async (page) => {
 		const boardsData = GET(
-			`http://localhost:8080/board?page=${page}`,
+			`http://localhost:${port}/board?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -137,7 +124,7 @@ const CommunityPostList = () => {
 	// 정렬기준 dictionary
 	const getAllBoardsByDic = async (page) => {
 		const boardsData = GET(
-			`http://localhost:8080/board/dictionary?page=${page}`,
+			`http://localhost:${port}/board/dictionary?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -153,7 +140,7 @@ const CommunityPostList = () => {
 	// 정렬기준 좋아요 많은 순
 	const getAllBoardsByLiked = async (page) => {
 		const boardsData = GET(
-			`http://localhost:8080/board/liked?page=${page}`,
+			`http://localhost:${port}/board/liked?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -176,7 +163,7 @@ const CommunityPostList = () => {
 		}
 		const nameURL = encodeURI(name);
 		const boardsData = GET(
-			`http://localhost:8080/board/title/${nameURL}`,
+			`http://localhost:${port}/board/title/${nameURL}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -196,7 +183,7 @@ const CommunityPostList = () => {
 		}
 		const contentURL = encodeURI(content);
 		const boardsData = GET(
-			`http://localhost:8080/board/content/${contentURL}`,
+			`http://localhost:${port}/board/content/${contentURL}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -205,23 +192,6 @@ const CommunityPostList = () => {
 				setPostList(result.data.content);
 				setMaxPage(result.data.totalPages);
 				setIsLoading(false);
-			}
-		});
-	};
-
-	// 사이드에 보여줄 사용자 기반 추천 칵테일
-	const getUserCocktailData = async () => {
-		const userCocktailData = GET(
-			`http://localhost:8080/cocktail/prefer/${authCtx.userObj.username}`,
-			createTokenHeader(authCtx.token)
-		);
-		userCocktailData.then((result) => {
-			if (result !== null) {
-				console.log("사용자 기반 추천 칵테일 : " + result.data.content);
-				setUserBasedCocktailList(result.data);
-				setIsLoading(false);
-				// console.log("유저 선호 칵테일 : " + result.data);
-				// result.data.forEach(cocktail => console.log(cocktail));
 			}
 		});
 	};
@@ -237,6 +207,13 @@ const CommunityPostList = () => {
 						info={postList[i]}
 					/>
 				);
+		}
+		if (postList.length === 0) {
+			result.push(
+				<span style={{ marginTop: "100px", fontSize: "30px" }}>
+					조건에 맞는 글이 없습니다!
+				</span>
+			);
 		}
 		return result;
 	}
@@ -380,23 +357,41 @@ const CommunityPostList = () => {
 					/>
 				</home.Explore>
 				<home.NonExplore>
-					<home.PostList>
-						{post({
-							amount: 4,
-							hMargin: 10,
-							vMargin: 10,
-						})}
-					</home.PostList>
+					{postList.length === 0 ? (
+						<home.Loading>
+							<home.LoadingImage
+								src={loadingImage}
+								alt={loadingImage}
+							/>
+						</home.Loading>
+					) : (
+						<home.PostList>
+							{post({
+								amount: 4,
+								hMargin: 10,
+								vMargin: 10,
+							})}
+						</home.PostList>
+					)}
 				</home.NonExplore>
 
 				<home.PageScroll>{pageScrollIndexButton()}</home.PageScroll>
 			</home.NonSidebar>
 			<home.Cocktailbar>
-				<CocktailCard
-					horizontalMargin={"10px"}
-					verticalMargin={"10px"}
-					//info={cocktailList[i]}
-				/>
+				{cocktailList.length === 0 ? (
+					<home.Loading>
+						<home.LoadingImage
+							src={loadingImage}
+							alt={loadingImage}
+						/>
+					</home.Loading>
+				) : (
+					<CocktailCard
+						horizontalMargin={"10px"}
+						verticalMargin={"10px"}
+						info={cocktailList[0]}
+					/>
+				)}
 			</home.Cocktailbar>
 		</home.Entire>
 	);

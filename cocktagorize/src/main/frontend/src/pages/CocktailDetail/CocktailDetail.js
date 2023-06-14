@@ -3,6 +3,7 @@ import Sidebar from "../../component/common/sidebar/Sidebar";
 import "../CocktailDetail/CocktailDetail.css";
 import UserTipList from "../../component/UserTipList";
 import Tag from "../../component/common/tag.js";
+import { POST } from "../../jwt/fetch-auth-action";
 import {
 	VscHeartFilled,
 	VscHeart,
@@ -36,6 +37,22 @@ const Ingredient = styled.span`
 			case "ALCOHOL":
 				return css`
 					background-color: brown;
+				`;
+			case "JUICE":
+				return css`
+					background-color: #ff0066;
+				`;
+			case "BITTER":
+				return css`
+					background-color: #660033;
+				`;
+			case "MILK":
+				return css`
+					background-color: #0080ff;
+				`;
+			case "SYRUP":
+				return css`
+					background-color: #cccc00;
 				`;
 		}
 	}};
@@ -71,12 +88,11 @@ const CocktailDetail = () => {
 			);
 			result.then((result) => {
 				if (result !== null) {
+					console.log(result.data);
 					setCocktail(result.data);
-					console.log(result);
 					setReplyList(result.data.cocktailReplyList);
 					setLike(result.data.liked);
 					setIsLike(result.data.userLikeCocktail);
-
 				}
 			});
 		};
@@ -105,7 +121,6 @@ const CocktailDetail = () => {
 		}
 	};
 	const fetchTTSAPI = () => {
-
 		const recipe = cocktail.recipe;
 		// 현재 아이디의 칵테일 레시피 가져오기
 
@@ -115,16 +130,31 @@ const CocktailDetail = () => {
 		};
 
 		// API 엔드포인트 URL
-		const apiUrl = 'http://localhost:8080/cocktail/${id}/tts';
+		const apiUrl = `http://localhost:8080/cocktail/${cocktail.id}/tts`;
 
 		// API 요청
-		fetch(apiUrl, {
-			method: 'POST',
+
+		const result = fetch(apiUrl, {
+			method: "POST",
 			body: JSON.stringify(requestData),
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
-		})
+		});
+		/*
+		const result = POST(
+			`http://localhost:8080/cocktail/${cocktail.id}/tts`,
+			{
+				method: "POST",
+				body: JSON.stringify(requestData),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+			createTokenHeader(authCtx.token)
+		);
+		*/
+		result
 			.then((response) => {
 				if (response.ok) {
 					// 오디오 스트리밍 응답 처리
@@ -134,21 +164,31 @@ const CocktailDetail = () => {
 						audio.play();
 					});
 				} else {
-					console.error('TTS API 호출에 실패했습니다.'); //호출 실패
+					console.error("TTS API 호출에 실패했습니다."); //호출 실패
 				}
 			})
 			.catch((error) => {
-				console.error('TTS API 호출 중 오류가 발생했습니다.', error);
+				console.error("TTS API 호출 중 오류가 발생했습니다.", error);
 			});
 	};
 
 	const tagList = cocktail.cocktailTagList.map((tag) => (
-		<Tag key={tag.name} info={tag} />
+		<Tag key={tag.tagDto.name} info={tag.tagDto} />
 	));
 	const ingre = cocktail.cocktailTagList.filter(
-		(tag) => tag.category === "INGREDIENT" || tag.category === "ALCOHOL"
+		(tag) =>
+			tag.tagDto.category === "INGREDIENT" ||
+			tag.tagDto.category === "ALCOHOL" ||
+			tag.tagDto.category === "JUICE" ||
+			tag.tagDto.category === "BITTER" ||
+			tag.tagDto.category === "MILK" ||
+			tag.tagDto.category === "SYRUP"
 	);
-	const ingredient = ingre.map((tag) => <p key={tag.id}>{tag.name}</p>);
+	const ingredient = ingre.map((tag) => (
+		<p key={tag.tagDto.id}>
+			{tag.tagDto.name} {}
+		</p>
+	));
 
 	return (
 		<div className="CocktailDetail">
@@ -178,33 +218,42 @@ const CocktailDetail = () => {
 								<p>
 									<hr />
 								</p>
-								<VscUnmute onClick={() => fetchTTSAPI()} />
+								<VscUnmute
+									style={{
+										width: "30px",
+										height: "30px",
+									}}
+									onClick={() => fetchTTSAPI()}
+								/>
 							</div>
 						</div>
 						<p> 유사한 칵테일 </p>
-						<div className="cocktail_similar">
-							<img
-								className="cocktail_similar_image"
-								src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
-								alt="유사 칵테일 이미지"
-							></img>
-							<div className="cocktail_similar_name">
-								<p className="cocktail_similar_name2">
-									{cocktail.similarCocktail.name}{" "}
-								</p>
-								<div className="similar_liked">
-									<p></p> <VscHeart />
-									<span className="liked_amount">
-										{cocktail.similarCocktail.liked}
-									</span>
-								</div>
-								<a
+						<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
+							<div className="cocktail_similar">
+								<img
+									className="cocktail_similar_image"
+									src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
+									alt="유사 칵테일 이미지"
 									href={`/cocktail/${cocktail.similarCocktail.id}`}
-								>
-									<VscLinkExternal />
-								</a>
+								></img>
+								<div className="cocktail_similar_name">
+									<p className="cocktail_similar_name2">
+										{cocktail.similarCocktail.name}{" "}
+									</p>
+									<div className="similar_liked">
+										<p></p> <VscHeart />
+										<span className="liked_amount">
+											{cocktail.similarCocktail.liked}
+										</span>
+									</div>
+									<a
+										href={`/cocktail/${cocktail.similarCocktail.id}`}
+									>
+										<VscLinkExternal />
+									</a>
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>
 					<div className="inner_right">
 						<div className="cocktail_recipe">
@@ -215,10 +264,13 @@ const CocktailDetail = () => {
 									<p>재료: </p>
 									{ingre.map((tag) => (
 										<Ingredient
-											key={tag.name}
-											category={tag.category}
+											key={tag.tagDto.name}
+											category={tag.tagDto.category}
 										>
-											{tag.name}
+											{tag.tagDto.name}
+											{tag.amount !== null
+												? ", " + tag.amount
+												: null}
 										</Ingredient>
 									))}
 									<p>도수: </p>

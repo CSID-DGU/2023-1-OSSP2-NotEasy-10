@@ -180,6 +180,7 @@ const BlackHeartImage = styled.img`
 `;
 
 const HeartText = styled.div`
+	font-family: var(--font-Jua);
 	margin: 0px 4px;
 	-webkit-user-select: none;
 `;
@@ -238,7 +239,7 @@ function CocktailCard(props) {
 				<Container>
 					<TitleContainer>
 						<NameText>{props.info.name}</NameText>
-						<SoundImage src={soundImage} alt={soundImage} />
+						{/*<SoundImage src={soundImage} alt={soundImage} />*/}
 					</TitleContainer>
 					<TagContainer>
 						{props.info.cocktailTagList &&

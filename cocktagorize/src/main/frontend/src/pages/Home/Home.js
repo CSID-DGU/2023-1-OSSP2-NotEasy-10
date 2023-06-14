@@ -38,6 +38,9 @@ const Home = () => {
 	const [searchLogic, setSearchLogic] = useState("AND");
 	const [searchMode, setSearchMode] = useState("태그 검색");
 
+	const [weatherTemp, setWeatherTemp] = useState(0);
+	const [weatherisRainy, setWeatherisRainy] = useState(0);
+
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
 	let isGetUser = authCtx.isGetUserSuccess;
@@ -68,6 +71,16 @@ const Home = () => {
 	useEffect(() => {
 		sort(currentTagData, sortType);
 	}, []);
+
+	useEffect(() => {
+		setPage(0);
+	}, [sortType, searchLogic, currentTagData, searchText]);
+
+	useEffect(() => {
+		const scroll = document.getElementById("NonExplore");
+		scroll.scrollTop = 0;
+		window.scrollTo(0, 0);
+	}, [cocktailList]);
 
 	const getAllCocktailById = async (page) => {
 		const allCocktailData = GET(
@@ -135,6 +148,13 @@ const Home = () => {
 					console.log("현재 강우 여부 : " + nowIsRainy);
 
 					getNowWeatherCocktailData(nowTemp, nowIsRainy);
+
+					setWeatherTemp((prevState) => {
+						return nowTemp;
+					});
+					setWeatherisRainy((prevState) => {
+						return nowIsRainy;
+					});
 				}
 			});
 			setIsWeatherLoading(false);
@@ -409,25 +429,49 @@ const Home = () => {
 			return;
 		}
 		let result = [];
-		for (let i = 0; i < props.amount; i++) {
-			if (userCocktailList.length > i) {
-				result.push(
-					<CocktailCard
-						horizontalMargin={props.hMargin + "px"}
-						verticalMargin={props.vMargin + "px"}
-						info={userCocktailList[i]}
-						key={userCocktailList[i].id}
-					/>
-				);
-			} else {
-				result.push(
-					<home.WeatherLoading>
-						<home.WeatherLoadingImage
-							src={weatherLoadingImage}
-							alt={weatherLoadingImage}
+
+		if (userCocktailList.length === 1) {
+			result.push(
+				<div
+					style={{
+						width: "50vw",
+						height: "calc(75vh - 250px)",
+						display: "flex",
+						justifyContent: "center",
+						alignContent: "center",
+					}}
+				>
+					<span
+						style={{
+							fontSize: "30px",
+							marginTop: "calc(37.5vh - 175px)",
+						}}
+					>
+						선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+					</span>
+				</div>
+			);
+		} else {
+			for (let i = 0; i < props.amount; i++) {
+				if (userCocktailList.length > i) {
+					result.push(
+						<CocktailCard
+							horizontalMargin={props.hMargin + "px"}
+							verticalMargin={props.vMargin + "px"}
+							info={userCocktailList[i]}
+							key={userCocktailList[i].id}
 						/>
-					</home.WeatherLoading>
-				);
+					);
+				} else {
+					result.push(
+						<home.WeatherLoading>
+							<home.WeatherLoadingImage
+								src={weatherLoadingImage}
+								alt={weatherLoadingImage}
+							/>
+						</home.WeatherLoading>
+					);
+				}
 			}
 		}
 		return result;
@@ -445,6 +489,13 @@ const Home = () => {
 						key={cocktailList[i].id}
 					/>
 				);
+		}
+		if (cocktailList.length === 0) {
+			result.push(
+				<span style={{ marginTop: "100px", fontSize: "30px" }}>
+					조건에 맞는 칵테일이 없습니다!
+				</span>
+			);
 		}
 		return result;
 	}
@@ -601,7 +652,9 @@ const Home = () => {
 					btnIndex={maxPage - 1}
 					key={maxPage}
 					onClick={() => {
-						setPage(maxPage - 1);
+						{
+							setPage(maxPage - 1);
+						}
 					}}
 				>
 					<home.Text>{maxPage}</home.Text>
@@ -718,21 +771,27 @@ const Home = () => {
 						}}
 					>
 						<home.SortBase>단어 검색</home.SortBase>
-						<home.SortBase>태그 검색</home.SortBase>
+						<home.SortBase selected>태그 검색</home.SortBase>
 						<home.SortBase>좋아요 순으로 정렬</home.SortBase>
 						<home.SortBase>사전 순으로 정렬</home.SortBase>
 						<home.SortBase>도수 범위로 검색</home.SortBase>
 					</home.Sort>
 					<home.SearchUI>{searchUI()}</home.SearchUI>
 				</home.Explore>
-				<home.NonExplore>
-					{isLogin && page === 0 && sortType <= 3 ? (
+				<home.NonExplore id="NonExplore">
+					{isLogin &&
+					page === 0 &&
+					(sortType <= 3 || sortType == 8) ? (
 						<home.LoginContent>
 							<home.WeatherNUserCocktail>
 								<home.Weather>
 									<home.WeatherInfoBox>
 										<home.WeatherInfo>
-											비가 많이 와요!
+											{"날씨 기반 칵테일 추천 : "}
+											{weatherTemp.toFixed(1)}°C,{" "}
+											{weatherisRainy === 1
+												? "비"
+												: "맑음"}
 										</home.WeatherInfo>
 										<home.WeatherSearchOption
 											onChange={(e) =>
@@ -740,10 +799,10 @@ const Home = () => {
 											}
 										>
 											<home.WeatherSearchOptionBase>
-												사용자 위치 기반
+												사용자 위치
 											</home.WeatherSearchOptionBase>
 											<home.WeatherSearchOptionBase>
-												현재 위치 기반
+												현재 위치
 											</home.WeatherSearchOptionBase>
 										</home.WeatherSearchOption>
 									</home.WeatherInfoBox>
@@ -777,8 +836,9 @@ const Home = () => {
 								<home.UserRecommand>
 									<home.UserRecommandInfoBox>
 										<home.UserRecommandInfo>
-											인생은 마치 칵테일처럼, 적절한 양의
-											조합과 꾸미기가 중요하다. -ChatGPT
+											사용자 기반 칵테일 추천
+											{/*인생은 마치 칵테일처럼, 적절한 양의
+											조합과 꾸미기가 중요하다. -ChatGPT*/}
 										</home.UserRecommandInfo>
 									</home.UserRecommandInfoBox>
 									<home.UserRecommandCocktail>

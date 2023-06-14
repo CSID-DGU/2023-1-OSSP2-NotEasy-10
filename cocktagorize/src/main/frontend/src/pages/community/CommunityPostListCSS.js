@@ -172,12 +172,6 @@ export const PageScrollIndex = styled.div`
 	transition: background-color 0.2s;
 `;
 
-export const Loading = styled.div`
-	width: 100vw;
-	height: 100vh;
-	position: fixed;
-	background-color: rgba(0, 0, 0, 0.5);
-`;
 export const blackXButton = styled.img`
 	width: 15px;
 	height: 15px;
@@ -198,4 +192,34 @@ export const Cocktailbar = styled.div`
 	height: 80vh;
 	justify-content: center;
 	align-items: center;
+`;
+
+export const Loading = styled.div`
+	width: 15.625vw;
+	height: calc(75vh - 270px);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+`;
+
+export const LoadingImage = styled.img`
+	width: 75px;
+	height: 75px;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	animation: rotate_image 1s ease-out infinite;
+	transform-origin: 50% 50%;
+
+	@keyframes rotate_image {
+		0% {
+			transform: rotate(0deg);
+		}
+		50% {
+			transform: rotate(180deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 `;

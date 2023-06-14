@@ -278,6 +278,9 @@ const MyPage = () => {
 			return;
 		}
 
+		const tagList = currentTagData.map((tag) => tag.name);
+		console.log(tagList);
+
 		const data = PUT(
 			`http://localhost:8080/user`,
 			{
@@ -289,7 +292,7 @@ const MyPage = () => {
 				city: city,
 				gu: gu,
 				dong: dong,
-				preferTagList: currentTagData,
+				preferTagList: tagList,
 			},
 			createTokenHeader(authCtx.token)
 		);
@@ -303,15 +306,20 @@ const MyPage = () => {
 
 	const handleInfoDelete = () => {
 		// axios delte
-		const boardsData = DELETE(
-			`http://localhost:8080/user/${authCtx.userObj.username}`,
-			createTokenHeader(authCtx.token)
-		);
-		boardsData.then((result) => {
-			authCtx.deleteUser();
-			alert("회원 탈퇴가 완료되었습니다!");
-			document.location.href = "/";
-		});
+
+		if (window.confirm("정말 탈퇴하시겠습니까??") == true) {
+			const boardsData = DELETE(
+				`http://localhost:8080/user/${authCtx.userObj.username}`,
+				createTokenHeader(authCtx.token)
+			);
+			boardsData.then((result) => {
+				authCtx.deleteUser();
+				alert("회원 탈퇴가 완료되었습니다!");
+				document.location.href = "/";
+			});
+		} else {
+			return false;
+		}
 	};
 
 	const modalOff = (tags) => {
