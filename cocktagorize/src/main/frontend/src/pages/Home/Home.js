@@ -40,6 +40,7 @@ const Home = () => {
 
 	const [weatherTemp, setWeatherTemp] = useState(0);
 	const [weatherisRainy, setWeatherisRainy] = useState(0);
+	const [weatherMode, setWeatherMode] = useState("사용자 위치 기반");
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -430,50 +431,53 @@ const Home = () => {
 		}
 		let result = [];
 
-		if (userCocktailList.length === 1) {
-			result.push(
-				<div
-					style={{
-						width: "50vw",
-						height: "calc(75vh - 250px)",
-						display: "flex",
-						justifyContent: "center",
-						alignContent: "center",
-					}}
-				>
-					<span
+		if (userCocktailList.length >= 2) {
+			if (userCocktailList[0].id === userCocktailList[1].id) {
+				result.push(
+					<div
 						style={{
-							fontSize: "30px",
-							marginTop: "calc(37.5vh - 175px)",
+							width: "50vw",
+							height: "calc(75vh - 250px)",
+							display: "flex",
+							justifyContent: "center",
+							alignContent: "center",
 						}}
 					>
-						선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
-					</span>
-				</div>
-			);
-		} else {
-			for (let i = 0; i < props.amount; i++) {
-				if (userCocktailList.length > i) {
-					result.push(
-						<CocktailCard
-							horizontalMargin={props.hMargin + "px"}
-							verticalMargin={props.vMargin + "px"}
-							info={userCocktailList[i]}
-							key={userCocktailList[i].id}
-						/>
-					);
-				} else {
-					result.push(
-						<home.WeatherLoading>
-							<home.WeatherLoadingImage
-								src={weatherLoadingImage}
-								alt={weatherLoadingImage}
-							/>
-						</home.WeatherLoading>
-					);
-				}
+						<span
+							style={{
+								fontSize: "30px",
+								marginTop: "calc(37.5vh - 175px)",
+							}}
+						>
+							선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+						</span>
+					</div>
+				);
+				return result;
 			}
 		}
+		for (let i = 0; i < props.amount; i++) {
+			if (userCocktailList.length > i) {
+				result.push(
+					<CocktailCard
+						horizontalMargin={props.hMargin + "px"}
+						verticalMargin={props.vMargin + "px"}
+						info={userCocktailList[i]}
+						key={userCocktailList[i].id}
+					/>
+				);
+			} else if (userCocktailList.length === 0) {
+				result.push(
+					<home.WeatherLoading>
+						<home.WeatherLoadingImage
+							src={weatherLoadingImage}
+							alt={weatherLoadingImage}
+						/>
+					</home.WeatherLoading>
+				);
+			}
+		}
+
 		return result;
 	}
 
@@ -521,11 +525,13 @@ const Home = () => {
 	const onWeatherSortChanged = (e) => {
 		if (isWeatherLoading) return;
 		setIsWeatherLoading(true);
-		console.log("바뀜");
-		if (e.target.value === "사용자 위치 기반") {
+		// console.log("바뀜");
+		if (e.target.value === "사용자 위치") {
 			getWeatherCocktailData();
+			setWeatherMode(() => "사용자 위치 기반");
 		} else {
 			getNowPositionWeatherCocktailData();
+			setWeatherMode(() => "현재 위치 기반");
 		}
 	};
 
@@ -756,6 +762,24 @@ const Home = () => {
 		return result;
 	}
 
+	function weatherText() {
+		// console.log(weatherMode);
+		if (weatherMode === "현재 위치 기반") {
+			return (
+				<home.WeatherInfo>
+					{"날씨 기반 칵테일 추천 : " +
+						weatherTemp.toFixed(1) +
+						"°C, " +
+						(weatherisRainy === 1 ? "비" : "맑음")}
+				</home.WeatherInfo>
+			);
+		} else {
+			return (
+				<home.WeatherInfo>{"날씨 기반 칵테일 추천"}</home.WeatherInfo>
+			);
+		}
+	}
+
 	return (
 		<home.Entire>
 			{isModal === true ? (
@@ -786,13 +810,7 @@ const Home = () => {
 							<home.WeatherNUserCocktail>
 								<home.Weather>
 									<home.WeatherInfoBox>
-										<home.WeatherInfo>
-											{"날씨 기반 칵테일 추천 : "}
-											{weatherTemp.toFixed(1)}°C,{" "}
-											{weatherisRainy === 1
-												? "비"
-												: "맑음"}
-										</home.WeatherInfo>
+										{weatherText()}
 										<home.WeatherSearchOption
 											onChange={(e) =>
 												onWeatherSortChanged(e)

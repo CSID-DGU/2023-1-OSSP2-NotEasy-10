@@ -45,14 +45,21 @@ public class PreferCocktailService {
         if(tags.isEmpty())
         {
             Cocktail cocktail = cocktailRepository.findById(11000);
-            preferCocktail.add(new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(11000, userRepository.findByUsername(authentication.getName()).getId())));
+            for (int i = 0; i < 3; i++) {
+                preferCocktail.add(new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(11000, userRepository.findByUsername(authentication.getName()).getId())));
+            }
         }
         else {
             for (int i = 0; i < 3; i++) {
-                int n = random.nextInt(tags.size());
-                Cocktail cocktail = cocktailRepository.findById(tags.get(n).getCocktail().getId());
-                preferCocktail.add(new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
-                tags.remove(n);
+                if(tags.isEmpty())
+                {
+                    break;
+                }
+                else {
+                    int n = random.nextInt(tags.size());
+                    Cocktail cocktail = cocktailRepository.findById(tags.get(n).getCocktail().getId());
+                    preferCocktail.add(new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
+                    tags.remove(n);}
             }
         }
         return preferCocktail;
