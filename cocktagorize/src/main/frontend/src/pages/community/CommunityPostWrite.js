@@ -60,6 +60,16 @@ const CommunityPostWrite = () => {
 	};
 
 	const onClickSubmit = () => {
+		if (title === "") {
+			alert("제목을 입력해주세요!");
+			return;
+		}
+
+		if (content === "") {
+			alert("내용을 입력해주세요!");
+			return;
+		}
+
 		const boardsData = POST(
 			`http://localhost:8080/board`,
 			{

@@ -39,6 +39,12 @@ const UserComment = (tip) => {
 
 	const handleSave = () => {
 		// axios로 수정된 사항('content: editedComment')을 보내면 서버에서 replyList에서 해당 변경내용을 업데이트해야함
+
+		if (editedComment === "") {
+			alert("댓글을 입력해주세요!");
+			return;
+		}
+
 		console.log("수정된 내용:", editedComment);
 		setIsEditing(false);
 		const result = PUT(
@@ -81,6 +87,7 @@ const UserComment = (tip) => {
 							className="tip_content"
 							value={editedComment}
 							onChange={handleEditedCommentChange}
+							style={{ resize: "none" }}
 						></textarea>
 					) : (
 						<p className="tip_content">{tip.tip.content}</p>
