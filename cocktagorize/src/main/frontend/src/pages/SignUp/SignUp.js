@@ -42,7 +42,7 @@ const SignUp = () => {
 
     const getCity = async () => {
         const data = GET(
-            `http://localhost:8080/city`,
+            `https://3.35.180.1:8080/city`,
             createTokenHeader(authCtx.token)
         );
         data.then((result) => {
@@ -54,7 +54,7 @@ const SignUp = () => {
 
     const getDongByCity = async (city) => {
         const data = GET(
-            `http://localhost:8080/dong?city=${city}`,
+            `https://3.35.180.1:8080/dong?city=${city}`,
             createTokenHeader(authCtx.token)
         );
         data.then((result) => {
@@ -66,7 +66,7 @@ const SignUp = () => {
 
     const getGuByDong = async (dong) => {
         const data = GET(
-            `http://localhost:8080/gu?dong=${dong}`,
+            `https://3.35.180.1:8080/gu?dong=${dong}`,
             createTokenHeader(authCtx.token)
         );
         data.then((result) => {
@@ -188,7 +188,7 @@ const SignUp = () => {
 
         try {
             const response = await axios
-                .post("http://localhost:8080/user/join", {
+                .post("https://3.35.180.1:8080/user/join", {
                     username: id,
                     password: password,
                     email: email,
@@ -214,7 +214,7 @@ const SignUp = () => {
                 username: id,
             };
             const response = await axios
-                .post("http://localhost:8080/user/join/id", data, {
+                .post("https://3.35.180.1:8080/user/join/id", data, {
                     header: {
                         "Content-Type": `application/json`,
                     },
@@ -241,7 +241,7 @@ const SignUp = () => {
                 nickname: nickname,
             };
             const response = await axios
-                .post("http://localhost:8080/user/join/nickname", data, {
+                .post("https://3.35.180.1:8080/user/join/nickname", data, {
                     header: {
                         "Content-Type": `application/json`,
                     },

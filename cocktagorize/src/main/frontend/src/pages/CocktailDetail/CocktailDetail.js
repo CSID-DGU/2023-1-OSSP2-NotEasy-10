@@ -32,28 +32,28 @@ const Ingredient = styled.span`
 		switch (props.category) {
 			case "INGREDIENT":
 				return css`
-					background-color: #6e41e2;
-				`;
+               background-color: #6e41e2;
+            `;
 			case "ALCOHOL":
 				return css`
-					background-color: brown;
-				`;
+               background-color: brown;
+            `;
 			case "JUICE":
 				return css`
-					background-color: #ff0066;
-				`;
+               background-color: #ff0066;
+            `;
 			case "BITTER":
 				return css`
-					background-color: #660033;
-				`;
+               background-color: #660033;
+            `;
 			case "MILK":
 				return css`
-					background-color: #0080ff;
-				`;
+               background-color: #0080ff;
+            `;
 			case "SYRUP":
 				return css`
-					background-color: #cccc00;
-				`;
+               background-color: #cccc00;
+            `;
 		}
 	}};
 `;
@@ -64,6 +64,8 @@ const CocktailDetail = () => {
 	const [replyList, setReplyList] = useState([]);
 	const [isLike, setIsLike] = useState();
 	const [like, setLike] = useState(0);
+	const [audio, setAudio] = useState(null);
+	const [isAudio, setIsAudio] = useState(false);
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -83,7 +85,7 @@ const CocktailDetail = () => {
 	useEffect(() => {
 		const getCocktailDetails = async () => {
 			const result = GET(
-				`http://localhost:8080/cocktail/${cocktail_id}`,
+				`https://3.35.180.1:8080/cocktail/${cocktail_id}`,
 				createTokenHeader(authCtx.token)
 			);
 			result.then((result) => {
@@ -106,7 +108,7 @@ const CocktailDetail = () => {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`http://localhost:8080/cocktail/${id}/like`,
+				`https://3.35.180.1:8080/cocktail/${id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);
@@ -130,7 +132,7 @@ const CocktailDetail = () => {
 		};
 
 		// API 엔드포인트 URL
-		const apiUrl = `http://localhost:8080/cocktail/${cocktail.id}/tts`;
+		const apiUrl = `https://3.35.180.1:8080/cocktail/${cocktail.id}/tts`;
 
 		// API 요청
 
@@ -142,26 +144,31 @@ const CocktailDetail = () => {
 			},
 		});
 		/*
-		const result = POST(
-			`http://localhost:8080/cocktail/${cocktail.id}/tts`,
-			{
-				method: "POST",
-				body: JSON.stringify(requestData),
-				headers: {
-					"Content-Type": "application/json",
-				},
-			},
-			createTokenHeader(authCtx.token)
-		);
-		*/
+        const result = POST(
+           `https://3.35.180.1:8080/cocktail/${cocktail.id}/tts`,
+           {
+              method: "POST",
+              body: JSON.stringify(requestData),
+              headers: {
+                 "Content-Type": "application/json",
+              },
+           },
+           createTokenHeader(authCtx.token)
+        );
+        */
 		result
 			.then((response) => {
 				if (response.ok) {
 					// 오디오 스트리밍 응답 처리
 					response.blob().then((blob) => {
 						const audioUrl = URL.createObjectURL(blob);
-						const audio = new Audio(audioUrl);
-						audio.play();
+						const playAudio = new Audio(audioUrl);
+						setAudio(() => playAudio);
+						setIsAudio(() => true);
+						playAudio.play();
+						playAudio.onended = () => {
+							setIsAudio(() => false);
+						};
 					});
 				} else {
 					console.error("TTS API 호출에 실패했습니다."); //호출 실패
@@ -218,42 +225,54 @@ const CocktailDetail = () => {
 								<p>
 									<hr />
 								</p>
-								<VscUnmute
-									style={{
-										width: "30px",
-										height: "30px",
-									}}
-									onClick={() => fetchTTSAPI()}
-								/>
+								{isAudio === true ? (
+									<VscUnmute
+										style={{
+											color: "red",
+											width: "30px",
+											height: "30px",
+										}}
+										onClick={() => {
+											audio.pause();
+											audio.currentTime = 0;
+											setIsAudio(() => false);
+										}}
+									/>
+								) : (
+									<VscUnmute
+										style={{
+											width: "30px",
+											height: "30px",
+										}}
+										onClick={() => fetchTTSAPI()}
+									/>
+								)}
 							</div>
 						</div>
 						<p> 유사한 칵테일 </p>
-						<a href={`/cocktail/${cocktail.similarCocktail.id}`}>
-							<div className="cocktail_similar">
-								<img
-									className="cocktail_similar_image"
-									src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
-									alt="유사 칵테일 이미지"
-									href={`/cocktail/${cocktail.similarCocktail.id}`}
-								></img>
-								<div className="cocktail_similar_name">
-									<p className="cocktail_similar_name2">
-										{cocktail.similarCocktail.name}{" "}
-									</p>
-									<div className="similar_liked">
-										<p></p> <VscHeart />
-										<span className="liked_amount">
-											{cocktail.similarCocktail.liked}
-										</span>
-									</div>
-									<a
-										href={`/cocktail/${cocktail.similarCocktail.id}`}
-									>
-										<VscLinkExternal />
-									</a>
+						<div className="cocktail_similar">
+							<img
+								className="cocktail_similar_image"
+								src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
+								alt="유사 칵테일 이미지"
+							></img>
+							<div className="cocktail_similar_name">
+								<p className="cocktail_similar_name2">
+									{cocktail.similarCocktail.name}{" "}
+								</p>
+								<div className="similar_liked">
+									<p></p> <VscHeart />
+									<span className="liked_amount">
+                              {cocktail.similarCocktail.liked}
+                           </span>
 								</div>
+								<a
+									href={`/cocktail/${cocktail.similarCocktail.id}`}
+								>
+									<VscLinkExternal />
+								</a>
 							</div>
-						</a>
+						</div>
 					</div>
 					<div className="inner_right">
 						<div className="cocktail_recipe">
@@ -275,18 +294,18 @@ const CocktailDetail = () => {
 									))}
 									<p>도수: </p>
 									<span className="alchol">
-										{cocktail.alcholeDegree}도
-									</span>
+                              {cocktail.alcholeDegree}도
+                           </span>
 									<p>추천잔: </p>
 									<span className="glass">
-										{cocktail.glassType}
-									</span>
+                              {cocktail.glassType}
+                           </span>
 								</div>
 								<div className="info_right">
 									<p>레시피: </p>
 									<span className="order">
-										{cocktail.recipe}
-									</span>
+                              {cocktail.recipe}
+                           </span>
 								</div>
 							</div>
 						</div>

@@ -112,7 +112,7 @@ const MyPage = () => {
 				nickname: userNickname,
 			};
 			const response = await axios
-				.post("http://localhost:8080/user/join/nickname", data, {
+				.post("https://3.35.180.1:8080/user/join/nickname", data, {
 					header: {
 						"Content-Type": `application/json`,
 					},
@@ -165,7 +165,7 @@ const MyPage = () => {
 
 	const getCity = async () => {
 		const data = GET(
-			`http://localhost:8080/city`,
+			`https://3.35.180.1:8080/city`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -177,7 +177,7 @@ const MyPage = () => {
 
 	const getDongByCity = async (city) => {
 		const data = GET(
-			`http://localhost:8080/dong?city=${city}`,
+			`https://3.35.180.1:8080/dong?city=${city}`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -189,7 +189,7 @@ const MyPage = () => {
 
 	const getGuByDong = async (dong) => {
 		const data = GET(
-			`http://localhost:8080/gu?dong=${dong}`,
+			`https://3.35.180.1:8080/gu?dong=${dong}`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -228,7 +228,7 @@ const MyPage = () => {
 	}, [isGetUser]);
 	const getUserInfo = () => {
 		const data = POST(
-			`http://localhost:8080/user`,
+			`https://3.35.180.1:8080/user`,
 			{
 				username: authCtx.userObj.username,
 			},
@@ -282,7 +282,7 @@ const MyPage = () => {
 		console.log(tagList);
 
 		const data = PUT(
-			`http://localhost:8080/user`,
+			`https://3.35.180.1:8080/user`,
 			{
 				username: user.username,
 				password: "",
@@ -309,7 +309,7 @@ const MyPage = () => {
 
 		if (window.confirm("정말 탈퇴하시겠습니까??") == true) {
 			const boardsData = DELETE(
-				`http://localhost:8080/user/${authCtx.userObj.username}`,
+				`https://3.35.180.1:8080/user/${authCtx.userObj.username}`,
 				createTokenHeader(authCtx.token)
 			);
 			boardsData.then((result) => {

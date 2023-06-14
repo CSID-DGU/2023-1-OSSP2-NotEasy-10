@@ -49,7 +49,7 @@ const UserCommentList = ({ tips }) => {
         //그럼 서버에서 replyList에 추가된 댓글 객체를 업데이트해야함
         console.log(`추가된 댓글: ${newTip}`);
         setNewTip("");
-        const result = POST(`http://localhost:8080/board/${communityId}/reply`,
+        const result = POST(`https://3.35.180.1:8080/board/${communityId}/reply`,
             {
                 content: newTip
             },
