@@ -340,7 +340,7 @@ const Modal = (props) => {
 		{
 			categoryName: "술",
 			categoryCode: "ALCOHOL",
-			height: 120,
+			height: 160,
 			tags: [],
 		},
 		{
