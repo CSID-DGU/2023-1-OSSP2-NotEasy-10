@@ -64,6 +64,8 @@ const CocktailDetail = () => {
 	const [replyList, setReplyList] = useState([]);
 	const [isLike, setIsLike] = useState();
 	const [like, setLike] = useState(0);
+	const [isSimilarLike, setIsSimilarLike] = useState();
+	const [similarLike, setSimilarLike] = useState(0);
 	const [audio, setAudio] = useState(null);
 	const [isAudio, setIsAudio] = useState(false);
 
@@ -95,6 +97,10 @@ const CocktailDetail = () => {
 					setReplyList(result.data.cocktailReplyList);
 					setLike(result.data.liked);
 					setIsLike(result.data.userLikeCocktail);
+					setSimilarLike(result.data.similarCocktail.liked);
+					setIsSimilarLike(
+						result.data.similarCocktail.userLikeCocktail
+					);
 				}
 			});
 		};
@@ -197,6 +203,26 @@ const CocktailDetail = () => {
 		</p>
 	));
 
+	const similarLikeClicked = async (event) => {
+		if (authCtx.isLoggedIn) {
+			const result = PUT(
+				`http://localhost:8080/cocktail/${cocktail.similarCocktail.id}/like`,
+				null,
+				createTokenHeader(authCtx.token)
+			);
+			// 만약 이미 좋아요를 누른 칵테일이라면
+			result.then((result) => {
+				if (result !== null) {
+					setSimilarLike(result.data.liked);
+					setIsSimilarLike(!isSimilarLike);
+					console.log(result);
+				}
+			});
+		} else {
+			alert("로그인을 해주세요!");
+		}
+	};
+
 	return (
 		<div className="CocktailDetail">
 			<Sidebar />
@@ -251,26 +277,42 @@ const CocktailDetail = () => {
 						</div>
 						<p> 유사한 칵테일 </p>
 						<div className="cocktail_similar">
-							<img
-								className="cocktail_similar_image"
-								src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
-								alt="유사 칵테일 이미지"
-							></img>
-							<div className="cocktail_similar_name">
-								<p className="cocktail_similar_name2">
-									{cocktail.similarCocktail.name}{" "}
-								</p>
-								<div className="similar_liked">
-									<p></p> <VscHeart />
-									<span className="liked_amount">
-										{cocktail.similarCocktail.liked}
-									</span>
-								</div>
-								<a
+							<a
+								href={`/cocktail/${cocktail.similarCocktail.id}`}
+							>
+								<img
 									href={`/cocktail/${cocktail.similarCocktail.id}`}
-								>
-									<VscLinkExternal />
-								</a>
+									className="cocktail_similar_image"
+									src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
+									alt="유사 칵테일 이미지"
+								></img>
+
+								<div className="cocktail_similar_name">
+									<p className="cocktail_similar_name2">
+										{cocktail.similarCocktail.name}{" "}
+									</p>
+								</div>
+							</a>
+
+							<div className="similar_liked">
+								{isSimilarLike ? (
+									<VscHeartFilled
+										style={{ color: "red" }}
+										onClick={(e) => {
+											similarLikeClicked();
+										}}
+									/>
+								) : (
+									<VscHeartFilled
+										style={{ color: "black" }}
+										onClick={(e) => {
+											similarLikeClicked();
+										}}
+									/>
+								)}
+								<span className="liked_amount">
+									{similarLike}
+								</span>
 							</div>
 						</div>
 					</div>
