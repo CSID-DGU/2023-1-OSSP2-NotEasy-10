@@ -32,28 +32,28 @@ const Ingredient = styled.span`
 		switch (props.category) {
 			case "INGREDIENT":
 				return css`
-               background-color: #6e41e2;
-            `;
+					background-color: #6e41e2;
+				`;
 			case "ALCOHOL":
 				return css`
-               background-color: brown;
-            `;
+					background-color: brown;
+				`;
 			case "JUICE":
 				return css`
-               background-color: #ff0066;
-            `;
+					background-color: #ff0066;
+				`;
 			case "BITTER":
 				return css`
-               background-color: #660033;
-            `;
+					background-color: #660033;
+				`;
 			case "MILK":
 				return css`
-               background-color: #0080ff;
-            `;
+					background-color: #0080ff;
+				`;
 			case "SYRUP":
 				return css`
-               background-color: #cccc00;
-            `;
+					background-color: #cccc00;
+				`;
 		}
 	}};
 `;
@@ -64,6 +64,8 @@ const CocktailDetail = () => {
 	const [replyList, setReplyList] = useState([]);
 	const [isLike, setIsLike] = useState();
 	const [like, setLike] = useState(0);
+	const [isSimilarLike, setIsSimilarLike] = useState();
+	const [similarLike, setSimilarLike] = useState(0);
 	const [audio, setAudio] = useState(null);
 	const [isAudio, setIsAudio] = useState(false);
 
@@ -85,7 +87,7 @@ const CocktailDetail = () => {
 	useEffect(() => {
 		const getCocktailDetails = async () => {
 			const result = GET(
-				`https://3.35.180.1:8080/cocktail/${cocktail_id}`,
+				`http://3.35.180.1:8080/cocktail/${cocktail_id}`,
 				createTokenHeader(authCtx.token)
 			);
 			result.then((result) => {
@@ -95,6 +97,10 @@ const CocktailDetail = () => {
 					setReplyList(result.data.cocktailReplyList);
 					setLike(result.data.liked);
 					setIsLike(result.data.userLikeCocktail);
+					setSimilarLike(result.data.similarCocktail.liked);
+					setIsSimilarLike(
+						result.data.similarCocktail.userLikeCocktail
+					);
 				}
 			});
 		};
@@ -108,7 +114,7 @@ const CocktailDetail = () => {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`https://3.35.180.1:8080/cocktail/${id}/like`,
+				`http://3.35.180.1:8080/cocktail/${id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);
@@ -132,7 +138,7 @@ const CocktailDetail = () => {
 		};
 
 		// API 엔드포인트 URL
-		const apiUrl = `https://3.35.180.1:8080/cocktail/${cocktail.id}/tts`;
+		const apiUrl = `http://3.35.180.1:8080/cocktail/${cocktail.id}/tts`;
 
 		// API 요청
 
@@ -145,7 +151,7 @@ const CocktailDetail = () => {
 		});
 		/*
         const result = POST(
-           `https://3.35.180.1:8080/cocktail/${cocktail.id}/tts`,
+           `http://3.35.180.1:8080/cocktail/${cocktail.id}/tts`,
            {
               method: "POST",
               body: JSON.stringify(requestData),
@@ -196,6 +202,26 @@ const CocktailDetail = () => {
 			{tag.tagDto.name} {}
 		</p>
 	));
+
+	const similarLikeClicked = async (event) => {
+		if (authCtx.isLoggedIn) {
+			const result = PUT(
+				`http://3.35.180.1:8080/cocktail/${cocktail.similarCocktail.id}/like`,
+				null,
+				createTokenHeader(authCtx.token)
+			);
+			// 만약 이미 좋아요를 누른 칵테일이라면
+			result.then((result) => {
+				if (result !== null) {
+					setSimilarLike(result.data.liked);
+					setIsSimilarLike(!isSimilarLike);
+					console.log(result);
+				}
+			});
+		} else {
+			alert("로그인을 해주세요!");
+		}
+	};
 
 	return (
 		<div className="CocktailDetail">
@@ -251,26 +277,42 @@ const CocktailDetail = () => {
 						</div>
 						<p> 유사한 칵테일 </p>
 						<div className="cocktail_similar">
-							<img
-								className="cocktail_similar_image"
-								src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
-								alt="유사 칵테일 이미지"
-							></img>
-							<div className="cocktail_similar_name">
-								<p className="cocktail_similar_name2">
-									{cocktail.similarCocktail.name}{" "}
-								</p>
-								<div className="similar_liked">
-									<p></p> <VscHeart />
-									<span className="liked_amount">
-                              {cocktail.similarCocktail.liked}
-                           </span>
-								</div>
-								<a
+							<a
+								href={`/cocktail/${cocktail.similarCocktail.id}`}
+							>
+								<img
 									href={`/cocktail/${cocktail.similarCocktail.id}`}
-								>
-									<VscLinkExternal />
-								</a>
+									className="cocktail_similar_image"
+									src={require(`../../images/${cocktail.similarCocktail.id}.jpeg`)}
+									alt="유사 칵테일 이미지"
+								></img>
+
+								<div className="cocktail_similar_name">
+									<p className="cocktail_similar_name2">
+										{cocktail.similarCocktail.name}{" "}
+									</p>
+								</div>
+							</a>
+
+							<div className="similar_liked">
+								{isSimilarLike ? (
+									<VscHeartFilled
+										style={{ color: "red" }}
+										onClick={(e) => {
+											similarLikeClicked();
+										}}
+									/>
+								) : (
+									<VscHeartFilled
+										style={{ color: "black" }}
+										onClick={(e) => {
+											similarLikeClicked();
+										}}
+									/>
+								)}
+								<span className="liked_amount">
+									{similarLike}
+								</span>
 							</div>
 						</div>
 					</div>
@@ -294,18 +336,18 @@ const CocktailDetail = () => {
 									))}
 									<p>도수: </p>
 									<span className="alchol">
-                              {cocktail.alcholeDegree}도
-                           </span>
+										{cocktail.alcholeDegree}도
+									</span>
 									<p>추천잔: </p>
 									<span className="glass">
-                              {cocktail.glassType}
-                           </span>
+										{cocktail.glassType}
+									</span>
 								</div>
 								<div className="info_right">
 									<p>레시피: </p>
 									<span className="order">
-                              {cocktail.recipe}
-                           </span>
+										{cocktail.recipe}
+									</span>
 								</div>
 							</div>
 						</div>

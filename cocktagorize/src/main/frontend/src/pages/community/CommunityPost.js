@@ -43,7 +43,7 @@ const CommunityPost = () => {
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
-			`http://3.35.180.1:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://3.35.180.1:8080/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
@@ -57,7 +57,7 @@ const CommunityPost = () => {
 
 	const getBoard = async (page) => {
 		const boardsData = GET(
-			`https://3.35.180.1:8080/board/${communityId}`,
+			`http://3.35.180.1:8080/board/${communityId}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -81,7 +81,7 @@ const CommunityPost = () => {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`https://3.35.180.1:8080/board/${id}/like`,
+				`http://3.35.180.1:8080/board/${id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);
@@ -98,14 +98,6 @@ const CommunityPost = () => {
 
 	// delete button은 로그인 username이랑 작성자 username이랑 비교해서 아예 안보이게 하면 될거 같애요.
 	const handleDelete = () => {
-		const boardsData = DELETE(
-			`https://3.35.180.1:8080/board/${communityId}`,
-			createTokenHeader(authCtx.token)
-		);
-		boardsData.then((result) => {
-			alert("삭제가 완료되었습니다!");
-			document.location.href = "/community";
-		});
 		if (window.confirm("정말 삭제하시겠습니까??") == true) {
 			const boardsData = DELETE(
 				`http://3.35.180.1:8080/board/${communityId}`,
@@ -141,6 +133,7 @@ const CommunityPost = () => {
 					</div>
 					<hr />
 					<div className="post_content">{board.content}</div>
+
 					<div className="onlyUser">
 						<button
 							className="post_like"
