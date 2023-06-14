@@ -46,7 +46,9 @@ img {
 .inner_left {
 	display: flex;
 	flex-direction: column;
-	width: 16vw;
+	justify-content: center;
+	align-items: center;
+	width: 18vw;
 	height: auto;
 }
 
@@ -56,11 +58,11 @@ img {
 	display: flex;
 	flex-direction: column;
 	padding: 0.5rem 1rem 0 0.5rem;
-	height: 45vh;
+	height: 36vh;
 }
 
 .cocktail_image {
-	height: 37vh;
+	height: 28vh;
 	user-select: none;
 	/* object-fit: contain; */
 }
@@ -91,6 +93,7 @@ img {
 	border-radius: 0.25rem;
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 }
 
@@ -105,20 +108,21 @@ img {
 	flex-direction: column;
 	flex: 1;
 	background-color: white;
-	height: 100px;
-	margin-bottom: 10px;
+	margin: 10px 10px;
 }
 
 .cocktail_similar_name2 {
 	text-align: center;
 	flex: 1;
-	margin-bottom: 0;
+	margin: 10px 20px;
 }
 
 .similar_liked {
 	text-align: center;
 	margin-bottom: 1rem;
-	margin-top: -50px;
+	margin-top: 0px;
+	background-color: white;
+	width: 100%;
 }
 
 .cocktail_similar_name > a {

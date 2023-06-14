@@ -275,10 +275,16 @@ const CocktailDetail = () => {
 								)}
 							</div>
 						</div>
-						<p> 유사한 칵테일 </p>
+						<p style={{ marginBottom: "15px" }}> 유사한 칵테일 </p>
 						<div className="cocktail_similar">
 							<a
 								href={`/cocktail/${cocktail.similarCocktail.id}`}
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
 							>
 								<img
 									href={`/cocktail/${cocktail.similarCocktail.id}`}
