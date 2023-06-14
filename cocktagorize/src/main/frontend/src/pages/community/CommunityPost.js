@@ -18,6 +18,9 @@ const CommunityPost = () => {
 	const [isLike, setIsLike] = useState();
 	const [like, setLike] = useState(0);
 
+	const [cocktailList, setCocktailList] = useState([]);
+	const port = 8080;
+
 	const [board, setBoard] = useState();
 	const [boardReplyList, setBoardReplyList] = useState([]);
 
@@ -30,6 +33,28 @@ const CommunityPost = () => {
 			authCtx.getUser();
 		}
 	}, [isLogin]);
+
+	useEffect(() => {
+		if (isGetUser) {
+			// User 정보를 불러와야지 이 함수를 호출 가능해서 여기다 작성
+			getCocktailData();
+		}
+	}, [isGetUser]);
+
+	const getCocktailData = async () => {
+		const userCocktailData = GET(
+			`http://localhost:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			createTokenHeader(authCtx.token)
+		);
+		userCocktailData.then((result) => {
+			if (result !== null) {
+				setCocktailList(result.data);
+				// console.log("유저 선호 칵테일 : " + result.data);
+				// result.data.forEach(cocktail => console.log(cocktail));
+			}
+		});
+	};
+
 	const getBoard = async (page) => {
 		const boardsData = GET(
 			`http://localhost:8080/board/${communityId}`,
@@ -73,14 +98,18 @@ const CommunityPost = () => {
 
 	// delete button은 로그인 username이랑 작성자 username이랑 비교해서 아예 안보이게 하면 될거 같애요.
 	const handleDelete = () => {
-		const boardsData = DELETE(
-			`http://localhost:8080/board/${communityId}`,
-			createTokenHeader(authCtx.token)
-		);
-		boardsData.then((result) => {
-			alert("삭제가 완료되었습니다!");
-			document.location.href = "/community";
-		});
+		if (window.confirm("정말 삭제하시겠습니까??") == true) {
+			const boardsData = DELETE(
+				`http://localhost:8080/board/${communityId}`,
+				createTokenHeader(authCtx.token)
+			);
+			boardsData.then((result) => {
+				alert("삭제가 완료되었습니다!");
+				document.location.href = "/community";
+			});
+		} else {
+			return false;
+		}
 	};
 
 	function timeConvert(time) {
@@ -98,19 +127,6 @@ const CommunityPost = () => {
 					</div>
 					<div className="post_info">
 						<p className="post_name">{board.user.nickname}</p>{" "}
-						<p className="post_like">
-							{isLike ? (
-								<VscHeartFilled
-									onClick={() => likeClicked(board.id)}
-									style={{ color: "red" }}
-								/>
-							) : (
-								<VscHeartFilled
-									onClick={() => likeClicked(board.id)}
-								/>
-							)}
-							{like}
-						</p>
 						<p className="post_time">
 							{timeConvert(board.createdDate)}
 						</p>
@@ -119,6 +135,25 @@ const CommunityPost = () => {
 					<div className="post_content">{board.content}</div>
 					{board.user.nickname === authCtx.userObj.nickname && (
 						<div className="onlyUser">
+							<button
+								className="post_like"
+								onClick={() => likeClicked(board.id)}
+							>
+								{isLike ? (
+									<>
+										<span>좋아요 취소 </span>
+										<VscHeartFilled
+											style={{ color: "red" }}
+										/>
+									</>
+								) : (
+									<>
+										<span>좋아요 </span>
+										<VscHeartFilled />
+									</>
+								)}
+								{like}
+							</button>
 							<Link to={`/community/${communityId}/modify`}>
 								<button className="post_edit">수정</button>
 							</Link>
@@ -133,7 +168,11 @@ const CommunityPost = () => {
 				</div>
 				<UserCommentList tips={boardReplyList} />
 			</div>
-			{/*<CocktailCard verticalMargin="100px" />*/}
+			<CocktailCard
+				verticalMargin="10vh"
+				horizontalMargin="10px"
+				info={cocktailList[0]}
+			/>
 		</div>
 	);
 };

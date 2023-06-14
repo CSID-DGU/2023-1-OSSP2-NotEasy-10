@@ -26,6 +26,7 @@ textarea {
 	flex: 1;
 	height: 5rem;
 	border: none;
+	font-size: 18px;
 }
 
 .tips_write_submit {

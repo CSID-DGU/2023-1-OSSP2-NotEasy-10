@@ -5,7 +5,7 @@
 
 .post_wrap {
 	background-color: white;
-	width: 70vw;
+	width: 50vw;
 	height: auto;
 	margin-top: 1.5rem;
 	border-radius: 0.5rem;
@@ -42,6 +42,7 @@
 }
 
 .post_content {
+	font-size: 18px;
 	background-color: #dcdada;
 	margin: 1rem 0 0 0;
 	padding: 1.5rem 1rem;
@@ -60,9 +61,16 @@
 }
 
 .onlyUser > button {
-	width: 65px;
 	border-radius: 0.5rem;
 	border-color: azure;
+}
+
+button {
+	margin: 0px 5px;
+}
+
+.post_like {
+	width: 150px;
 }
 
 .post_edit {
@@ -70,6 +78,10 @@
 	border-radius: 0.5rem;
 	border-color: azure;
 	height: 100%;
+}
+
+.post_delete {
+	width: 65px;
 }
 
 .post_content_edit {

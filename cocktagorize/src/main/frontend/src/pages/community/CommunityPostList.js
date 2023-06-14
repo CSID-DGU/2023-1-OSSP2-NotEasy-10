@@ -374,7 +374,21 @@ const CommunityPostList = () => {
 						</home.PostList>
 					)}
 				</home.NonExplore>
-
+				<a
+					href={`/community/write`}
+					style={{ marginLeft: "auto", marginRight: "60px" }}
+				>
+					<button
+						style={{
+							width: "100px",
+							borderRadius: "0.5rem",
+							borderColor: "azure",
+							height: "100%",
+						}}
+					>
+						글쓰기
+					</button>
+				</a>
 				<home.PageScroll>{pageScrollIndexButton()}</home.PageScroll>
 			</home.NonSidebar>
 			<home.Cocktailbar>

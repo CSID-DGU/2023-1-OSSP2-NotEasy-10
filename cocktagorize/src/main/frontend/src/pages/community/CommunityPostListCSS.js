@@ -24,7 +24,7 @@ export const PostList = styled.div`
 	margin-left: 25px;
 	margin-right: 25px;
 	width: 100%;
-	height: 70%;
+	height: 100%;
 `;
 
 export const NonExplore = styled.div`
