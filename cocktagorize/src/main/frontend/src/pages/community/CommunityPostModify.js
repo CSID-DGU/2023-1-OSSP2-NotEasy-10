@@ -36,7 +36,7 @@ const CommunityPostModify = () => {
   const getBoard = async (page) => {
     try {
       const boardsData = await GET(
-        `http://localhost:8080/board/${communityId}`,
+        `https://3.35.180.1:8080/board/${communityId}`,
         createTokenHeader(authCtx.token)
       );
   
@@ -54,7 +54,7 @@ const CommunityPostModify = () => {
 
   const onClickSubmit = () => {
     const boardsData = PUT(
-        `http://localhost:8080/board/${communityId}`,
+        `https://3.35.180.1:8080/board/${communityId}`,
         {
             title : boardTitle,
             content: boardContent,

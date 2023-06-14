@@ -84,7 +84,7 @@ const Home = () => {
 
 	const getAllCocktailById = async (page) => {
 		const allCocktailData = GET(
-			`http://localhost:${port}/?page=${page}`,
+			`https://3.35.180.1:${port}/?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		allCocktailData.then((result) => {
@@ -108,7 +108,7 @@ const Home = () => {
 		console.log(minDegree);
 
 		const allCocktailData = GET(
-			`http://localhost:${port}/cocktail/degree/${minDegree}/${maxDegree}?page=${page}`,
+			`https://3.35.180.1:${port}/cocktail/degree/${minDegree}/${maxDegree}?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		allCocktailData.then((result) => {
@@ -165,7 +165,7 @@ const Home = () => {
 		// console.log("온도 : " + temp);
 		// console.log("강우 여부 : " + isRainy);
 		const weatherCocktailData = GET(
-			`http://localhost:${port}/cocktail/weather/now?temp=${temp}&isRainy=${isRainy}`,
+			`https://3.35.180.1:${port}/cocktail/weather/now?temp=${temp}&isRainy=${isRainy}`,
 			createTokenHeader(authCtx.token)
 		);
 		weatherCocktailData.then((result) => {
@@ -184,7 +184,7 @@ const Home = () => {
 
 	const getWeatherCocktailData = async () => {
 		const weatherCocktailData = GET(
-			`http://localhost:${port}/cocktail/weather`,
+			`https://3.35.180.1:${port}/cocktail/weather`,
 			createTokenHeader(authCtx.token)
 		);
 		weatherCocktailData.then((result) => {
@@ -201,7 +201,7 @@ const Home = () => {
 
 	const getUserCocktailData = async () => {
 		const userCocktailData = GET(
-			`http://localhost:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`https://3.35.180.1:${port}/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
@@ -217,7 +217,7 @@ const Home = () => {
 	const getAllCocktailByName = async (page) => {
 		try {
 			const response = await axios.get(
-				`http://localhost:${port}/dictionary?page=${page}`
+				`https://3.35.180.1:${port}/dictionary?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			setCocktailList(response.data.content);
@@ -234,7 +234,7 @@ const Home = () => {
 	const getAllCocktailByLiked = async (page) => {
 		try {
 			const response = await axios.get(
-				`http://localhost:${port}/liked?page=${page}`
+				`https://3.35.180.1:${port}/liked?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			console.log(response.data);
@@ -252,7 +252,7 @@ const Home = () => {
 	const getAllCocktailByUpdate = async (page) => {
 		try {
 			const response = await axios.get(
-				`http://localhost:${port}/update?page=${page}`
+				`https://3.35.180.1:${port}/update?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			console.log(response.data);
@@ -274,7 +274,7 @@ const Home = () => {
 		}
 		try {
 			const response = await axios.get(
-				`http://localhost:${port}/cocktail/search/${name}?page=${page}`
+				`https://3.35.180.1:${port}/cocktail/search/${name}?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			setCocktailList(response.data.content);
@@ -303,7 +303,7 @@ const Home = () => {
 							.join("&");
 			// console.log(tags);
 			const response = await axios.get(
-				`http://localhost:${port}/cocktail/tag/and?${tags}&page=${page}`
+				`https://3.35.180.1:${port}/cocktail/tag/and?${tags}&page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			// console.log(response.data);
@@ -327,7 +327,7 @@ const Home = () => {
 							.map((tag) => `tags=${encodeURIComponent(tag)}`)
 							.join("&");
 			const response = await axios.get(
-				`http://localhost:${port}/cocktail/tag/or?${tags}&page=${page}`
+				`https://3.35.180.1:${port}/cocktail/tag/or?${tags}&page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			console.log(response.data);
