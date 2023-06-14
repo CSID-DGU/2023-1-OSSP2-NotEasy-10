@@ -229,7 +229,7 @@ const Favorites = () => {
 							{isLoading === false
 								? post({
 										width: "25",
-										height: "144",
+										height: "48",
 										hMargin: "10",
 										vMargin: "10",
 								  })
