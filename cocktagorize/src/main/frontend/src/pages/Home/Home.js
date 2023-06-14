@@ -40,6 +40,7 @@ const Home = () => {
 
 	const [weatherTemp, setWeatherTemp] = useState(0);
 	const [weatherisRainy, setWeatherisRainy] = useState(0);
+	const [weatherMode, setWeatherMode] = useState("사용자 위치 기반");
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -84,7 +85,7 @@ const Home = () => {
 
 	const getAllCocktailById = async (page) => {
 		const allCocktailData = GET(
-			`https://3.35.180.1:${port}/?page=${page}`,
+			`http://localhost:${port}/?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		allCocktailData.then((result) => {
@@ -105,10 +106,10 @@ const Home = () => {
 			maxDegree = 100;
 		}
 
-		console.log(minDegree);
+		// console.log(minDegree);
 
 		const allCocktailData = GET(
-			`https://3.35.180.1:${port}/cocktail/degree/${minDegree}/${maxDegree}?page=${page}`,
+			`http://localhost:${port}/cocktail/degree/${minDegree}/${maxDegree}?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		allCocktailData.then((result) => {
@@ -142,10 +143,10 @@ const Home = () => {
 						nowIsRainy = 1;
 					}
 
-					console.log(weatherData.weather[0].main);
-					console.log(weatherData.weather[0].description);
-					console.log("현재 온도 : " + nowTemp);
-					console.log("현재 강우 여부 : " + nowIsRainy);
+					// console.log(weatherData.weather[0].main);
+					// console.log(weatherData.weather[0].description);
+					// console.log("현재 온도 : " + nowTemp);
+					// console.log("현재 강우 여부 : " + nowIsRainy);
 
 					getNowWeatherCocktailData(nowTemp, nowIsRainy);
 
@@ -165,7 +166,7 @@ const Home = () => {
 		// console.log("온도 : " + temp);
 		// console.log("강우 여부 : " + isRainy);
 		const weatherCocktailData = GET(
-			`https://3.35.180.1:${port}/cocktail/weather/now?temp=${temp}&isRainy=${isRainy}`,
+			`http://localhost:${port}/cocktail/weather/now?temp=${temp}&isRainy=${isRainy}`,
 			createTokenHeader(authCtx.token)
 		);
 		weatherCocktailData.then((result) => {
@@ -184,7 +185,7 @@ const Home = () => {
 
 	const getWeatherCocktailData = async () => {
 		const weatherCocktailData = GET(
-			`https://3.35.180.1:${port}/cocktail/weather`,
+			`http://localhost:${port}/cocktail/weather`,
 			createTokenHeader(authCtx.token)
 		);
 		weatherCocktailData.then((result) => {
@@ -192,7 +193,7 @@ const Home = () => {
 				setWeatherCocktailList(result.data);
 				// setWeatherCocktailList(nowWeatherCocktailData.content);
 				setIsLoading(false);
-				console.log("회원가입 저장 날씨 기반 칵테일 : " + result.data);
+				// console.log("회원가입 저장 날씨 기반 칵테일 : " + result.data);
 				result.data.forEach((cocktail) => console.log(cocktail));
 			}
 			setIsWeatherLoading(false);
@@ -201,14 +202,14 @@ const Home = () => {
 
 	const getUserCocktailData = async () => {
 		const userCocktailData = GET(
-			`https://3.35.180.1:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://localhost:${port}/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
 			if (result !== null) {
 				setUserBasedCocktailList(result.data);
-				// console.log("유저 선호 칵테일 : " + result.data);
-				// result.data.forEach(cocktail => console.log(cocktail));
+				// // console.log("유저 선호 칵테일 : " + result.data);
+				// result.data.forEach(cocktail => // console.log(cocktail));
 			}
 		});
 	};
@@ -217,7 +218,7 @@ const Home = () => {
 	const getAllCocktailByName = async (page) => {
 		try {
 			const response = await axios.get(
-				`https://3.35.180.1:${port}/dictionary?page=${page}`
+				`http://localhost:${port}/dictionary?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			setCocktailList(response.data.content);
@@ -226,7 +227,7 @@ const Home = () => {
 			// Handle the cocktail data as needed
 		} catch (error) {
 			// Handle the error
-			console.error(error);
+			// console.error(error);
 		}
 	};
 
@@ -234,17 +235,17 @@ const Home = () => {
 	const getAllCocktailByLiked = async (page) => {
 		try {
 			const response = await axios.get(
-				`https://3.35.180.1:${port}/liked?page=${page}`
+				`http://localhost:${port}/liked?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-			console.log(response.data);
+			// console.log(response.data);
 			setCocktailList(response.data.content);
 			setMaxPage(response.data.totalPages);
 			setIsLoading(false);
 			// Handle the cocktail data as needed
 		} catch (error) {
 			// Handle the error
-			console.error(error);
+			// console.error(error);
 		}
 	};
 
@@ -252,17 +253,17 @@ const Home = () => {
 	const getAllCocktailByUpdate = async (page) => {
 		try {
 			const response = await axios.get(
-				`https://3.35.180.1:${port}/update?page=${page}`
+				`http://localhost:${port}/update?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-			console.log(response.data);
+			// console.log(response.data);
 			setCocktailList(response.data.content);
 			setMaxPage(response.data.totalPages);
 			setIsLoading(false);
 			// Handle the cocktail data as needed
 		} catch (error) {
 			// Handle the error
-			console.error(error);
+			// console.error(error);
 		}
 	};
 
@@ -274,7 +275,7 @@ const Home = () => {
 		}
 		try {
 			const response = await axios.get(
-				`https://3.35.180.1:${port}/cocktail/search/${name}?page=${page}`
+				`http://localhost:${port}/cocktail/search/${name}?page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
 			setCocktailList(response.data.content);
@@ -283,13 +284,13 @@ const Home = () => {
 			// Handle the cocktail data as needed
 		} catch (error) {
 			// Handle the error
-			console.error(error);
+			// console.error(error);
 		}
 	};
 
 	// 태그로 검색하기 AND 연산
 	const getCocktailByTagAnd = async (page, tagData) => {
-		console.log(tagData.length);
+		// console.log(tagData.length);
 		if (tagData.length === 0) {
 			getAllCocktailById(page);
 			return;
@@ -301,19 +302,19 @@ const Home = () => {
 					: tagData
 							.map((tag) => `tags=${encodeURIComponent(tag)}`)
 							.join("&");
-			// console.log(tags);
+			// // console.log(tags);
 			const response = await axios.get(
-				`https://3.35.180.1:${port}/cocktail/tag/and?${tags}&page=${page}`
+				`http://localhost:${port}/cocktail/tag/and?${tags}&page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-			// console.log(response.data);
+			// // console.log(response.data);
 			setCocktailList(response.data.content);
 			setMaxPage(response.data.totalPages);
 			setIsLoading(false);
 			// Handle the cocktail data as needed
 		} catch (error) {
 			// Handle the error
-			console.error(error);
+			// console.error(error);
 		}
 	};
 
@@ -327,17 +328,17 @@ const Home = () => {
 							.map((tag) => `tags=${encodeURIComponent(tag)}`)
 							.join("&");
 			const response = await axios.get(
-				`https://3.35.180.1:${port}/cocktail/tag/or?${tags}&page=${page}`
+				`http://localhost:${port}/cocktail/tag/or?${tags}&page=${page}`
 			);
 			// data에 전체 페이지에 대한 정보가 나와요! (totalElemets : 보내진 칵테일의 수, totalPages: 전체 페이지 수)
-			console.log(response.data);
+			// console.log(response.data);
 			setCocktailList(response.data.content);
 			setMaxPage(response.data.totalPages);
 			setIsLoading(false);
 			// Handle the cocktail data as needed
 		} catch (error) {
 			// Handle the error
-			console.error(error);
+			// console.error(error);
 		}
 	};
 	let weatherAutoScroll = useInterval(
@@ -430,50 +431,53 @@ const Home = () => {
 		}
 		let result = [];
 
-		if (userCocktailList.length === 1) {
-			result.push(
-				<div
-					style={{
-						width: "50vw",
-						height: "calc(75vh - 250px)",
-						display: "flex",
-						justifyContent: "center",
-						alignContent: "center",
-					}}
-				>
-					<span
+		if (userCocktailList.length >= 2) {
+			if (userCocktailList[0].id === userCocktailList[1].id) {
+				result.push(
+					<div
 						style={{
-							fontSize: "30px",
-							marginTop: "calc(37.5vh - 175px)",
+							width: "50vw",
+							height: "calc(75vh - 250px)",
+							display: "flex",
+							justifyContent: "center",
+							alignContent: "center",
 						}}
 					>
-						선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
-					</span>
-				</div>
-			);
-		} else {
-			for (let i = 0; i < props.amount; i++) {
-				if (userCocktailList.length > i) {
-					result.push(
-						<CocktailCard
-							horizontalMargin={props.hMargin + "px"}
-							verticalMargin={props.vMargin + "px"}
-							info={userCocktailList[i]}
-							key={userCocktailList[i].id}
-						/>
-					);
-				} else {
-					result.push(
-						<home.WeatherLoading>
-							<home.WeatherLoadingImage
-								src={weatherLoadingImage}
-								alt={weatherLoadingImage}
-							/>
-						</home.WeatherLoading>
-					);
-				}
+						<span
+							style={{
+								fontSize: "30px",
+								marginTop: "calc(37.5vh - 175px)",
+							}}
+						>
+							선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+						</span>
+					</div>
+				);
+				return result;
 			}
 		}
+		for (let i = 0; i < props.amount; i++) {
+			if (userCocktailList.length > i) {
+				result.push(
+					<CocktailCard
+						horizontalMargin={props.hMargin + "px"}
+						verticalMargin={props.vMargin + "px"}
+						info={userCocktailList[i]}
+						key={userCocktailList[i].id}
+					/>
+				);
+			} else if (userCocktailList.length === 0) {
+				result.push(
+					<home.WeatherLoading>
+						<home.WeatherLoadingImage
+							src={weatherLoadingImage}
+							alt={weatherLoadingImage}
+						/>
+					</home.WeatherLoading>
+				);
+			}
+		}
+
 		return result;
 	}
 
@@ -521,11 +525,13 @@ const Home = () => {
 	const onWeatherSortChanged = (e) => {
 		if (isWeatherLoading) return;
 		setIsWeatherLoading(true);
-		console.log("바뀜");
-		if (e.target.value === "사용자 위치 기반") {
+		// console.log("바뀜");
+		if (e.target.value === "사용자 위치") {
 			getWeatherCocktailData();
+			setWeatherMode(() => "사용자 위치 기반");
 		} else {
 			getNowPositionWeatherCocktailData();
+			setWeatherMode(() => "현재 위치 기반");
 		}
 	};
 
@@ -608,8 +614,8 @@ const Home = () => {
 				break;
 		}
 		setSortType(realSortType);
-		console.log("sortType : " + sortType);
-		// console.log(cocktailList);
+		// // // console.log("sortType : " + sortType);
+		// // // console.log(cocktailList);
 	}
 
 	function pageScrollIndexButton() {
@@ -756,6 +762,24 @@ const Home = () => {
 		return result;
 	}
 
+	function weatherText() {
+		// console.log(weatherMode);
+		if (weatherMode === "현재 위치 기반") {
+			return (
+				<home.WeatherInfo>
+					{"날씨 기반 칵테일 추천 : " +
+						weatherTemp.toFixed(1) +
+						"°C, " +
+						(weatherisRainy === 1 ? "비" : "맑음")}
+				</home.WeatherInfo>
+			);
+		} else {
+			return (
+				<home.WeatherInfo>{"날씨 기반 칵테일 추천"}</home.WeatherInfo>
+			);
+		}
+	}
+
 	return (
 		<home.Entire>
 			{isModal === true ? (
@@ -786,13 +810,7 @@ const Home = () => {
 							<home.WeatherNUserCocktail>
 								<home.Weather>
 									<home.WeatherInfoBox>
-										<home.WeatherInfo>
-											{"날씨 기반 칵테일 추천 : "}
-											{weatherTemp.toFixed(1)}°C,{" "}
-											{weatherisRainy === 1
-												? "비"
-												: "맑음"}
-										</home.WeatherInfo>
+										{weatherText()}
 										<home.WeatherSearchOption
 											onChange={(e) =>
 												onWeatherSortChanged(e)

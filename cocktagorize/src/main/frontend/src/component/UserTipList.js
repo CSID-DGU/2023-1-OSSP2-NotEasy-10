@@ -53,7 +53,7 @@ const UserTipList = ({ tips }) => {
 		console.log(`추가된 댓글: ${newTip}`);
 		setNewTip("");
 		const result = POST(
-			`https://3.35.180.1:8080/cocktail/${cocktail_id}/reply`,
+			`http://localhost:8080/cocktail/${cocktail_id}/reply`,
 			{
 				content: newTip,
 			},

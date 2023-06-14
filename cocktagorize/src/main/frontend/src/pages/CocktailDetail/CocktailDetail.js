@@ -32,28 +32,28 @@ const Ingredient = styled.span`
 		switch (props.category) {
 			case "INGREDIENT":
 				return css`
-               background-color: #6e41e2;
-            `;
+					background-color: #6e41e2;
+				`;
 			case "ALCOHOL":
 				return css`
-               background-color: brown;
-            `;
+					background-color: brown;
+				`;
 			case "JUICE":
 				return css`
-               background-color: #ff0066;
-            `;
+					background-color: #ff0066;
+				`;
 			case "BITTER":
 				return css`
-               background-color: #660033;
-            `;
+					background-color: #660033;
+				`;
 			case "MILK":
 				return css`
-               background-color: #0080ff;
-            `;
+					background-color: #0080ff;
+				`;
 			case "SYRUP":
 				return css`
-               background-color: #cccc00;
-            `;
+					background-color: #cccc00;
+				`;
 		}
 	}};
 `;
@@ -85,7 +85,7 @@ const CocktailDetail = () => {
 	useEffect(() => {
 		const getCocktailDetails = async () => {
 			const result = GET(
-				`https://3.35.180.1:8080/cocktail/${cocktail_id}`,
+				`http://localhost:8080/cocktail/${cocktail_id}`,
 				createTokenHeader(authCtx.token)
 			);
 			result.then((result) => {
@@ -108,7 +108,7 @@ const CocktailDetail = () => {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`https://3.35.180.1:8080/cocktail/${id}/like`,
+				`http://localhost:8080/cocktail/${id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);
@@ -132,7 +132,7 @@ const CocktailDetail = () => {
 		};
 
 		// API 엔드포인트 URL
-		const apiUrl = `https://3.35.180.1:8080/cocktail/${cocktail.id}/tts`;
+		const apiUrl = `http://localhost:8080/cocktail/${cocktail.id}/tts`;
 
 		// API 요청
 
@@ -145,7 +145,7 @@ const CocktailDetail = () => {
 		});
 		/*
         const result = POST(
-           `https://3.35.180.1:8080/cocktail/${cocktail.id}/tts`,
+           `http://localhost:8080/cocktail/${cocktail.id}/tts`,
            {
               method: "POST",
               body: JSON.stringify(requestData),
@@ -263,8 +263,8 @@ const CocktailDetail = () => {
 								<div className="similar_liked">
 									<p></p> <VscHeart />
 									<span className="liked_amount">
-                              {cocktail.similarCocktail.liked}
-                           </span>
+										{cocktail.similarCocktail.liked}
+									</span>
 								</div>
 								<a
 									href={`/cocktail/${cocktail.similarCocktail.id}`}
@@ -294,18 +294,18 @@ const CocktailDetail = () => {
 									))}
 									<p>도수: </p>
 									<span className="alchol">
-                              {cocktail.alcholeDegree}도
-                           </span>
+										{cocktail.alcholeDegree}도
+									</span>
 									<p>추천잔: </p>
 									<span className="glass">
-                              {cocktail.glassType}
-                           </span>
+										{cocktail.glassType}
+									</span>
 								</div>
 								<div className="info_right">
 									<p>레시피: </p>
 									<span className="order">
-                              {cocktail.recipe}
-                           </span>
+										{cocktail.recipe}
+									</span>
 								</div>
 							</div>
 						</div>

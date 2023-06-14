@@ -43,7 +43,7 @@ const CommunityPostList = () => {
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
-			`https://3.35.180.1:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://localhost:8080/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
@@ -106,7 +106,7 @@ const CommunityPostList = () => {
 	// 게시글 들을 불러오는 함수
 	const getAllBoards = async (page) => {
 		const boardsData = GET(
-			`https://3.35.180.1:${port}/board?page=${page}`,
+			`http://localhost:8080/board?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -124,7 +124,7 @@ const CommunityPostList = () => {
 	// 정렬기준 dictionary
 	const getAllBoardsByDic = async (page) => {
 		const boardsData = GET(
-			`https://3.35.180.1:${port}/board/dictionary?page=${page}`,
+			`http://localhost:8080/board/dictionary?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -140,7 +140,7 @@ const CommunityPostList = () => {
 	// 정렬기준 좋아요 많은 순
 	const getAllBoardsByLiked = async (page) => {
 		const boardsData = GET(
-			`https://3.35.180.1:${port}/board/liked?page=${page}`,
+			`http://localhost:8080/board/liked?page=${page}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -163,7 +163,7 @@ const CommunityPostList = () => {
 		}
 		const nameURL = encodeURI(name);
 		const boardsData = GET(
-			`https://3.35.180.1:${port}/board/title/${nameURL}`,
+			`http://localhost:8080/board/title/${nameURL}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -183,7 +183,7 @@ const CommunityPostList = () => {
 		}
 		const contentURL = encodeURI(content);
 		const boardsData = GET(
-			`https://3.35.180.1:${port}/board/content/${contentURL}`,
+			`http://localhost:8080/board/content/${contentURL}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {

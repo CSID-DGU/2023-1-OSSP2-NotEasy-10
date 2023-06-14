@@ -26,7 +26,7 @@ const UserTip = (tip) => {
 		// axios로 삭제요청 보내면 서버에서 replyList 업데이트해야함
 		console.log("삭제된 댓글 아이디:", tip.tip.id);
 		const result = DELETE(
-			`https://3.35.180.1:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+			`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
 			createTokenHeader(authCtx.token)
 		);
 		result.then((result) => {
@@ -42,7 +42,7 @@ const UserTip = (tip) => {
 		console.log("수정된 내용:", editedComment);
 		setIsEditing(false);
 		const result = PUT(
-			`https://3.35.180.1:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+			`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
 			{
 				content: editedComment,
 			},

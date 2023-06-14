@@ -47,7 +47,7 @@ const CommunityPostWrite = () => {
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
-			`http://3.35.180.1:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://localhost:8080/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
