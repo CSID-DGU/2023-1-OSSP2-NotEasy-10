@@ -141,38 +141,39 @@ const CommunityPost = () => {
 					</div>
 					<hr />
 					<div className="post_content">{board.content}</div>
-					{board.user.nickname === authCtx.userObj.nickname && (
-						<div className="onlyUser">
-							<button
-								className="post_like"
-								onClick={() => likeClicked(board.id)}
-							>
-								{isLike ? (
-									<>
-										<span>좋아요 취소 </span>
-										<VscHeartFilled
-											style={{ color: "red" }}
-										/>
-									</>
-								) : (
-									<>
-										<span>좋아요 </span>
-										<VscHeartFilled />
-									</>
-								)}
-								{like}
-							</button>
-							<Link to={`/community/${communityId}/modify`}>
-								<button className="post_edit">수정</button>
-							</Link>
-							<button
-								className="post_delete"
-								onClick={handleDelete}
-							>
-								삭제
-							</button>
-						</div>
-					)}
+
+					<div className="onlyUser">
+						<button
+							className="post_like"
+							onClick={() => likeClicked(board.id)}
+						>
+							{isLike ? (
+								<>
+									<span>좋아요 취소 </span>
+									<VscHeartFilled style={{ color: "red" }} />
+								</>
+							) : (
+								<>
+									<span>좋아요 </span>
+									<VscHeartFilled />
+								</>
+							)}
+							{like}
+						</button>
+						{board.user.nickname === authCtx.userObj.nickname && (
+							<>
+								<Link to={`/community/${communityId}/modify`}>
+									<button className="post_edit">수정</button>
+								</Link>
+								<button
+									className="post_delete"
+									onClick={handleDelete}
+								>
+									삭제
+								</button>
+							</>
+						)}
+					</div>
 				</div>
 				<UserCommentList tips={boardReplyList} />
 			</div>
