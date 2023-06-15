@@ -88,7 +88,7 @@ const CocktailDetail = () => {
 		const getCocktailDetails = async () => {
 			const result = GET(
 				`http://localhost:8080/cocktail/${cocktail_id}`,
-				createTokenHeader(authCtx.token)
+				createTokenHeader(authCtx.token )
 			);
 			result.then((result) => {
 				if (result !== null) {
