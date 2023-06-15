@@ -122,7 +122,7 @@ function Post(props) {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`http://localhost:8080/board/${props.info.id}/like`,
+				`http://3.35.180.1:8080/board/${props.info.id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);

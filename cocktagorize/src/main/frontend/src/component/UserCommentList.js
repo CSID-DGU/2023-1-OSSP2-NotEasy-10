@@ -55,7 +55,7 @@ const UserCommentList = ({ tips }) => {
 		console.log(`추가된 댓글: ${newTip}`);
 		setNewTip("");
 		const result = POST(
-			`http://localhost:8080/board/${communityId}/reply`,
+			`http://3.35.180.1:8080/board/${communityId}/reply`,
 			{
 				content: newTip,
 			},

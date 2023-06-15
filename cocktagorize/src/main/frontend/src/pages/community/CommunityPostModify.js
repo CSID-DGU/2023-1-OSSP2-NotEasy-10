@@ -39,7 +39,7 @@ const CommunityPostModify = () => {
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
-			`http://localhost:8080/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://3.35.180.1:8080/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
@@ -64,7 +64,7 @@ const CommunityPostModify = () => {
 	const getBoard = async (page) => {
 		try {
 			const boardsData = await GET(
-				`http://localhost:8080/board/${communityId}`,
+				`http://3.35.180.1:8080/board/${communityId}`,
 				createTokenHeader(authCtx.token)
 			);
 
@@ -93,7 +93,7 @@ const CommunityPostModify = () => {
 		}
 
 		const boardsData = PUT(
-			`http://localhost:8080/board/${communityId}`,
+			`http://3.35.180.1:8080/board/${communityId}`,
 			{
 				title: boardTitle,
 				content: boardContent,

@@ -57,7 +57,7 @@ const CommunityPost = () => {
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
-			`http://localhost:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://3.35.180.1:8080/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
@@ -71,7 +71,7 @@ const CommunityPost = () => {
 
 	const getBoard = async (page) => {
 		const boardsData = GET(
-			`http://localhost:8080/board/${communityId}`,
+			`http://3.35.180.1:8080/board/${communityId}`,
 			createTokenHeader(authCtx.token)
 		);
 		boardsData.then((result) => {
@@ -95,7 +95,7 @@ const CommunityPost = () => {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`http://localhost:8080/board/${id}/like`,
+				`http://3.35.180.1:8080/board/${id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);
@@ -114,7 +114,7 @@ const CommunityPost = () => {
 	const handleDelete = () => {
 		if (window.confirm("정말 삭제하시겠습니까??") == true) {
 			const boardsData = DELETE(
-				`http://localhost:8080/board/${communityId}`,
+				`http://3.35.180.1:8080/board/${communityId}`,
 				createTokenHeader(authCtx.token)
 			);
 			boardsData.then((result) => {

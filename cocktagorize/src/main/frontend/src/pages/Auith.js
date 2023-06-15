@@ -3,7 +3,7 @@ import axios from "axios";
 export function login(data) {
 	return (dispatch) => {
 		return axios
-			.post("http://localhost:8080/user/login", data)
+			.post("http://3.35.180.1:8080/user/login", data)
 			.then((res) => {
 				const token = res.data.accessToken;
 				const expiresIn = res.data.tokenExpiresIn;

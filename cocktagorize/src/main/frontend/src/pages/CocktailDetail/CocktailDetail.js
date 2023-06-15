@@ -87,7 +87,7 @@ const CocktailDetail = () => {
 	useEffect(() => {
 		const getCocktailDetails = async () => {
 			const result = GET(
-				`http://localhost:8080/cocktail/${cocktail_id}`,
+				`http://3.35.180.1:8080/cocktail/${cocktail_id}`,
 				createTokenHeader(authCtx.token)
 			);
 			result.then((result) => {
@@ -114,7 +114,7 @@ const CocktailDetail = () => {
 		// 로그인을 했다면
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`http://localhost:8080/cocktail/${id}/like`,
+				`http://3.35.180.1:8080/cocktail/${id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);
@@ -138,7 +138,7 @@ const CocktailDetail = () => {
 		};
 
 		// API 엔드포인트 URL
-		const apiUrl = `http://localhost:8080/cocktail/${cocktail.id}/tts`;
+		const apiUrl = `http://3.35.180.1:8080/cocktail/${cocktail.id}/tts`;
 
 		// API 요청
 
@@ -151,7 +151,7 @@ const CocktailDetail = () => {
 		});
 		/*
         const result = POST(
-           `http://localhost:8080/cocktail/${cocktail.id}/tts`,
+           `http://3.35.180.1:8080/cocktail/${cocktail.id}/tts`,
            {
               method: "POST",
               body: JSON.stringify(requestData),
@@ -206,7 +206,7 @@ const CocktailDetail = () => {
 	const similarLikeClicked = async (event) => {
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`http://localhost:8080/cocktail/${cocktail.similarCocktail.id}/like`,
+				`http://3.35.180.1:8080/cocktail/${cocktail.similarCocktail.id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);

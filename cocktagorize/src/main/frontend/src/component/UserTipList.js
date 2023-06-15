@@ -63,7 +63,7 @@ const UserTipList = ({ tips }) => {
 		}
 		setNewTip("");
 		const result = POST(
-			`http://localhost:8080/cocktail/${cocktail_id}/reply`,
+			`http://3.35.180.1:8080/cocktail/${cocktail_id}/reply`,
 			{
 				content: newTip,
 			},

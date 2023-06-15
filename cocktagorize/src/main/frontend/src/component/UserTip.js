@@ -27,7 +27,7 @@ const UserTip = (tip) => {
 		if (window.confirm("정말 삭제하시겠습니까??") == true) {
 			console.log("삭제된 댓글 아이디:", tip.tip.id);
 			const result = DELETE(
-				`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+				`http://3.35.180.1:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
 				createTokenHeader(authCtx.token)
 			);
 			result.then((result) => {
@@ -50,7 +50,7 @@ const UserTip = (tip) => {
 			return;
 		}
 		const result = PUT(
-			`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+			`http://3.35.180.1:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
 			{
 				content: editedComment,
 			},

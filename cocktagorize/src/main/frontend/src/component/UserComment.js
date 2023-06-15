@@ -24,21 +24,22 @@ const UserComment = (tip) => {
 
 	const handleDelete = () => {
 		// axios로 삭제요청 보내면 서버에서 replyList 업데이트해야함
-		if (window.confirm("정말 삭제하시겠습니까??") == true) {
-			console.log("삭제된 댓글 아이디:", tip.tip.id);
-			const result = DELETE(
-				`http://localhost:8080/board/${communityId}/reply/${tip.tip.id}`,
-				createTokenHeader(authCtx.token)
-			);
-			result.then((result) => {
-				if (result !== null) {
-					alert("댓글이 삭제되었습니다!");
-					window.location.replace(`/community/${communityId}`);
-				}
-			});
-		} else {
-			return false;
+
+		if (window.confirm("정말 삭제하시겠습니까??") == false) {
+			return;
 		}
+
+		console.log("삭제된 댓글 아이디:", tip.tip.id);
+		const result = DELETE(
+			`https://3.35.180.1:8080/board/${communityId}/reply/${tip.tip.id}`,
+			createTokenHeader(authCtx.token)
+		);
+		result.then((result) => {
+			if (result !== null) {
+				alert("댓글이 삭제되었습니다!");
+				window.location.replace(`/community/${communityId}`);
+			}
+		});
 	};
 
 	const handleSave = () => {
@@ -48,10 +49,11 @@ const UserComment = (tip) => {
 			alert("댓글을 입력해주세요!");
 			return;
 		}
+
 		console.log("수정된 내용:", editedComment);
 		setIsEditing(false);
 		const result = PUT(
-			`http://localhost:8080/board/${communityId}/reply/${tip.tip.id}`,
+			`https://3.35.180.1:8080/board/${communityId}/reply/${tip.tip.id}`,
 			{
 				content: editedComment,
 			},
@@ -87,10 +89,10 @@ const UserComment = (tip) => {
 					<p className="tip_name">{tip.tip.user.nickname}</p>
 					{isEditing ? (
 						<textarea
-							style={{ resize: "none" }}
 							className="tip_content"
 							value={editedComment}
 							onChange={handleEditedCommentChange}
+							style={{ resize: "none" }}
 						></textarea>
 					) : (
 						<p className="tip_content">{tip.tip.content}</p>
