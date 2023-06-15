@@ -20,7 +20,7 @@ const CommunityPost = () => {
 	const [isLike, setIsLike] = useState();
 	const [like, setLike] = useState(0);
 
-	const [cocktailList, setCocktailList] = useState([]);
+	const [userCocktailList, setUserCocktailList] = useState([]);
 	const port = 8080;
 
 	const [board, setBoard] = useState();
@@ -62,7 +62,7 @@ const CommunityPost = () => {
 		);
 		userCocktailData.then((result) => {
 			if (result !== null) {
-				setCocktailList(result.data);
+				setUserCocktailList(result.data);
 				// console.log("유저 선호 칵테일 : " + result.data);
 				// result.data.forEach(cocktail => console.log(cocktail));
 			}
@@ -130,6 +130,48 @@ const CommunityPost = () => {
 		return new Date(time).toLocaleString(); // Date 형식으로 변환
 	}
 
+	function userCocktailCard(props) {
+		if (userCocktailList.length === 0) {
+			return;
+		}
+		let result = [];
+
+		if (userCocktailList.length >= 2) {
+			if (userCocktailList[0].id === userCocktailList[1].id) {
+				result.push(
+					<div
+						style={{
+							width: "15vw",
+							height: "calc(250px)",
+							display: "flex",
+							justifyContent: "center",
+							alignContent: "center",
+							marginTop: "calc(37.5vh - 175px)",
+						}}
+					>
+						<span
+							style={{
+								fontSize: "15px",
+								marginTop: "calc(37.5vh - 175px)",
+							}}
+						>
+							선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+						</span>
+					</div>
+				);
+				return result;
+			}
+		}
+		result.push(
+			<CocktailCard
+				horizontalMargin={"10px"}
+				verticalMargin={"10vh"}
+				info={userCocktailList[0]}
+			/>
+		);
+		return result;
+	}
+
 	return (
 		<div className="CommunityPost">
 			<Sidebar />
@@ -183,11 +225,7 @@ const CommunityPost = () => {
 				</div>
 				<UserCommentList tips={boardReplyList} />
 			</div>
-			<CocktailCard
-				horizontalMargin={"10px"}
-				verticalMargin={"10vh"}
-				info={cocktailList[0]}
-			/>
+			{userCocktailCard()}
 		</div>
 	);
 };
