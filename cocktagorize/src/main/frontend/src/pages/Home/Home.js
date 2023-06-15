@@ -803,9 +803,7 @@ const Home = () => {
 					<home.SearchUI>{searchUI()}</home.SearchUI>
 				</home.Explore>
 				<home.NonExplore id="NonExplore">
-					{isLogin &&
-					page === 0 &&
-					(sortType <= 3 || sortType == 8) ? (
+					{isLogin && page === 0 ? (
 						<home.LoginContent>
 							<home.WeatherNUserCocktail>
 								<home.Weather>
