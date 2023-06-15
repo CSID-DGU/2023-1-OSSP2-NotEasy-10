@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../component/common/sidebar/Sidebar";
 import CocktailCard from "../../component/cocktailCard";
 import "./CommunityPost.css";
+import * as home from "./CommunityPostCSS.js";
 import UserCommentList from "../../component/UserCommentList";
 import PostTag from "../../component/common/PostTag";
 import { Link, useParams } from "react-router-dom";
@@ -9,12 +10,13 @@ import { VscHeartFilled } from "react-icons/vsc";
 import AuthContext from "../../jwt/auth-context";
 import { DELETE, GET, PUT } from "../../jwt/fetch-auth-action";
 import { createTokenHeader } from "../../jwt/auth-action";
+import useInterval from "../../component/common/UseInterval.js";
+import loadingImage from "../../images/loading.png";
+import weatherLoadingImage from "../../images/loading.png";
+import { getCurrentWeatherData } from "../../Weather";
 
 const CommunityPost = () => {
 	const { communityId } = useParams();
-	const authCtx = useContext(AuthContext);
-	let isLogin = authCtx.isLoggedIn;
-	let isGetUser = authCtx.isGetUserSuccess;
 	const [isLike, setIsLike] = useState();
 	const [like, setLike] = useState(0);
 
@@ -24,9 +26,11 @@ const CommunityPost = () => {
 	const [board, setBoard] = useState();
 	const [boardReplyList, setBoardReplyList] = useState([]);
 
-	useEffect(() => {
-		getBoard();
-	}, []);
+	const [isLoading, setIsLoading] = useState(true);
+
+	const authCtx = useContext(AuthContext);
+	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
 
 	useEffect(() => {
 		if (isLogin) {
@@ -40,6 +44,16 @@ const CommunityPost = () => {
 			getCocktailData();
 		}
 	}, [isGetUser]);
+
+	useEffect(() => {
+		getBoard();
+	}, []);
+
+	useEffect(() => {
+		if (isLogin) {
+			authCtx.getUser();
+		}
+	}, [isLogin]);
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
@@ -170,8 +184,8 @@ const CommunityPost = () => {
 				<UserCommentList tips={boardReplyList} />
 			</div>
 			<CocktailCard
-				verticalMargin="10vh"
-				horizontalMargin="10px"
+				horizontalMargin={"10px"}
+				verticalMargin={"10vh"}
 				info={cocktailList[0]}
 			/>
 		</div>

@@ -11,6 +11,7 @@ const CommunityPostModify = () => {
 	const { communityId } = useParams();
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
 
 	const [boardTitle, setBoardTitle] = useState("");
 	const title = boardTitle;
@@ -26,6 +27,28 @@ const CommunityPostModify = () => {
 	const content = boardContent;
 	const onChangeContent = (e) => {
 		setBoardContent(e.target.value);
+	};
+
+	const [userCocktailList, setUserCocktailList] = useState([]);
+	useEffect(() => {
+		if (isGetUser) {
+			// User 정보를 불러와야지 이 함수를 호출 가능해서 여기다 작성
+			getCocktailData();
+		}
+	}, [isGetUser]);
+
+	const getCocktailData = async () => {
+		const userCocktailData = GET(
+			`http://localhost:8080/cocktail/prefer/${authCtx.userObj.username}`,
+			createTokenHeader(authCtx.token)
+		);
+		userCocktailData.then((result) => {
+			if (result !== null) {
+				setUserCocktailList(result.data);
+				// console.log("유저 선호 칵테일 : " + result.data);
+				// result.data.forEach(cocktail => console.log(cocktail));
+			}
+		});
 	};
 
 	useEffect(() => {
@@ -84,6 +107,48 @@ const CommunityPostModify = () => {
 		});
 	};
 
+	function userCocktailCard(props) {
+		if (userCocktailList.length === 0) {
+			return;
+		}
+		let result = [];
+
+		if (userCocktailList.length >= 2) {
+			if (userCocktailList[0].id === userCocktailList[1].id) {
+				result.push(
+					<div
+						style={{
+							width: "15vw",
+							height: "calc(250px)",
+							display: "flex",
+							justifyContent: "center",
+							alignContent: "center",
+							marginTop: "calc(37.5vh - 175px)",
+						}}
+					>
+						<span
+							style={{
+								fontSize: "14px",
+								marginTop: "calc(37.5vh - 175px)",
+							}}
+						>
+							선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+						</span>
+					</div>
+				);
+				return result;
+			}
+		}
+		result.push(
+			<CocktailCard
+				horizontalMargin={"10px"}
+				verticalMargin={"10vh"}
+				info={userCocktailList[0]}
+			/>
+		);
+		return result;
+	}
+
 	return (
 		<div className="CommunityPostModify">
 			<Sidebar />
@@ -121,7 +186,7 @@ const CommunityPostModify = () => {
 					onClick={onClickSubmit}
 				/>
 			</div>
-			<CocktailCard />
+			{userCocktailCard()}
 		</div>
 	);
 };
