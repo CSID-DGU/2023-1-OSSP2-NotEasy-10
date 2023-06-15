@@ -128,7 +128,7 @@ const CommunityPostModify = () => {
 					>
 						<span
 							style={{
-								fontSize: "14px",
+								fontSize: "15px",
 								marginTop: "calc(37.5vh - 175px)",
 							}}
 						>

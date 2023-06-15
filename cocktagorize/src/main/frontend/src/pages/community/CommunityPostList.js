@@ -249,8 +249,7 @@ const CommunityPostList = () => {
 			default:
 				sortType = 0;
 		}
-		if (sortType <= 3 && searchText !== "") sortType = 4;
-		setSortType(sortType);
+		setSortType(() => sortType);
 	};
 	/*
 	function sort(tags, type) {
