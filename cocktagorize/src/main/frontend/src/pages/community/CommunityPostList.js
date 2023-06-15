@@ -563,7 +563,7 @@ const CommunityPostList = () => {
 					/>
 				</home.Explore>
 				<home.NonExplore>
-					{postList.length === 0 ? (
+					{isLoading === true ? (
 						<home.Loading>
 							<home.LoadingImage
 								src={loadingImage}
