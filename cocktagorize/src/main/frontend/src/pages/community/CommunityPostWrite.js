@@ -22,7 +22,7 @@ const CommunityPostWrite = () => {
 	};
 
 	const port = 8080;
-	const [cocktailList, setCocktailList] = useState([]);
+	const [userCocktailList, setUserCocktailList] = useState([]);
 
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
@@ -47,24 +47,65 @@ const CommunityPostWrite = () => {
 
 	const getCocktailData = async () => {
 		const userCocktailData = GET(
-			`http://3.35.180.1:${port}/cocktail/prefer/${authCtx.userObj.username}`,
+			`http://localhost:8080/cocktail/prefer/${authCtx.userObj.username}`,
 			createTokenHeader(authCtx.token)
 		);
 		userCocktailData.then((result) => {
 			if (result !== null) {
-				setCocktailList(result.data);
+				setUserCocktailList(result.data);
 				// console.log("유저 선호 칵테일 : " + result.data);
 				// result.data.forEach(cocktail => console.log(cocktail));
 			}
 		});
 	};
 
+	function userCocktailCard(props) {
+		if (userCocktailList.length === 0) {
+			return;
+		}
+		let result = [];
+
+		if (userCocktailList.length >= 2) {
+			if (userCocktailList[0].id === userCocktailList[1].id) {
+				result.push(
+					<div
+						style={{
+							width: "15vw",
+							height: "calc(250px)",
+							display: "flex",
+							justifyContent: "center",
+							alignContent: "center",
+							marginTop: "calc(37.5vh - 175px)",
+						}}
+					>
+						<span
+							style={{
+								fontSize: "14px",
+								marginTop: "calc(37.5vh - 175px)",
+							}}
+						>
+							선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+						</span>
+					</div>
+				);
+				return result;
+			}
+		}
+		result.push(
+			<CocktailCard
+				horizontalMargin={"10px"}
+				verticalMargin={"10vh"}
+				info={userCocktailList[0]}
+			/>
+		);
+		return result;
+	}
+
 	const onClickSubmit = () => {
 		if (title === "") {
 			alert("제목을 입력해주세요!");
 			return;
 		}
-
 		if (content === "") {
 			alert("내용을 입력해주세요!");
 			return;
@@ -127,11 +168,8 @@ const CommunityPostWrite = () => {
 					/>
 				</div>
 			</div>
-			<CocktailCard
-				horizontalMargin={"10px"}
-				verticalMargin={"10vh"}
-				info={cocktailList[0]}
-			/>
+
+			{userCocktailCard()}
 		</div>
 	);
 };

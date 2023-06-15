@@ -209,7 +209,7 @@ function CocktailCard(props) {
 	const likeClicked = async (event) => {
 		if (authCtx.isLoggedIn) {
 			const result = PUT(
-				`https://3.35.180.1:8080/cocktail/${props.info.id}/like`,
+				`http://localhost:8080/cocktail/${props.info.id}/like`,
 				null,
 				createTokenHeader(authCtx.token)
 			);

@@ -24,36 +24,33 @@ const UserTip = (tip) => {
 
 	const handleDelete = () => {
 		// axios로 삭제요청 보내면 서버에서 replyList 업데이트해야함
-
-		if (window.confirm("정말 삭제하시겠습니까??") == false) {
-			return;
+		if (window.confirm("정말 삭제하시겠습니까??") == true) {
+			console.log("삭제된 댓글 아이디:", tip.tip.id);
+			const result = DELETE(
+				`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+				createTokenHeader(authCtx.token)
+			);
+			result.then((result) => {
+				if (result !== null) {
+					alert("댓글이 삭제되었습니다!");
+					window.location.replace(`/cocktail/${cocktail_id}`);
+				}
+			});
+		} else {
+			return false;
 		}
-
-		console.log("삭제된 댓글 아이디:", tip.tip.id);
-		const result = DELETE(
-			`https://3.35.180.1:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
-			createTokenHeader(authCtx.token)
-		);
-		result.then((result) => {
-			if (result !== null) {
-				alert("댓글이 삭제되었습니다!");
-				window.location.replace(`/cocktail/${cocktail_id}`);
-			}
-		});
 	};
 
 	const handleSave = () => {
 		// axios로 수정된 사항('content: editedComment')을 보내면 서버에서 replyList에서 해당 변경내용을 업데이트해야함
-
+		console.log("수정된 내용:", editedComment);
+		setIsEditing(false);
 		if (editedComment === "") {
 			alert("댓글을 입력해주세요!");
 			return;
 		}
-
-		console.log("수정된 내용:", editedComment);
-		setIsEditing(false);
 		const result = PUT(
-			`https://3.35.180.1:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
+			`http://localhost:8080/cocktail/${cocktail_id}/reply/${tip.tip.id}`,
 			{
 				content: editedComment,
 			},

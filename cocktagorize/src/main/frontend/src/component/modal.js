@@ -284,7 +284,7 @@ const Modal = (props) => {
 	}, []);
 	const getAllTag = async () => {
 		try {
-			const response = await axios.get(`https://3.35.180.1:8080/tag/all`);
+			const response = await axios.get(`http://localhost:8080/tag/all`);
 
 			response.data.map((info) => {
 				info.mode = "add";
@@ -340,7 +340,7 @@ const Modal = (props) => {
 		{
 			categoryName: "술",
 			categoryCode: "ALCOHOL",
-			height: 120,
+			height: 160,
 			tags: [],
 		},
 		{

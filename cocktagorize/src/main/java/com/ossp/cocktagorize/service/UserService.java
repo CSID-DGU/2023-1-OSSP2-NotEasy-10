@@ -7,6 +7,7 @@ import com.ossp.cocktagorize.data.dto.UserJoinDto;
 import com.ossp.cocktagorize.data.dto.UserRequestDto;
 import com.ossp.cocktagorize.data.dto.UserResponseDto;
 import com.ossp.cocktagorize.data.entity.PreferTag;
+import com.ossp.cocktagorize.data.entity.User;
 import com.ossp.cocktagorize.data.repository.PreferTagRepository;
 import com.ossp.cocktagorize.data.repository.TagRepository;
 import com.ossp.cocktagorize.data.repository.UserRepository;
@@ -57,7 +58,10 @@ public class UserService {
 
     @Transactional
     public void registerPreferTag(UserJoinDto userJoinDto) {
-        preferTagRepository.deleteAll();
+        User user = userRepository.findByUsername(userJoinDto.getUsername());
+        if (user != null) {
+            preferTagRepository.deleteByUser(user);
+        }
         PreferTag preferTag = null;
         for (String tagName : userJoinDto.getPreferTagList()) {
             preferTag = new PreferTag(userRepository.findByUsername(userJoinDto.getUsername()), tagRepository.findTagByName(tagName));

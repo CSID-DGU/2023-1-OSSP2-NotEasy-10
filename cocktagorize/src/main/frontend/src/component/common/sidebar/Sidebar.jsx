@@ -92,6 +92,7 @@ export default function Sidebar() {
 				)}
 			</ul>
 			<hr></hr>
+
 			{authCtx.isLoggedIn ? (
 				<div className="dropdown">
 					<VscAccount />{" "}
