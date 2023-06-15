@@ -30,7 +30,6 @@ public class CocktailDetailservice {
     private CocktailRepository cocktailRepository;
 
     private final double PORTION = 0.8;
-
     @Transactional
     public CocktailDetailResponseDto getCocktailDetailAndLike(int id,Authentication authentication){
         Cocktail cocktail = cocktailDetailrepository.findById(id);
