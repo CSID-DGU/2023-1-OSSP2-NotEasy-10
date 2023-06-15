@@ -57,9 +57,13 @@ const UserTipList = ({ tips }) => {
 		}
 
 		console.log(`추가된 댓글: ${newTip}`);
+		if (newTip === "") {
+			alert("댓글을 입력해주세요!");
+			return;
+		}
 		setNewTip("");
 		const result = POST(
-			`https://3.35.180.1:8080/cocktail/${cocktail_id}/reply`,
+			`http://3.35.180.1:8080/cocktail/${cocktail_id}/reply`,
 			{
 				content: newTip,
 			},

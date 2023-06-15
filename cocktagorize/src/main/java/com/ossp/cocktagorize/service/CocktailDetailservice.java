@@ -29,8 +29,7 @@ public class CocktailDetailservice {
     @Autowired
     private CocktailRepository cocktailRepository;
 
-    private final double PORTION = 0.4;
-
+    private final double PORTION = 0.8;
     @Transactional
     public CocktailDetailResponseDto getCocktailDetailAndLike(int id,Authentication authentication){
         Cocktail cocktail = cocktailDetailrepository.findById(id);
@@ -155,7 +154,7 @@ public class CocktailDetailservice {
             return 9;
         }
         if (tag.getTag().getCategory() == TagType.BITTER) {
-            return 6;
+            return 7;
         }
         if (tag.getTag().getCategory() == TagType.JUICE) {
             return 6;

@@ -27,7 +27,7 @@ const Card = styled.div`
 `;
 
 const TitleContainer = styled.div`
-	margin: 12px 10px;
+	margin: 8px 10px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -62,7 +62,7 @@ const TitleText = styled.p`
 
 const InfoContainer = styled.div`
 	width: 100%;
-	height: calc(100% - 50px);
+	height: calc(100% - 70px);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -97,7 +97,7 @@ const HeartContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	margin: 0px 10px;
+	margin: 0px 15px;
 	margin-top: auto;
 	margin-bottom: 10px;
 	-webkit-user-select: none;
@@ -118,26 +118,6 @@ function Post(props) {
 
 	useEffect(() => {}, []);
 
-	const likeClicked = async (event) => {
-		// 로그인을 했다면
-		if (authCtx.isLoggedIn) {
-			const result = PUT(
-				`https://3.35.180.1:8080/board/${props.info.id}/like`,
-				null,
-				createTokenHeader(authCtx.token)
-			);
-			result.then((result) => {
-				if (result !== null) {
-					setLike(result.data.liked);
-					setIsLike(!isLike);
-					console.log(result);
-				}
-			});
-		} else {
-			alert("로그인을 해주세요!");
-		}
-	};
-
 	return (
 		<Link to={`/community/${props.info.id}`}>
 			<Card
@@ -154,14 +134,16 @@ function Post(props) {
 				<InfoContainer>
 					<InfoText>{props.info.content}</InfoText>
 				</InfoContainer>
-				{/*<HeartContainer>
-					{isLike ? (
-						<VscHeartFilled style={{ color: "red" }} />
-					) : (
-						<VscHeartFilled />
-					)}
-					<HeartText>{like}</HeartText>
-				</HeartContainer>*/}
+				{like !== undefined ? (
+					<HeartContainer>
+						{isLike ? (
+							<VscHeartFilled style={{ color: "red" }} />
+						) : (
+							<VscHeartFilled />
+						)}
+						<HeartText>{props.info.liked}</HeartText>
+					</HeartContainer>
+				) : null}
 			</Card>
 		</Link>
 	);

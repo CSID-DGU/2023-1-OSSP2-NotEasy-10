@@ -24,6 +24,11 @@ const UserComment = (tip) => {
 
 	const handleDelete = () => {
 		// axios로 삭제요청 보내면 서버에서 replyList 업데이트해야함
+
+		if (window.confirm("정말 삭제하시겠습니까??") == false) {
+			return;
+		}
+
 		console.log("삭제된 댓글 아이디:", tip.tip.id);
 		const result = DELETE(
 			`https://3.35.180.1:8080/board/${communityId}/reply/${tip.tip.id}`,
