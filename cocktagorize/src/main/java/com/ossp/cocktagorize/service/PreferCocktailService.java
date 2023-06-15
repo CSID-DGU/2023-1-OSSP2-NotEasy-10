@@ -56,10 +56,10 @@ public class PreferCocktailService {
                     break;
                 }
                 else {
-                    int n = random.nextInt(tags.size());
-                    Cocktail cocktail = cocktailRepository.findById(tags.get(n).getCocktail().getId());
-                    preferCocktail.add(new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
-                    tags.remove(n);}
+                int n = random.nextInt(tags.size());
+                Cocktail cocktail = cocktailRepository.findById(tags.get(n).getCocktail().getId());
+                preferCocktail.add(new CocktailResponseDto(cocktail, userLikeCocktailRepository.findByCocktailIdAndUserId(cocktail.getId(), userRepository.findByUsername(authentication.getName()).getId())));
+                tags.remove(n);}
             }
         }
         return preferCocktail;

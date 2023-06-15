@@ -43,7 +43,7 @@ const SignUp = () => {
 
 	const getCity = async () => {
 		const data = GET(
-			`https://3.35.180.1:8080/city`,
+			`http://3.35.180.1:8080/city`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -55,7 +55,7 @@ const SignUp = () => {
 
 	const getDongByCity = async (city) => {
 		const data = GET(
-			`https://3.35.180.1:8080/dong?city=${city}`,
+			`http://3.35.180.1:8080/dong?city=${city}`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -67,7 +67,7 @@ const SignUp = () => {
 
 	const getGuByDong = async (dong) => {
 		const data = GET(
-			`https://3.35.180.1:8080/gu?dong=${dong}`,
+			`http://3.35.180.1:8080/gu?dong=${dong}`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -184,16 +184,11 @@ const SignUp = () => {
 			return;
 		}
 
-		if (gu === "동") {
-			alert("지역을 선택해주세요.");
-			return;
-		}
-
 		const preferTagList = currentTagData.map((tag) => tag.name);
 
 		try {
 			const response = await axios
-				.post("https://3.35.180.1:8080/user/join", {
+				.post("http://3.35.180.1:8080/user/join", {
 					username: id,
 					password: password,
 					email: email,
@@ -219,7 +214,7 @@ const SignUp = () => {
 				username: id,
 			};
 			const response = await axios
-				.post("https://3.35.180.1:8080/user/join/id", data, {
+				.post("http://3.35.180.1:8080/user/join/id", data, {
 					header: {
 						"Content-Type": `application/json`,
 					},
@@ -252,7 +247,7 @@ const SignUp = () => {
 				nickname: nickname,
 			};
 			const response = await axios
-				.post("https://3.35.180.1:8080/user/join/nickname", data, {
+				.post("http://3.35.180.1:8080/user/join/nickname", data, {
 					header: {
 						"Content-Type": `application/json`,
 					},

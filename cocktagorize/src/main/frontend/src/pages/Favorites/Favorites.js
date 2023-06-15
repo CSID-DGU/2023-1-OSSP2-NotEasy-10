@@ -59,7 +59,7 @@ const Favorites = () => {
 
 	const getUserLikedBoardAndCocktails = async () => {
 		const data = GET(
-			`https://3.35.180.1:8080/liked-cocktails`,
+			`http://3.35.180.1:8080/liked-cocktails`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {

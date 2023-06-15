@@ -11,6 +11,7 @@ const CommunityPostModify = () => {
 	const { communityId } = useParams();
 	const authCtx = useContext(AuthContext);
 	let isLogin = authCtx.isLoggedIn;
+	let isGetUser = authCtx.isGetUserSuccess;
 
 	const [boardTitle, setBoardTitle] = useState("");
 	const title = boardTitle;
@@ -28,6 +29,28 @@ const CommunityPostModify = () => {
 		setBoardContent(e.target.value);
 	};
 
+	const [userCocktailList, setUserCocktailList] = useState([]);
+	useEffect(() => {
+		if (isGetUser) {
+			// User 정보를 불러와야지 이 함수를 호출 가능해서 여기다 작성
+			getCocktailData();
+		}
+	}, [isGetUser]);
+
+	const getCocktailData = async () => {
+		const userCocktailData = GET(
+			`http://3.35.180.1:8080/cocktail/prefer/${authCtx.userObj.username}`,
+			createTokenHeader(authCtx.token)
+		);
+		userCocktailData.then((result) => {
+			if (result !== null) {
+				setUserCocktailList(result.data);
+				// console.log("유저 선호 칵테일 : " + result.data);
+				// result.data.forEach(cocktail => console.log(cocktail));
+			}
+		});
+	};
+
 	useEffect(() => {
 		getBoard();
 	}, []);
@@ -41,7 +64,7 @@ const CommunityPostModify = () => {
 	const getBoard = async (page) => {
 		try {
 			const boardsData = await GET(
-				`https://3.35.180.1:8080/board/${communityId}`,
+				`http://3.35.180.1:8080/board/${communityId}`,
 				createTokenHeader(authCtx.token)
 			);
 
@@ -64,14 +87,13 @@ const CommunityPostModify = () => {
 			alert("제목을 입력해주세요!");
 			return;
 		}
-
 		if (boardContent === "") {
 			alert("내용을 입력해주세요!");
 			return;
 		}
 
 		const boardsData = PUT(
-			`https://3.35.180.1:8080/board/${communityId}`,
+			`http://3.35.180.1:8080/board/${communityId}`,
 			{
 				title: boardTitle,
 				content: boardContent,
@@ -84,6 +106,48 @@ const CommunityPostModify = () => {
 			document.location.href = `/community/${communityId}`;
 		});
 	};
+
+	function userCocktailCard(props) {
+		if (userCocktailList.length === 0) {
+			return;
+		}
+		let result = [];
+
+		if (userCocktailList.length >= 2) {
+			if (userCocktailList[0].id === userCocktailList[1].id) {
+				result.push(
+					<div
+						style={{
+							width: "15vw",
+							height: "calc(250px)",
+							display: "flex",
+							justifyContent: "center",
+							alignContent: "center",
+							marginTop: "calc(37.5vh - 175px)",
+						}}
+					>
+						<span
+							style={{
+								fontSize: "14px",
+								marginTop: "calc(37.5vh - 175px)",
+							}}
+						>
+							선호하는 태그를 설정하면 맞춤 추천이 가능합니다!
+						</span>
+					</div>
+				);
+				return result;
+			}
+		}
+		result.push(
+			<CocktailCard
+				horizontalMargin={"10px"}
+				verticalMargin={"10vh"}
+				info={userCocktailList[0]}
+			/>
+		);
+		return result;
+	}
 
 	return (
 		<div className="CommunityPostModify">
@@ -117,12 +181,12 @@ const CommunityPostModify = () => {
 				></textarea>
 				<input
 					type="submit"
-					value="Done"
+					value="완료"
 					className="edit_submit"
 					onClick={onClickSubmit}
 				/>
 			</div>
-			<CocktailCard />
+			{userCocktailCard()}
 		</div>
 	);
 };

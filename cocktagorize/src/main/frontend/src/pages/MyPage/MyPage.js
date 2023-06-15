@@ -112,7 +112,7 @@ const MyPage = () => {
 				nickname: userNickname,
 			};
 			const response = await axios
-				.post("https://3.35.180.1:8080/user/join/nickname", data, {
+				.post("http://3.35.180.1:8080/user/join/nickname", data, {
 					header: {
 						"Content-Type": `application/json`,
 					},
@@ -165,7 +165,7 @@ const MyPage = () => {
 
 	const getCity = async () => {
 		const data = GET(
-			`https://3.35.180.1:8080/city`,
+			`http://3.35.180.1:8080/city`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -177,7 +177,7 @@ const MyPage = () => {
 
 	const getDongByCity = async (city) => {
 		const data = GET(
-			`https://3.35.180.1:8080/dong?city=${city}`,
+			`http://3.35.180.1:8080/dong?city=${city}`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -189,7 +189,7 @@ const MyPage = () => {
 
 	const getGuByDong = async (dong) => {
 		const data = GET(
-			`https://3.35.180.1:8080/gu?dong=${dong}`,
+			`http://3.35.180.1:8080/gu?dong=${dong}`,
 			createTokenHeader(authCtx.token)
 		);
 		data.then((result) => {
@@ -228,7 +228,7 @@ const MyPage = () => {
 	}, [isGetUser]);
 	const getUserInfo = () => {
 		const data = POST(
-			`https://3.35.180.1:8080/user`,
+			`http://3.35.180.1:8080/user`,
 			{
 				username: authCtx.userObj.username,
 			},
@@ -282,7 +282,7 @@ const MyPage = () => {
 		console.log(tagList);
 
 		const data = PUT(
-			`https://3.35.180.1:8080/user`,
+			`http://3.35.180.1:8080/user`,
 			{
 				username: user.username,
 				password: "",
@@ -309,7 +309,7 @@ const MyPage = () => {
 
 		if (window.confirm("정말 탈퇴하시겠습니까??") == true) {
 			const boardsData = DELETE(
-				`https://3.35.180.1:8080/user/${authCtx.userObj.username}`,
+				`http://3.35.180.1:8080/user/${authCtx.userObj.username}`,
 				createTokenHeader(authCtx.token)
 			);
 			boardsData.then((result) => {
@@ -402,9 +402,7 @@ const MyPage = () => {
 				</p>
 				<div className="location">
 					<select name="city" value={city} onChange={onChangeCity}>
-						<option style={{ color: "gray" }} disabled>
-							{user.city}
-						</option>
+						<option style={{ color: "gray" }}>{user.city}</option>
 						{cityList.map((city) => (
 							<option value={city}> {city}</option>
 						))}
