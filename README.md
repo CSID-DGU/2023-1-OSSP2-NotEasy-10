@@ -1,9 +1,6 @@
 # 2023-1-OSSP2-NotEasy-10
 2023년 1학기 공개SW프로젝트 02분반 10조 10지않조 (Not Easy) 팀입니다.
 
-## 프로젝트
-칵테고라이즈 - 사용자 기반 칵테일 가이드 서비스 
-
 ### TEAM MEMBER 
 <table>
   <tbody>
@@ -17,7 +14,10 @@
 </table>
 <br/>
 
-## 프로젝트 세부 내용
+## 프로젝트
+<img width="928" alt="스크린샷 2023-06-18 오후 2 30 49" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/fa5dee78-fab6-410d-b7ca-95c65f93553b">
+
+## 프로젝트 소개
 
 ### 목적:
 1) 홈텐딩과 칵테일 입문자들의 칵테일 선택에 대한 편의성 향상
@@ -34,7 +34,21 @@
 5) 칵테일 정보 제공을 위한 데이터베이스
 
 --- 
+
+**[1] 메인 화면:**
 <img width="1369" alt="스크린샷 2023-06-07 오후 1 53 44" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/aa055dc9-6d6c-48e5-b37c-56b4e38bd742">
+
+**[2] 다양한 태그를 통한 칵테일 검색:**
+<img width="1413" alt="스크린샷 2023-06-18 오후 2 41 41" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/70486665-214d-40ba-bbf3-400a4efb5024">
+
+**[3] 칵테일 상세페이지:**
+<img width="1411" alt="스크린샷 2023-06-18 오후 2 42 22" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/9015257c-f9a2-49c1-9ed8-56b2d1fa999e">
+
+**[4] 커뮤니티 페이지:**
+<img width="1416" alt="스크린샷 2023-06-18 오후 2 42 32" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/98af73b9-d423-4dbb-8491-b9bbba51b6b0">
+
+**[5] 좋아요 페이지:**
+<img width="1413" alt="스크린샷 2023-06-18 오후 2 42 56" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/274bd090-831c-4604-8e5c-9ff985f78bd5">
 
 ---
 <br/>
