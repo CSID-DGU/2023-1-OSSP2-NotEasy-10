@@ -158,7 +158,7 @@ const Home = () => {
 					});
 				}
 			});
-			setIsWeatherLoading(false);
+			setIsWeatherLoading(() => false);
 		});
 	};
 
@@ -196,7 +196,7 @@ const Home = () => {
 				// console.log("회원가입 저장 날씨 기반 칵테일 : " + result.data);
 				result.data.forEach((cocktail) => console.log(cocktail));
 			}
-			setIsWeatherLoading(false);
+			setIsWeatherLoading(() => false);
 		});
 	};
 
@@ -524,8 +524,8 @@ const Home = () => {
 
 	const onWeatherSortChanged = (e) => {
 		if (isWeatherLoading) return;
-		setIsWeatherLoading(true);
-		// console.log("바뀜");
+		setIsWeatherLoading(() => true);
+		console.log("바뀜");
 		if (e.target.value === "사용자 위치") {
 			getWeatherCocktailData();
 			setWeatherMode(() => "사용자 위치 기반");
@@ -803,7 +803,9 @@ const Home = () => {
 					<home.SearchUI>{searchUI()}</home.SearchUI>
 				</home.Explore>
 				<home.NonExplore id="NonExplore">
-					{isLogin && page === 0 ? (
+					{isLogin &&
+					page === 0 &&
+					(sortType <= 3 || sortType == 8) ? (
 						<home.LoginContent>
 							<home.WeatherNUserCocktail>
 								<home.Weather>
