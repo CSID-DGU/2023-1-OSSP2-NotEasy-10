@@ -12,7 +12,8 @@
       <td align="center"  width="16.66%"><a href="https://github.com/juhno1023"><img src="https://avatars.githubusercontent.com/u/114224596?s=64&v=4" width="100px;" alt="주현욱"/><br /><sub><b>주현욱</b></sub></a><br />BackEnd</td>
   </tbody>
 </table>
-<br/>
+
+---
 
 ## 프로젝트
 <img width="928" alt="스크린샷 2023-06-18 오후 2 30 49" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/fa5dee78-fab6-410d-b7ca-95c65f93553b">
