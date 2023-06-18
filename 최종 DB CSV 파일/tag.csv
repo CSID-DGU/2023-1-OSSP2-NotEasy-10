@@ -1,0 +1,521 @@
+1,40,ALCOHOL,Vodka
+2,40,ALCOHOL,Gin
+3,40,ALCOHOL,Rum
+4,40,ALCOHOL,Tequila
+5,0,ALCOHOL,Scotch
+6,40,ALCOHOL,Absolut Kurant
+7,40,ALCOHOL,Absolut Peppar
+8,40,ALCOHOL,Absolut Vodka
+9,17,ALCOHOL,Advocaat
+10,38,ALCOHOL,Aejo Rum
+11,30,ALCOHOL,Aftershock
+12,0,SYRUP,Agave Syrup
+13,4,ALCOHOL,Ale
+14,0,INGREDIENT,Allspice
+16,0,INGREDIENT,Almond Flavoring
+17,0,INGREDIENT,Almond
+18,28,ALCOHOL,Amaretto
+19,0,INGREDIENT,Angelica Root
+20,0,BITTER,Angostura Bitters
+21,0,INGREDIENT,Anis
+22,0,INGREDIENT,Anise
+23,0,INGREDIENT,Anisette
+24,11,ALCOHOL,Aperol
+25,18,ALCOHOL,Apfelkorn
+26,35,ALCOHOL,Apple Brandy
+27,5,ALCOHOL,Apple Cider
+28,0,JUICE,Apple Juice
+29,18,ALCOHOL,Apple Schnapps
+30,0,INGREDIENT,Apple
+31,40,ALCOHOL,Applejack
+32,24,ALCOHOL,Apricot Brandy
+33,0,INGREDIENT,Apricot Nectar
+34,0,INGREDIENT,Apricot
+35,0,INGREDIENT,Aquavit
+36,0,INGREDIENT,Asafoetida
+37,38,ALCOHOL,Añejo Rum
+39,32,ALCOHOL,Bacardi Limon
+40,38,ALCOHOL,Bacardi
+43,13,ALCOHOL,Baileys Irish Cream
+44,0,ALCOHOL,Banana Liqueur
+45,0,INGREDIENT,Banana Rum
+46,0,SYRUP,Banana Syrup
+47,0,INGREDIENT,Banana
+48,0,INGREDIENT,Barenjager
+49,0,INGREDIENT,Basil
+51,0,INGREDIENT,Beef Stock
+52,4,ALCOHOL,Beer
+53,0,INGREDIENT,Benedictine
+54,0,INGREDIENT,Berries
+55,0,BITTER,Bitter lemon
+56,0,BITTER,Bitters
+57,0,INGREDIENT,Black Pepper
+58,0,INGREDIENT,Black Rum
+59,0,INGREDIENT,Black Sambuca
+60,0,INGREDIENT,Blackberries
+61,0,INGREDIENT,Blackberry Brandy
+62,0,ALCOHOL,Blackberry Schnapps
+63,0,INGREDIENT,Blackcurrant Cordial
+64,0,ALCOHOL,Blackcurrant Schnapps
+65,0,INGREDIENT,Blackcurrant Squash
+66,40,ALCOHOL,Blended Whiskey
+67,0,ALCOHOL,Blue Curacao
+68,0,INGREDIENT,Blue Maui
+69,0,INGREDIENT,Blueberries
+70,0,ALCOHOL,Blueberry Schnapps
+71,0,INGREDIENT,Bourbon
+74,0,INGREDIENT,Brandy
+77,0,INGREDIENT,Brown Sugar
+79,0,INGREDIENT,Butter
+80,0,ALCOHOL,Butterscotch Schnapps
+81,0,INGREDIENT,Cachaca
+82,0,INGREDIENT,Calvados
+83,0,INGREDIENT,Campari
+84,0,INGREDIENT,Canadian Whisky
+85,0,INGREDIENT,Candy
+86,0,INGREDIENT,Cantaloupe
+87,0,INGREDIENT,Caramel Coloring
+88,0,INGREDIENT,Carbonated Soft Drink
+89,0,INGREDIENT,Carbonated Water
+90,0,INGREDIENT,Cardamom
+93,0,INGREDIENT,Cayenne Pepper
+94,0,INGREDIENT,Celery Salt
+95,0,INGREDIENT,Celery
+96,0,ALCOHOL,Chambord Raspberry Liqueur
+97,13,ALCOHOL,Champagne
+99,0,INGREDIENT,Cherries
+100,0,INGREDIENT,Cherry Brandy
+101,0,INGREDIENT,Cherry Cola
+102,0,SYRUP,Cherry Grenadine
+103,0,INGREDIENT,Cherry Heering
+104,0,JUICE,Cherry Juice
+105,0,ALCOHOL,Cherry Liqueur
+106,0,INGREDIENT,Cherry
+112,0,INGREDIENT,Chocolate Ice-cream
+113,0,ALCOHOL,Chocolate Liqueur
+114,0,MILK,Chocolate Milk
+115,0,SYRUP,Chocolate Syrup
+116,0,INGREDIENT,Chocolate
+120,4,ALCOHOL,Cider
+121,0,ALCOHOL,Cinnamon Schnapps
+122,0,INGREDIENT,Cinnamon
+123,0,INGREDIENT,Citrus Vodka
+124,0,JUICE,Clamato Juice
+126,0,INGREDIENT,Cloves
+127,0,INGREDIENT,Club Soda
+128,0,INGREDIENT,Coca-Cola
+130,0,INGREDIENT,Cocktail Onion
+131,0,INGREDIENT,Cocoa Powder
+132,0,INGREDIENT,Coconut Cream
+133,0,ALCOHOL,Coconut Liqueur
+134,0,MILK,Coconut Milk
+135,0,INGREDIENT,Coconut Rum
+136,0,SYRUP,Coconut Syrup
+137,0,INGREDIENT,Coffee Brandy
+138,0,ALCOHOL,Coffee Liqueur
+139,0,INGREDIENT,Coffee
+141,0,INGREDIENT,Cognac
+142,40,ALCOHOL,Cointreau
+143,0,INGREDIENT,Cola
+144,0,INGREDIENT,Cold Water
+145,0,MILK,Condensed Milk
+147,0,INGREDIENT,Coriander
+149,0,SYRUP,Corn Syrup
+151,0,INGREDIENT,Cornstarch
+152,4,ALCOHOL,Corona
+154,0,INGREDIENT,Cranberries
+155,0,JUICE,Cranberry Juice
+156,0,ALCOHOL,Cranberry Liqueur
+157,0,INGREDIENT,Cranberry Vodka
+158,0,INGREDIENT,Cream of Coconut
+159,0,INGREDIENT,Cream Sherry
+160,0,INGREDIENT,Cream Soda
+161,0,INGREDIENT,Cream
+162,0,INGREDIENT,Creme De Almond
+163,0,INGREDIENT,Creme De Banane
+164,0,INGREDIENT,Creme De Cacao
+165,15,ALCOHOL,Creme De Cassis
+166,0,INGREDIENT,Creme De Noyaux
+167,0,INGREDIENT,Creme Fraiche
+168,0,INGREDIENT,Crown Royal
+169,0,INGREDIENT,Crystal Light
+171,0,INGREDIENT,Cucumber
+172,0,INGREDIENT,Cumin Powder
+173,0,INGREDIENT,Cumin Seed
+174,0,INGREDIENT,Curacao
+175,0,INGREDIENT,Cynar
+176,0,INGREDIENT,Daiquiri Mix
+177,0,INGREDIENT,Dark Chocolate
+178,0,INGREDIENT,Dark Creme De Cacao
+179,40,ALCOHOL,Dark Rum
+180,0,INGREDIENT,Dark Soy Sauce
+181,0,INGREDIENT,Demerara Sugar
+186,0,INGREDIENT,Dr. Pepper
+187,0,ALCOHOL,Drambuie
+188,0,INGREDIENT,Dried Oregano
+189,0,ALCOHOL,Dry Vermouth
+190,0,INGREDIENT,Dubonnet Blanc
+191,0,INGREDIENT,Dubonnet Rouge
+192,0,INGREDIENT,Egg White
+193,0,INGREDIENT,Egg Yolk
+194,0,INGREDIENT,Egg
+195,0,INGREDIENT,Eggnog
+199,0,INGREDIENT,Erin Cream
+200,0,INGREDIENT,Espresso
+201,0,INGREDIENT,Everclear
+203,0,INGREDIENT,Fanta
+205,0,INGREDIENT,Fennel Seeds
+207,0,INGREDIENT,Firewater
+208,0,INGREDIENT,Flaked Almonds
+210,0,INGREDIENT,Food Coloring
+211,0,INGREDIENT,Forbidden Fruit
+212,0,INGREDIENT,Frangelico
+215,0,INGREDIENT,Fresca
+216,0,INGREDIENT,Fresh Basil
+217,0,JUICE,Fresh Lemon Juice
+220,0,JUICE,Fruit Juice
+221,0,JUICE,Fruit Punch
+222,0,INGREDIENT,Fruit
+223,0,ALCOHOL,Galliano
+224,0,INGREDIENT,Garlic Sauce
+226,0,INGREDIENT,Gatorade
+228,0,INGREDIENT,Ginger Ale
+229,0,INGREDIENT,Ginger Beer
+230,0,INGREDIENT,Ginger
+231,0,INGREDIENT,Glycerine
+232,0,ALCOHOL,Godiva Liqueur
+233,0,INGREDIENT,Gold rum
+234,0,INGREDIENT,Gold Tequila
+235,44,ALCOHOL,Goldschlager
+237,0,INGREDIENT,Grain Alcohol
+238,0,ALCOHOL,Grand Marnier
+239,0,INGREDIENT,Granulated Sugar
+240,0,JUICE,Grape juice
+241,0,INGREDIENT,Grape soda
+242,0,JUICE,Grapefruit Juice
+243,0,INGREDIENT,Grapes
+245,0,INGREDIENT,Green Chartreuse
+246,0,ALCOHOL,Green Creme de Menthe
+247,0,INGREDIENT,Green Ginger Wine
+248,0,INGREDIENT,Green Olives
+250,0,SYRUP,Grenadine
+252,0,INGREDIENT,Ground Ginger
+253,0,JUICE,Guava juice
+254,0,INGREDIENT,Guinness stout
+255,0,INGREDIENT,Guinness
+256,0,INGREDIENT,Half-and-half
+257,0,INGREDIENT,Hawaiian punch
+258,0,ALCOHOL,Hazelnut liqueur
+259,0,INGREDIENT,Heavy cream
+260,0,INGREDIENT,Honey
+261,0,INGREDIENT,Hooch
+264,0,INGREDIENT,Hot Chocolate
+265,0,INGREDIENT,Hot Damn
+266,0,INGREDIENT,Hot Sauce
+268,0,INGREDIENT,Hpnotiq
+269,0,INGREDIENT,Ice-Cream
+270,0,INGREDIENT,Ice
+271,0,INGREDIENT,Iced tea
+272,0,ALCOHOL,Irish cream
+273,0,ALCOHOL,Irish Whiskey
+275,0,ALCOHOL,Jack Daniels
+276,0,INGREDIENT,Jello
+277,0,INGREDIENT,Jelly
+278,35,ALCOHOL,Jagermeister
+279,0,INGREDIENT,Jim Beam
+280,0,INGREDIENT,Johnnie Walker
+282,0,ALCOHOL,Kahlua
+283,0,ALCOHOL,Key Largo Schnapps
+284,0,INGREDIENT,Kirschwasser
+285,0,ALCOHOL,Kiwi liqueur
+286,0,INGREDIENT,Kiwi
+287,0,INGREDIENT,Kool-Aid
+288,0,INGREDIENT,Kummel
+289,4,ALCOHOL,Lager
+293,0,JUICE,Lemon Juice
+294,0,INGREDIENT,Lemon Peel
+295,0,INGREDIENT,Lemon soda
+296,0,INGREDIENT,Lemon vodka
+297,0,INGREDIENT,Lemon-lime soda
+298,0,INGREDIENT,lemon-lime
+299,0,INGREDIENT,lemon
+300,0,INGREDIENT,Lemonade
+303,0,INGREDIENT,Licorice Root
+304,0,INGREDIENT,Light Cream
+305,0,ALCOHOL,Light Rum
+306,0,INGREDIENT,Lillet
+307,0,JUICE,Lime juice cordial
+308,0,JUICE,Lime Juice
+309,0,ALCOHOL,Lime liqueur
+310,0,INGREDIENT,Lime Peel
+311,0,INGREDIENT,Lime vodka
+312,0,INGREDIENT,Lime
+313,0,INGREDIENT,Limeade
+314,0,INGREDIENT,Madeira
+315,21,ALCOHOL,Malibu Rum
+317,0,INGREDIENT,Mandarin
+318,0,INGREDIENT,Mandarine napoleon
+319,0,INGREDIENT,Mango
+320,0,SYRUP,Maple syrup
+321,0,JUICE,Maraschino cherry juice
+322,0,INGREDIENT,Maraschino Cherry
+323,0,ALCOHOL,Maraschino Liqueur
+324,0,INGREDIENT,Margarita mix
+325,0,INGREDIENT,Marjoram leaves
+326,0,INGREDIENT,Marshmallows
+327,0,INGREDIENT,Maui
+328,0,ALCOHOL,Melon Liqueur
+329,0,INGREDIENT,Melon Vodka
+330,0,INGREDIENT,Mezcal
+331,0,ALCOHOL,Midori Melon Liqueur
+332,0,ALCOHOL,Midori
+333,0,MILK,Milk
+336,0,SYRUP,Mint syrup
+337,0,INGREDIENT,Mint
+338,0,INGREDIENT,Mountain Dew
+344,0,INGREDIENT,Nutmeg
+346,0,INGREDIENT,Olive Oil
+347,0,INGREDIENT,Olive
+348,0,INGREDIENT,Onion
+350,0,BITTER,Orange Bitters
+351,0,ALCOHOL,Orange Curacao
+352,0,JUICE,Orange Juice
+353,0,ALCOHOL,Orange liqueur
+354,0,INGREDIENT,Orange Peel
+355,0,INGREDIENT,Orange rum
+356,0,INGREDIENT,Orange Soda
+357,0,INGREDIENT,Orange spiral
+358,0,INGREDIENT,Orange vodka
+359,0,INGREDIENT,Orange
+361,0,INGREDIENT,Oreo cookie
+362,0,SYRUP,Orgeat Syrup
+363,38,ALCOHOL,Ouzo
+364,0,INGREDIENT,Oyster Sauce
+365,0,JUICE,Papaya juice
+366,0,INGREDIENT,Papaya
+367,0,INGREDIENT,Parfait amour
+372,0,JUICE,Passion fruit juice
+373,0,SYRUP,Passion fruit syrup
+374,17,ALCOHOL,Passoa
+375,0,INGREDIENT,Peach brandy
+376,0,JUICE,Peach juice
+377,0,ALCOHOL,Peach liqueur
+378,0,JUICE,Peach Nectar
+379,0,ALCOHOL,Peach Schnapps
+380,0,INGREDIENT,Peach Vodka
+381,0,INGREDIENT,Peach
+382,0,ALCOHOL,Peachtree schnapps
+383,0,INGREDIENT,Peanut Oil
+386,0,INGREDIENT,Pepper
+387,0,INGREDIENT,Peppermint extract
+388,0,ALCOHOL,Peppermint Schnapps
+389,0,INGREDIENT,Pepsi Cola
+390,0,INGREDIENT,Pernod
+391,0,BITTER,Peychaud bitters
+392,0,INGREDIENT,Pina colada mix
+393,0,JUICE,Pineapple Juice
+394,0,INGREDIENT,Pineapple rum
+395,0,INGREDIENT,Pineapple vodka
+396,0,JUICE,Pineapple-orange-banana juice
+397,0,INGREDIENT,Pineapple
+398,0,INGREDIENT,Pink lemonade
+399,0,INGREDIENT,Pisang Ambon
+400,0,INGREDIENT,Pisco
+402,0,INGREDIENT,Plain Chocolate
+403,0,INGREDIENT,Plain Flour
+405,0,INGREDIENT,Plums
+406,0,INGREDIENT,Port
+409,0,INGREDIENT,Powdered Sugar
+411,0,INGREDIENT,Purple passion
+412,0,INGREDIENT,Raisins
+413,0,INGREDIENT,Raspberry cordial
+414,0,INGREDIENT,Raspberry Jam
+415,0,JUICE,Raspberry Juice
+416,0,ALCOHOL,Raspberry Liqueur
+417,0,ALCOHOL,Raspberry schnapps
+418,0,SYRUP,Raspberry syrup
+419,0,INGREDIENT,Raspberry Vodka
+421,0,INGREDIENT,Red Chile Flakes
+422,0,INGREDIENT,Red Chili Flakes
+423,0,INGREDIENT,Red Hot Chili Flakes
+425,14,ALCOHOL,Red Wine
+426,0,INGREDIENT,Rhubarb
+427,0,INGREDIENT,Ricard
+429,0,INGREDIENT,Rock Salt
+430,0,ALCOHOL,Root beer schnapps
+431,0,INGREDIENT,Root beer
+432,0,JUICE,Roses sweetened lime juice
+433,0,INGREDIENT,Rosewater
+435,0,INGREDIENT,Rumple Minze
+436,0,INGREDIENT,Rye Whiskey
+437,0,INGREDIENT,Sake
+439,0,INGREDIENT,Salt
+440,38,ALCOHOL,Sambuca
+441,0,INGREDIENT,Sarsaparilla
+442,0,ALCOHOL,Schnapps
+443,0,INGREDIENT,Schweppes Lemon
+444,0,INGREDIENT,Schweppes Russchian
+448,0,INGREDIENT,Sherbet
+449,0,INGREDIENT,Sherry
+452,0,SYRUP,Sirup of roses
+453,0,ALCOHOL,Sloe Gin
+455,0,INGREDIENT,Soda Water
+456,0,INGREDIENT,Sour Apple Pucker
+457,0,INGREDIENT,Sour Mix
+458,0,ALCOHOL,Southern Comfort
+459,0,MILK,Soy Milk
+460,0,INGREDIENT,Soy Sauce
+461,0,MILK,Soya Milk
+462,0,INGREDIENT,Soya Sauce
+464,0,INGREDIENT,Spiced Rum
+466,0,INGREDIENT,Sprite
+467,0,JUICE,Squeezed Orange
+468,0,INGREDIENT,Squirt
+470,0,INGREDIENT,Strawberries
+471,0,JUICE,Strawberry juice
+472,0,ALCOHOL,Strawberry liqueur
+473,0,ALCOHOL,Strawberry Schnapps
+474,0,SYRUP,Strawberry syrup
+475,0,SYRUP,Sugar Syrup
+476,0,INGREDIENT,Sugar
+477,0,JUICE,Sunny delight
+478,0,INGREDIENT,Surge
+479,0,INGREDIENT,Swedish punsch
+480,0,INGREDIENT,Sweet and Sour
+481,0,INGREDIENT,Sweet Cream
+482,0,INGREDIENT,Sweet Vermouth
+483,0,INGREDIENT,Tabasco Sauce
+484,0,INGREDIENT,Tang
+485,0,INGREDIENT,Tawny port
+486,0,INGREDIENT,Tea
+487,0,INGREDIENT,Tennessee whiskey
+488,0,INGREDIENT,Tequila rose
+490,0,INGREDIENT,Tia Maria
+492,0,JUICE,Tomato Juice
+494,0,INGREDIENT,Tomato
+497,0,INGREDIENT,Tonic Water
+498,0,ALCOHOL,Triple Sec
+499,0,JUICE,Tropicana
+500,0,INGREDIENT,Tuaca
+502,0,INGREDIENT,Vanilla extract
+503,0,INGREDIENT,Vanilla Ice-Cream
+504,0,ALCOHOL,Vanilla liqueur
+505,0,ALCOHOL,Vanilla schnapps
+506,0,SYRUP,Vanilla syrup
+507,0,INGREDIENT,Vanilla vodka
+508,0,INGREDIENT,Vanilla
+510,0,INGREDIENT,Vermouth
+511,0,INGREDIENT,Vinegar
+513,0,INGREDIENT,Water
+514,0,ALCOHOL,Watermelon schnapps
+515,0,INGREDIENT,Whipped Cream
+516,0,INGREDIENT,Whipping Cream
+519,0,ALCOHOL,White chocolate liqueur
+520,0,INGREDIENT,White Creme de Menthe
+521,0,JUICE,White grape juice
+522,0,INGREDIENT,White port
+523,0,INGREDIENT,White Rum
+524,0,INGREDIENT,White Vinegar
+525,0,INGREDIENT,White Wine
+526,0,INGREDIENT,Wild Turkey
+527,0,ALCOHOL,Wildberry schnapps
+528,14,ALCOHOL,Wine
+529,0,INGREDIENT,Worcestershire Sauce
+530,0,INGREDIENT,Wormwood
+531,0,INGREDIENT,Yeast
+532,0,ALCOHOL,Yellow Chartreuse
+533,0,INGREDIENT,Yoghurt
+534,0,ALCOHOL,Yukon Jack
+535,0,INGREDIENT,Zima
+537,0,INGREDIENT,Caramel Sauce
+538,0,INGREDIENT,Chocolate Sauce
+539,0,INGREDIENT,Lillet Blanc
+540,0,BITTER,Peach Bitters
+541,0,INGREDIENT,Mini-snickers bars
+542,0,INGREDIENT,Prosecco
+543,0,INGREDIENT,Salted Chocolate
+544,0,INGREDIENT,Martini Rosso
+545,0,INGREDIENT,Martini Bianco
+546,0,INGREDIENT,Martini Extra Dry
+547,0,JUICE,Fresh Lime Juice
+548,0,INGREDIENT,Fresh Mint
+549,0,INGREDIENT,Rosemary
+550,0,INGREDIENT,Habanero Peppers
+551,0,INGREDIENT,Ilegal Joven mezcal
+552,0,INGREDIENT,Elderflower cordial
+553,0,INGREDIENT,Rosso Vermouth
+554,0,ALCOHOL,Creme de Violette
+555,0,INGREDIENT,Cocchi Americano
+556,0,INGREDIENT,White Vermouth
+557,0,ALCOHOL,Dry Curacao
+558,0,ALCOHOL,Nocino
+559,0,ALCOHOL,Averna
+560,0,ALCOHOL,Ramazzotti
+561,0,ALCOHOL,Fernet-Branca
+562,0,INGREDIENT,Allspice Dram
+563,0,SYRUP,Falernum
+564,0,ALCOHOL,Singani
+565,0,ALCOHOL,Arrack
+566,0,INGREDIENT,Blackstrap rum
+567,0,SYRUP,Ginger Syrup
+568,0,SYRUP,Honey syrup
+569,0,INGREDIENT,Blended Scotch
+570,0,INGREDIENT,Islay single malt Scotch
+571,0,ALCOHOL,151 proof rum
+572,0,INGREDIENT,7-up
+573,0,INGREDIENT,Absinthe
+574,0,INGREDIENT,Absolut citron
+575,16,ALCOHOL,Creme de Mure
+576,0,INGREDIENT,Olive Brine
+577,0,JUICE,Pineapple Syrup
+578,0,ALCOHOL,St. Germain
+579,0,INGREDIENT,Lavender
+600,40,ALCOHOL,Whiskey
+601,40,ALCOHOL,Whisky
+602,0,JUICE,Pomegranate juice
+603,0,INGREDIENT,Watermelon
+604,25,ALCOHOL,Chareau
+605,33,ALCOHOL,Cinnamon Whisky
+606,0,INGREDIENT,Red Bull
+607,0,INGREDIENT,Diet Coke
+608,0,SYRUP,Rosemary Syrup
+609,0,INGREDIENT,Figs
+610,0,INGREDIENT,Thyme
+611,0,INGREDIENT,Orange Slice
+612,0,INGREDIENT,Blood Orange
+613,23,ALCOHOL,Amaro Montenegro
+614,19,ALCOHOL,Ruby Port
+615,14,ALCOHOL,Rose
+616,0,INGREDIENT,Tajin
+617,0,INGREDIENT,Carrot
+618,0,COLOR,노란색
+619,0,COLOR,갈색
+620,0,COLOR,layer
+621,0,COLOR,어두운색
+622,0,COLOR,흰색
+623,0,COLOR,분홍빛
+624,0,COLOR,붉은색
+625,0,COLOR,주황색
+626,0,COLOR,녹색
+627,0,COLOR,보라색
+628,0,COLOR,파란색
+629,0,COLOR,투명
+630,0,TASTE,dry
+631,0,TASTE,creamy
+632,0,TASTE,상쾌한
+633,0,TASTE,달콤
+634,0,TASTE,신맛
+635,0,TASTE,복숭아맛
+636,0,TASTE,탄산
+637,0,TASTE,쓴맛
+638,0,TASTE,짠맛
+639,0,TASTE,단맛
+640,0,ETC,flame
+641,0,ETC,젤리
+642,0,TASTE,매움
+643,0,WEATHER,RainyAndWinter
+644,0,WEATHER,RainyAndSpring
+645,0,WEATHER,RainyAndSummer
+646,0,WEATHER,NotRainyAndWinter
+647,0,WEATHER,NotRainyAndSpring
+648,0,WEATHER,NotRainyAndSummer
