@@ -58,6 +58,8 @@
 
 **[4] 커뮤니티 페이지 -** 
 <img width="1424" alt="스크린샷 2023-06-18 오후 2 46 36" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/8e357cb4-2fec-4249-b252-99b9963d9f4f">
+<img width="1418" alt="스크린샷 2023-06-18 오후 3 23 12" src="https://github.com/CSID-DGU/2023-1-OSSP2-NotEasy-10/assets/114224596/d568f86b-da16-4a6f-ae45-a163905cbcc2">
+
 > 레시피와 팁으로 분류된 게시글들을 공유하는 커뮤니티
 <br/>
 
