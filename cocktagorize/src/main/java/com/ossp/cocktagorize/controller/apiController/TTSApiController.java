@@ -35,19 +35,7 @@ public class TTSApiController {
         try {
             // API 키 JSON 파일 내용
             String apiKeyJson =
-                    "{\n" +
-                    "  \"type\": \"service_account\",\n" +
-                    "  \"project_id\": \"feisty-mason-387506\",\n" +
-                    "  \"private_key_id\": \"e9f93d5a02317fdfc4ee26d543ea1d661476d9ff\",\n" +
-                    "  \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+/SL/UlSgbraf\\n1/b/BkGZlinFQ2fJ+ix5ukRxeIkUFr6YGbx6jllmp/05LobtvH/LcumYqglpzGLE\\n/8gPJt8y5Ep1Veh4xCjzgcbcr/E4bi0P7itUzKAn3zdMMLdO9aXhI8MvE2zttt3d\\ncaU6in8nb8KZoSHS+6AYN7+U+9ytBYSWZlJi/XTNn34Behclm7vYVKKMQ6CorE2K\\nphNu4DF69f/L6/dZtUZ0mvFexLqFM0dJdvTwFR6seJqALmLacFRy7kz7UoUgAK1i\\nD76ZE5+aPQ97FolouEgCO0xfEuHX2f3piZ2N+GmZZzjZzzTuoUoHtaDRH4sUESJf\\nuWGETerLAgMBAAECggEAJ07xU4xt54Ex7C8mYnG2sbYyzatkYrEvUzRvns0YpX5S\\n5voxDSZcJyE/IHQ/iBGqWcTCaE3i1xgeYf5k/h1Zhd9vpbuzN5vj885LkCNUKfGf\\nK66w02i0M9Cg0HkcWU98vxw9sWQ1oK1o94lK4QQdTJAXhMghrotkdWeP8kluL1ve\\nqGF4AyAd9nBqfThM6mlDU/X1PMfkcBu8xtKLnW6mB7Z12Pwx13i/TlZt1UaQsuDp\\nkcpIwnJLONwnV2XdtxU1qqX0366i80kiCd6hq13Mugv2CbH/4BNzzfhHODgpKUpX\\ndNugqzxoKSz3zlgARvbwniQ3klPFHpDimlh83C+bEQKBgQDsPy+oNagLcNC3dqBq\\n6z7zUyKR39UdZE2DQn3pfmUpnjZAr/OYj3qbAnTxwLESxCfdmuWb7Hyl9k6I9mBX\\nVE2UmLX94pe92NKKuYW/39SgKIQcRlfluXtP2CwTVczUDe6BT3eJNkj/9sq38uye\\n3qT4rs8e/xOmwb1oFoecK17rUQKBgQDO9TZfY1YX2Jn1P1iG1cd13xW04GAHDHRV\\naq7tI+FsgHQkWr4sjvvwO/CH8z9fy7feH+A+Ngzz5vZHtpd3578wjZ4rZ1m3dd4H\\nHp1ON74Za4qLYLMbtQVEldJG94o4PItVcbDgmTf9CPkLzeI+BNc7IXJQFbg0VMtU\\nuWW2fjC1WwKBgEJGI4drrf2vo02kYLI91kYKb2s+wJljNv94mrvy8kwvjwaslYiZ\\nz4pGsSnUpZgfIRPgzULln74rD7MKctJs2uqxwHQ9qdXfSokSLHw8PXjEhPMtpKDU\\nXMx0V0EBU9m1ItBxy5XZfbcYs5vQ8SJMUTlWSNJoOkoQlaLqlxZvcExRAoGBAL0e\\nd0FTlSjVVls2N79/O3YLFdrj7tyCFQy5IICzeRudhoRyJ7awMqmlHHgfYJo5nxvs\\nJQ60dcGsHQILaP65V40W3KLtHp73ppz67OS9K4ovK7uR8hovoVC7WBxhuH0LVogO\\nDIQxf2hK+so+qa/i3Iu8VKm6L0oi8mvJv5i0V+5hAoGBAJU/RAOm6KaABUK2/6jC\\nTtfIQ8Fuc4+BOuffuwhy1xcSGzmPlH7bJodp0XBjw1SezMD0sUwY2jZj98aJ9Qj3\\nNao/Wq0KElJ9427JyuJy1+S8Aa+kutHx9jEKDUXwS2g0q3Xs57avSbnVltRVDlii\\nxxL0cvofQic0urikSaMzNsJg\\n-----END PRIVATE KEY-----\\n\",\n" +
-                    "  \"client_email\": \"hyeondnr@feisty-mason-387506.iam.gserviceaccount.com\",\n" +
-                    "  \"client_id\": \"101605650079029343851\",\n" +
-                    "  \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n" +
-                    "  \"token_uri\": \"https://oauth2.googleapis.com/token\",\n" +
-                    "  \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n" +
-                    "  \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/hyeondnr%40feisty-mason-387506.iam.gserviceaccount.com\",\n" +
-                    "  \"universe_domain\": \"googleapis.com\"\n" +
-                    "}\n";
+                    "구글의apiKeyJson코드내용넣기";
 
             // API 키 JSON 파일 내용을 이용하여 ServiceAccountCredentials 생성
             GoogleCredentials credentials =
